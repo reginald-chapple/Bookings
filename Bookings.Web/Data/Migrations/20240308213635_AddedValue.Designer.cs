@@ -3,6 +3,7 @@ using System;
 using Bookings.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bookings.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240308213635_AddedValue")]
+    partial class AddedValue
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.1");
@@ -970,41 +973,6 @@ namespace Bookings.Web.Data.Migrations
                     b.ToTable("Posts");
                 });
 
-            modelBuilder.Entity("Bookings.Web.Domain.Relationship", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsPrivate")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("SeekerId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("TargetId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("Updated")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SeekerId");
-
-                    b.HasIndex("TargetId");
-
-                    b.ToTable("Relationships");
-                });
-
             modelBuilder.Entity("Bookings.Web.Domain.Reply", b =>
                 {
                     b.Property<long>("Id")
@@ -1573,25 +1541,6 @@ namespace Bookings.Web.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Forum");
-                });
-
-            modelBuilder.Entity("Bookings.Web.Domain.Relationship", b =>
-                {
-                    b.HasOne("Bookings.Web.Domain.ApplicationUser", "Seeker")
-                        .WithMany()
-                        .HasForeignKey("SeekerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Bookings.Web.Domain.ApplicationUser", "Target")
-                        .WithMany()
-                        .HasForeignKey("TargetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Seeker");
-
-                    b.Navigation("Target");
                 });
 
             modelBuilder.Entity("Bookings.Web.Domain.Reply", b =>

@@ -19,6 +19,7 @@ namespace Bookings.Web.Data
         public DbSet<Chat> Chats { get; set; }
         public DbSet<ChatUser> ChatUsers { get; set; }
         public DbSet<ChatMessage> ChatMessages { get; set; }
+        public DbSet<UserValue> UserValues { get; set; }
         public DbSet<Community> Communities { get; set; }
         public DbSet<CommunityMember> CommunityMembers { get; set; }
         public DbSet<Cause> Causes { get; set; }
@@ -41,6 +42,7 @@ namespace Bookings.Web.Data
         public DbSet<MatchProfile> MatchProfiles { get; set; }
         public DbSet<Attraction> Attractions { get; set; }
         public DbSet<SkinComplexion> SkinComplexions { get; set; }
+        public DbSet<Relationship> Relationships { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -72,6 +74,7 @@ namespace Bookings.Web.Data
             builder.ApplyConfiguration(new MeetingAttendeeConfiguration());
             builder.ApplyConfiguration(new CommunityMemberConfiguration());
             builder.ApplyConfiguration(new VolunteerConfiguration());
+            builder.ApplyConfiguration(new UserValueConfiguration());
         }
 
         public override int SaveChanges()
