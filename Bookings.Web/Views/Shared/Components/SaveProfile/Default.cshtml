@@ -1,0 +1,128 @@
+@model MatchProfile
+
+@{
+    List<SkinComplexion> complexions = ViewBag.SkinComplexions;
+}
+
+<form class="row g-3" asp-controller="Dating" asp-action="CreateProfile">
+    <div class="col-12 col-xl-4">
+        <p class="bold">Do you have any children?</p>
+        <div class="mb-3 form-check form-check-inline">
+            <input class="form-check-input" type="radio" value="true" asp-for="HasChildren" checked="@(Model.HasChildren)" />
+            <label class="form-check-label" asp-for="HasChildren">Yes</label>
+        </div>
+        <div class="mb-3 form-check form-check-inline">
+            <input class="form-check-input" type="radio" value="false" asp-for="HasChildren" checked="@(!Model.HasChildren)" />
+            <label class="form-check-label" asp-for="HasChildren">No</label>
+        </div>
+    </div>
+    <div class="col-12 col-xl-4">
+        <p class="bold">Do you somke?</p>
+        <div class="mb-3 form-check form-check-inline">
+            <input class="form-check-input" type="radio" value="true" asp-for="IsSmoker" checked="@(Model.IsSmoker)" />
+            <label class="form-check-label" asp-for="IsSmoker">Yes</label>
+        </div>
+        <div class="mb-3 form-check form-check-inline">
+            <input class="form-check-input" type="radio" value="false" asp-for="IsSmoker" checked="@(!Model.IsSmoker)" />
+            <label class="form-check-label" asp-for="IsSmoker">No</label>
+        </div>
+    </div>
+    <div class="col-12 col-xl-4">
+        <p class="bold">Do you drink?</p>
+        <div class="mb-3 form-check form-check-inline">
+            <input class="form-check-input" type="radio" value="true" asp-for="IsDrinker" checked="@(Model.IsDrinker)" />
+            <label class="form-check-label" asp-for="IsDrinker">Yes</label>
+        </div>
+        <div class="mb-3 form-check form-check-inline">
+            <input class="form-check-input" type="radio" value="false" asp-for="IsDrinker" checked="@(!Model.IsDrinker)" />
+            <label class="form-check-label" asp-for="IsDrinker">No</label>
+        </div>
+    </div>
+    <div class="col-12 col-xl-6">
+        <div class="mb-3">
+            <label asp-for="HairColor" class="control-label"></label>
+            <select asp-for="HairColor" class ="form-select" asp-items="Html.GetEnumSelectList<HairColor>()"></select>
+            <span asp-validation-for="HairColor" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-12 col-xl-6">
+        <div class="mb-3">
+            <label asp-for="EyeColor" class="control-label"></label>
+            <select asp-for="EyeColor" class ="form-select" asp-items="Html.GetEnumSelectList<EyeColor>()"></select>
+            <span asp-validation-for="EyeColor" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="mb-3">
+            <p class="mb-0">Select your complexion.</p>
+            @foreach (var complexion in complexions)
+            {
+                <div class="form-check form-check-inline">
+                    @if (Model.ComplexionId != null && Model.ComplexionId == complexion.Id)
+                    {
+                        <input 
+                            class="form-check-input" 
+                            type="radio" 
+                            value="@complexion.Id"
+                            asp-for="ComplexionId"
+                            checked />
+                    }
+                    else
+                    {
+                        <input 
+                            class="form-check-input" 
+                            type="radio" 
+                            value="@complexion.Id"
+                            asp-for="ComplexionId"  />
+                    }
+                    
+                    <label class="form-check-label" asp-for="Complexion">
+                        <div class="border rounded-circle" style="height: 20px; width: 20px; background-color: @(Html.Raw(complexion.HexCode))"></div>
+                    </label>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col-12 col-xl-6">
+        <div class="mb-3">
+            <label asp-for="BodyType" class="control-label"></label>
+            <select asp-for="BodyType" class ="form-select" asp-items="Html.GetEnumSelectList<BodyType>()"></select>
+            <span asp-validation-for="BodyType" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-12 col-xl-6">
+        <div class="mb-3">
+            <label asp-for="GenderIdentity" class="control-label"></label>
+            <select asp-for="GenderIdentity" class ="form-select" asp-items="Html.GetEnumSelectList<GenderIdentity>()"></select>
+            <span asp-validation-for="GenderIdentity" class="text-danger"></span>
+        </div>
+    </div>
+
+    @* <div class="col-12">
+        <div class="mb-3">
+            <p class="mb-0">What are seeking?</p>
+            @foreach (var attraction in attractions)
+            {
+                <div class="form-check form-check-inline">
+                    <input 
+                        class="form-check-input" 
+                        type="checkbox" 
+                        value="@attraction.AttractionId" 
+                        id="attraction-@attraction.AttractionId" 
+                        name="chosenAttractions" 
+                        checked="@attraction.Assigned" />
+                    
+                    <label class="form-check-label" for="attraction-@attraction.AttractionId">
+                        @attraction.Label
+                    </label>
+                </div>
+            }
+        </div>
+    </div> *@
+
+    <input type="hidden" asp-for="UserId" />
+    
+    <div class="col-12 text-end">
+        <button type="submit" class="btn btn-primary mb-0">Save profile</button>
+    </div>
+</form>

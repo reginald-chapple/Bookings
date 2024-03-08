@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Echo Company - @ViewData["Title"]</title>
+    <!-- ===============================================-->
+    <!--    Favicons-->
+    <!-- ===============================================-->
+    @* <link rel="apple-touch-icon" sizes="180x180" href="~/assets/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/assets/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/assets/img/favicons/favicon-16x16.png">
+    <link rel="shortcut icon" type="image/x-icon" href="~/assets/img/favicons/favicon.ico">
+    <link rel="manifest" href="~/assets/img/favicons/manifest.json">
+    <meta name="msapplication-TileImage" content="~/assets/img/favicons/mstile-150x150.png"> *@
+    
+    <!-- ===============================================-->
+    <!--    Stylesheets-->
+    <!-- ===============================================-->
+    @await RenderSectionAsync("Stylesheets", required: false)
+    <!-- Boxicons CDN Link -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/assets/css/color-modes.css" type="text/css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+    <link href="~/css/dashboard.css" type="text/css" rel="stylesheet" />
+    @await RenderSectionAsync("StyleTag", required: false)
+</head>
+<body>
+    <partial name="_ColorMode" />
+    <partial name="_DashSideNav" />
+    
+    <section class="home-section">
+        <partial name="_DashNavbar" />
+        <div class="home-content">
+            @RenderBody()
+        </div>
+    </section>
+    
+    <script src="~/lib/signalr/signalr.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/bootstrap/assets/js/color-modes.js"></script>
+    <script src="~/js/dashboard.js"></script>
+    @await RenderSectionAsync("JavaScripts", required: false)
+    @await RenderSectionAsync("ScriptTag", required: false)
+</body>
+</html>

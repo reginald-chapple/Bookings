@@ -1,0 +1,107 @@
+@model Applicant
+
+@{
+    ViewData["Title"] = "Applicant";
+}
+
+@section StyleTag{}
+
+@section SidebarWidgets {
+    <partial name="Widgets/_NewsWidget" />
+}
+
+<div class="row">
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-header d-sm-flex align-items-center text-center justify-content-sm-between border-0 pb-0">
+                <h1 class="h4 card-title">Discover Campaigns</h1>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <a class="btn btn-primary-soft" asp-controller="Members" asp-action="Campaigns" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)!.Value"> 
+                        <i class="bi bi-person-circle pe-1"></i> My Campaigns
+                    </a>
+                    <a class="btn btn-primary-soft" href="#"> 
+                        <i class="bi bi-compass pe-1"></i> All Applicants
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <ul class="nav nav-tabs nav-bottom-line justify-content-center justify-content-md-start">
+                    <li class="nav-item"> 
+                        <a class="nav-link active" asp-controller="Applicants" asp-action="Details" asp-route-id="@Model.Id"> Applicant </a> 
+                    </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link" href="#"> Reviews </a>
+                    </li>
+                </ul>
+                <div class="tab-content mb-0 pb-0">
+                    <div class="tab-pane fade show active">
+                        <div class="row g-4">
+                            <div class="col-12 col-xl-7">
+                                <h2 class="mb-3">@Model.Resume!.User!.FullName</h2>
+
+                                <h3>Background</h3>
+                                <p>@Model.Resume.Background</p>
+
+                                <h3>Experience</h3>
+                                <p class="mb-2">@Model.Resume.Experience</p>
+
+                                <h3>Skills</h3>
+                                <p class="mb-2">@Model.Resume.Skills</p>
+
+                                <h3>Education</h3>
+                                <p class="mb-2">@Model.Resume.Education</p>
+                            </div>
+                            <div class="col-12 col-xl-5">
+                                <div class="row gy-3">
+                                    <div class="col-12">
+                                        <button type="button" class="btn btn-primary-soft w-100" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#interviewInviteModal"
+                                            @(Model.Status == ApplicantStatus.Review ? "" : Html.Raw("disabled"))>
+                                            Interview
+                                        </button>
+                                    </div>
+                                    <div class="col-12">
+                                        @if (Model.Status == ApplicantStatus.Review || Model.Status == ApplicantStatus.Interview)
+                                        {
+                                            <form asp-controller="Applicants" asp-action="Status" asp-route-id="@Model.Id">
+                                                <input type="hidden" name="Status" value="@((int)ApplicantStatus.Selected)" />
+                                                <button type="submit" class="btn btn-success-soft w-100">
+                                                    Select
+                                                </button>
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                            <button type="button" class="btn btn-success-soft w-100" disabled>
+                                                Select
+                                            </button>
+                                        }
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="button" class="btn btn-danger-soft w-100" 
+                                            @(
+                                                Model.Status == ApplicantStatus.Review || 
+                                                Model.Status == ApplicantStatus.Interview ? "" : Html.Raw("disabled")
+                                            )>
+                                            Not Selected
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.Status == ApplicantStatus.Review)
+{
+    @await Component.InvokeAsync("InterviewInvite", new { campaignId = Model.Opportunity!.CampaignId, applicantId = Model.Id })
+}
+
+@section JavaScripts {}
+
+@section ScriptTag {}

@@ -1,0 +1,104 @@
+@model InterviewInviteModel
+
+@{
+    ViewData["Title"] = "Campaign";
+}
+
+@section StyleTag{
+    <style>
+        .table > :not(caption) > * > * {
+            background-color: transparent !important;
+        }
+        .table-borderless > tbody > tr > td,
+        .table-borderless > tbody > tr > th,
+        .table-borderless > tfoot > tr > td,
+        .table-borderless > tfoot > tr > th,
+        .table-borderless > thead > tr > td,
+        .table-borderless > thead > tr > th {
+            border: none;
+        }
+    </style>
+}
+
+@section SidebarWidgets {
+    <partial name="Widgets/_NewsWidget" />
+}
+
+<div class="card card-body">
+    <div class="row g-4">
+        <div class="col-12 col-xl-7">
+            <h3>@Model.Label</h3>
+            <p>@Model.Message</p>
+
+            <h4>Interview details</h4>
+            <p>@Model.Details</p>
+        </div>
+        <div class="col-12 col-xl-5">
+            <div class="row gx-0 gx-sm-7">
+                <div class="col-12 mb-3">
+                    <table class="lh-sm mb-4 mb-sm-0 mb-xl-4 table justify-content-center table-borderless">
+                        <tbody>
+                            <tr>
+                                <td class="py-1" colspan="2">
+                                    <div class="d-flex">
+                                        <h5 class="text-900">Interview</h5>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="align-top py-1 text-start">
+                                    <div class="d-flex">
+                                        <span class="bi bi-geo-alt me-2 text-700 fs--1"></span>
+                                        <span class="text-900 fw-bold mb-0 text-nowrap">Location :</span>
+                                    </div>
+                                </td>
+                                <td class="text-900 text-end">
+                                    @Model.Location
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="align-top py-1 text-start">
+                                    <div class="d-flex">
+                                        <span class="bi bi-calendar-date me-2 text-700 fs--1"></span>
+                                        <span class="text-900 fw-bold mb-0 text-nowrap">Date : </span>
+                                    </div>
+                                </td>
+                                <td class="ps-1 py-1 text-1000 text-end">@Model.Date.ToString("MMM dd, yyyy")</td>
+                            </tr>
+                            <tr>
+                                <td class="align-top py-1 text-start">
+                                    <div class="d-flex">
+                                        <span class="bi bi-clock me-2 text-700 fs--1"></span>
+                                        <span class="text-900 fw-bold mb-0 text-nowrap">Start : </span>
+                                    </div>
+                                </td>
+                                <td class="ps-1 py-1 text-1000 text-end">@Model.StartTime.ToString("hh:mm tt")</td>
+                            </tr>
+                            <tr>
+                                <td class="align-top py-1 text-start">
+                                    <div class="d-flex">
+                                        <span class="bi bi-clock me-2 text-700 fs--1"></span>
+                                        <span class="text-900 fw-bold mb-0 text-nowrap">End : </span>
+                                    </div>
+                                </td>
+                                <td class="ps-1 py-1 text-1000 text-end">@Model.EndTime.ToString("hh:mm tt")</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                @if (Model.Status == InviteStatus.Pending)
+                {
+                    <div class="col-12 mb-3">
+                        <form asp-controller="Invites" asp-action="Interview" asp-route-id="@Model.InviteId">
+                            <input type="hidden" name="MeetingId" value="@Model.MeetingId" />
+                            <button type="submit" class="btn btn-primary-soft w-100">Accept</button>
+                        </form>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <a href="#" class="btn btn-danger-soft w-100">Decline</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

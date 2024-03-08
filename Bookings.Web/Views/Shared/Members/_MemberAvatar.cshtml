@@ -1,0 +1,13 @@
+@{
+    var profileImage = User.FindFirst("Image")!.Value;
+    var firstInitial = User.FindFirst("FullName")!.Value;
+}
+
+@if (string.IsNullOrEmpty(profileImage) || string.IsNullOrWhiteSpace(profileImage))
+{
+    <div class="avatar-name rounded-circle"><span>@firstInitial[..1]</span></div>
+}
+else
+{
+    <img class="rounded-circle" src="~/media/members/@profileImage" alt="" />
+}

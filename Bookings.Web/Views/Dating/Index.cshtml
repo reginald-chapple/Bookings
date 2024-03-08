@@ -1,0 +1,124 @@
+@model PaginatedList<MatchProfile>
+
+@{
+    ViewData["Title"] = "Profiles";
+}
+
+@section SidebarWidgets {
+    <partial name="Widgets/_NewsWidget" />
+}
+
+
+<div class="row mb-4">
+    <div class="col-12">
+        <h1>Dating Profiles</h1>
+        <hr/>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header d-sm-flex text-center align-items-center justify-content-between border-0 pb-0">
+        <h1 class="card-title h4">Browse</h1>
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button class="btn btn-primary-soft" type="button" data-bs-toggle="modal" data-bs-target="#datingSearchModal"> 
+                <i class="bi bi-search pe-1"></i>
+            </button>
+            <a class="btn btn-danger-soft" asp-controller="Dating" asp-action="Index"> 
+                <i class="bi bi-x-lg pe-1"></i>
+            </a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row g-4 mb-3">
+            @foreach(var item in Model)
+            {
+                <div class="col-sm-12 col-md-6 col-xl-4">
+                    <div class="card h-100">
+                        <div class="position-relative">
+                            <img class="img-fluid rounded-top w-100" src="~/media/members/@(item.User!.Image)" alt="">
+                            <div class="badge bg-danger text-white mt-2 me-2 position-absolute top-0 end-0">
+                                Online
+                            </div>
+                        </div>
+                        <div class="card-body position-relative pt-0">
+                            <h6 class="mt-3"> <a href="event-details.html"> @item.User.FullName </a> </h6>
+                            <p class="mb-0 small"> <i class="bi bi-calendar-check pe-1"></i> Mon, Sep 25, 2020 at 9:30 AM </p>
+                            <p class="small"> <i class="bi bi-geo-alt pe-1"></i> San francisco </p>
+                            
+                            <div class="d-flex mt-3 justify-content-between">
+                                <div class="w-100">
+                                    <input type="checkbox" class="btn-check d-block" id="Interested1">
+                                    <label class="btn btn-sm btn-outline-success d-block" for="Interested1">
+                                        <i class="fa-solid fa-thumbs-up me-1"></i> Interested
+                                    </label>
+                                </div>
+                                <div class="dropdown ms-3">
+                                    <a href="#" class="btn btn-sm btn-primary-soft" id="eventActionShare" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        <i class="bi bi-share-fill"></i>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="eventActionShare">
+                                        <li>
+                                            <a class="dropdown-item" href="#"> 
+                                                <i class="bi bi-envelope fa-fw pe-1"></i> Send via Direct Message
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#"> 
+                                                <i class="bi bi-bookmark-check fa-fw pe-1"></i> Share to News Feed 
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#"> 
+                                                <i class="bi bi-people fa-fw pe-1"></i> Share to a group
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#"> 
+                                                <i class="bi bi-share fa-fw pe-1"></i> Share post via…
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#"> 
+                                                <i class="bi bi-person fa-fw pe-1"></i> Share on a friend's profile
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        @{
+            var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+            var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+        }
+        <div class="row g-4 mb-3">
+            <div class="col">
+                <div class="d-flex align-items-center justify-content-between">
+                    <a asp-action="Index"
+                        asp-route-sortOrder="@ViewData["CurrentSort"]"
+                        asp-route-pageNumber="@(Model.PageIndex - 1)"
+                        asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                        class="btn btn-primary @prevDisabled">
+                        <i class="bi bi-chevron-left"></i>
+                    </a>
+                    <a asp-action="Index"
+                        asp-route-sortOrder="@ViewData["CurrentSort"]"
+                        asp-route-pageNumber="@(Model.PageIndex + 1)"
+                        asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                        class="btn btn-primary @nextDisabled">
+                        <i class="fa-solid fa-chevronbi bi-chevron-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+
+@await Component.InvokeAsync("DatingSearch", new { profiles = Model })

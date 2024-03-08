@@ -1,0 +1,84 @@
+@model UserInputModel
+
+@{
+    ViewData["Title"] = "Create User";
+    List<AssignedRole> roles = ViewBag.Roles;
+}
+
+@section Stylesheets {
+    
+}
+
+<div class="container">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <div class="d-flex align-items-center">
+            <div>
+                <h2 class="mb-0"> 
+                    Users
+                </h2>
+            </div>
+        </div>
+        <div>
+            <a class="btn btn-primary" asp-controller="Users" asp-action="Index">
+                <span class="fas fa-compass"></span> View All
+            </a>
+        </div>
+    </div>
+    <div class="row g-3">
+        <form method="post" asp-action="Create" asp-route-returnurl="@ViewData["ReturnUrl"]" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-3">
+                <input asp-for="FullName" class="form-control" placeholder="Enter Full Name" aria-required="true" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <input asp-for="Email" class="form-control" placeholder="Enter Email" aria-required="true" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="mb-3 text-start">
+                <input class="form-control" asp-for="ImageUpload" placeholder="Upload Image" />
+                <span asp-validation-for="ImageUpload" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <input asp-for="Password" class="form-control" placeholder="Enter Password" aria-required="true" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <input class="form-control" asp-for="ConfirmPassword" placeholder="Confirm Password" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            @foreach (var role in roles)
+            {
+                <div class="form-check">
+                    <input 
+                        class="form-check-input" 
+                        type="checkbox" 
+                        value="@role.RoleId" 
+                        id="role-@role.RoleId" 
+                        name="selectedRoles" 
+                        checked="@role.Assigned" />
+                    
+                    <label class="form-check-label" for="role-@role.RoleId">
+                        @role.Name
+                    </label>
+                </div>
+            }
+
+            <button type="submit" class="btn btn-primary w-100 mb-3">Create</button>
+        </form>
+    </div>
+    <partial name="_Footer" />
+</div>
+
+@section JavaScripts {
+
+}
+
+@section ScriptTag {
+<script src="~/js/site.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    });
+</script>
+}

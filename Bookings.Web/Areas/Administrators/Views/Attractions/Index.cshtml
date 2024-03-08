@@ -1,0 +1,82 @@
+@model IEnumerable<Attraction>
+
+@{
+    ViewData["Title"] = "Attractions";
+}
+
+@section Stylesheets {}
+
+<div class="container mb-5">
+    <div class="d-flex align-items-center justify-content-end my-3">
+        <div class="ms-3" id="bulk-select-actions">
+            <div class="d-flex">
+                <select class="form-select form-select-sm" aria-label="Bulk actions">
+                    <option selected="selected">Bulk actions</option>
+                    <option value="Delete">Delete</option>
+                    <option value="Archive">Archive</option>
+                </select>
+                <button class="btn btn-phoenix-danger btn-sm mx-2" type="button">Apply</button>
+            </div>
+        </div>
+        <div id="bulk-select-replace-element">
+            <a asp-area="Administrators" asp-controller="Attractions" asp-action="Create" class="btn btn-success btn-sm" role="button">
+                <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>
+                <span class="ms-1">New</span>
+            </a>
+        </div>
+    </div>
+    <div id="causes-table">
+        <div class="table-responsive mx-n1 px-1">
+            <table class="table table-sm border-top border-200 fs--1 mb-0">
+                <thead>
+                    <tr>
+                        <th class="white-space-nowrap fs--1 align-middle ps-0" style="max-width:20px; width:18px;">
+                            <div class="form-check mb-0 fs-0">
+                                <input class="form-check-input" id="bulk-select-example" type="checkbox">
+                            </div>
+                        </th>
+                        <th class="sort align-middle text-uppercase ps-3">Attraction</th>
+                        <th class="sort text-end align-middle text-uppercase pe-0" scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="list" id="causes-table-body">
+                    @foreach(var item in Model)
+                    {
+                        <tr>
+                            <td class="fs--1 align-middle">
+                                <div class="form-check mb-0 fs-0">
+                                    <input class="form-check-input" type="checkbox">
+                                </div>
+                            </td>
+                            <td class="align-middle ps-3">@item.Label</td>
+                            <td class="align-middle white-space-nowrap text-end pe-0">
+                                <div class="font-sans-serif btn-reveal-trigger position-static">
+                                    <button
+                                        class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
+                                        type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true"
+                                        aria-expanded="false" data-bs-reference="parent">
+                                        <span class="fas fa-ellipsis-h fs--2"></span>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-end py-2">
+                                        <a class="dropdown-item" href="#!">View</a>
+                                        <a class="dropdown-item" asp-area="Administrators" asp-controller="Service" asp-action="Edit" asp-route-id="@item.Id">
+                                            Edit
+                                        </a>
+                                        <a class="dropdown-item" href="#!">Export</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item text-danger" href="#!">Remove</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <partial name="_Footer" />
+</div>
+
+@section JavaScripts {}
+
+@section ScriptTag {}

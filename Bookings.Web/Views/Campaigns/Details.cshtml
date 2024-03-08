@@ -1,0 +1,144 @@
+@model Campaign
+
+@{
+    ViewData["Title"] = "Campaign";
+}
+
+@section StyleTag{}
+
+@section SidebarWidgets {
+    <partial name="Widgets/_NewsWidget" />
+}
+
+<div class="row">
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-header d-sm-flex align-items-center text-center justify-content-sm-between border-0 pb-0">
+                <h1 class="h4 card-title">Discover Campaigns</h1>
+                @if (User.Identity!.IsAuthenticated && User.IsInRole("Member") && User.FindFirst(ClaimTypes.NameIdentifier)!.Value == Model.ManagerId)
+                {
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <a class="btn btn-primary-soft" asp-controller="Members" asp-action="Campaigns" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)!.Value"> 
+                            <i class="bi bi-person-circle pe-1"></i> My Campaigns
+                        </a>
+                        <a class="btn btn-primary-soft" href="#"> 
+                            <i class="bi bi-compass pe-1"></i> All Campaigns
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <a class="btn btn-primary-soft" href="#">
+                        <i class="bi bi-compass pe-1"></i> Campaigns
+                    </a>
+                }
+            </div>
+            <div class="card-body">
+                <ul class="nav nav-tabs nav-bottom-line justify-content-center justify-content-md-start">
+                    <li class="nav-item"> 
+                        <a class="nav-link" asp-controller="Campaigns" asp-action="Timeline" asp-route-slug="@Model.Slug"> Timeline </a> 
+                    </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link active" asp-controller="Campaigns" asp-action="Details" asp-route-slug="@Model.Slug"> Details </a> 
+                    </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link" asp-controller="Campaigns" asp-action="Expenditures" asp-route-slug="@Model.Slug"> Expenditures </a> 
+                    </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link" asp-controller="Campaigns" asp-action="Milestones" asp-route-slug="@Model.Slug"> Milestones </a> 
+                    </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link" asp-controller="Campaigns" asp-action="Opportunities" asp-route-slug="@Model.Slug"> Opportunities </a> 
+                    </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link" asp-controller="Campaigns" asp-action="Donations" asp-route-slug="@Model.Slug"> Donations </a> 
+                    </li>
+                </ul>
+                <div class="tab-content mb-0 pb-0">
+                    <div class="tab-pane fade show active">
+                        <div class="row g-2 mb-4">
+                            <div class="col-sm-4">
+                                <div class="d-flex border rounded-3">
+                                    <div class="p-3">
+                                        <i class="bi bi-heart fs-2"></i>
+                                        <div class="">
+                                            <h5 class="mb-0">@Model.Cause!.Name</h5>
+                                            <p class="mb-0">Cause</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="d-flex border rounded-3">
+                                    <div class="p-3">
+                                        <i class="bi bi-calendar-check fs-2"></i>
+                                        <div class="">
+                                            <h5 class="mb-0">04/01/2024</h5>
+                                            <p class="mb-0">Deadline</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="d-flex border rounded-3">
+                                    <div class="p-3">
+                                        <i class="bi bi-arrow-through-heart fs-2"></i>
+                                        <div class="">
+                                            <h5 class="mb-0">$@Model.FundraisingGoal.ToString("0.00")</h5>
+                                            <p class="mb-0">Fundraising Goal</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 ">
+                                <div class="border rounded-3 mb-3">
+                                    <div class="p-3">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <!-- Avatar -->
+                                            <div class="avatar avatar-story avatar-xxl me-2">
+                                                <a href="#!"> <img class="avatar-img rounded-circle" src="~/media/members/@(Model.Manager!.Image)" alt=""> </a>
+                                            </div>
+                                            <!-- Info -->
+                                            <div>
+                                                <div class="nav nav-divider">
+                                                    <h5 class="nav-item mb-0"> <a href="#!"> @Model.Manager!.FullName </a></h5>
+                                                </div>
+                                                <p class="mb-0 small">Occupation</p>
+                                            </div>
+                                        </div>
+                                        <p>
+                                            In mollis efficitur neque ac lobortis. Fusce commodo sit amet diam non hendrerit. Nullam volutpat enim odio, ut rutrum sapien bibendum ac. Ut vulputate malesuada mi, porttitor vestibulum lorem porttitor sit amet. Donec fermentum neque quis nibh eleifend dictum. Duis ac dui magna. Aliquam erat volutpat. Nunc diam nisl, faucibus vel risus id, semper dapibus nisi. Nullam imperdiet efficitur nunc vel commodo. Proin a blandit arcu. Fusce ut nisl varius, fermentum diam condimentum, mattis ligula. Donec et imperdiet lectus, et pellentesque felis.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <h4>Problem</h4>
+                                <p>@Model.Problem</p>
+
+                                <h4>Goal</h4>
+                                <p>@Model.Goal</p>
+
+                                <h4>Beneficiaries</h4>
+                                <p>@Model.Beneficiaries</p>
+
+                                <h4>Importance</h4>
+                                <p>@Model.Importance</p>
+
+                                <h4>Solution</h4>
+                                <p>@Model.Solution</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section JavaScripts {
+   <!-- <script src="~/lib/echarts/echarts.min.js"></script> -->
+}
+
+@section ScriptTag {}

@@ -1,0 +1,48 @@
+@model ApplicationUser
+
+@{
+    ViewData["Title"] = "Companions";
+}
+
+@section StyleTag {
+    <style>
+        .table > :not(caption) > * > * {
+            background-color: transparent !important;
+        }
+    </style>
+}
+
+@section SidebarWidgets {
+    <partial name="Widgets/_NewsWidget" />
+}
+
+<div class="row">
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-header d-sm-flex align-items-center text-center justify-content-sm-between border-0 pb-0">
+                <h1 class="h4 card-title">Discover Campaigns</h1>
+                <a class="btn btn-primary-soft" role="button" href="#"> 
+                    <i class="bi bi-compass pe-1"></i> All Profiles
+                </a>
+            </div>
+            <div class="card-body">
+                <ul class="nav nav-tabs nav-bottom-line justify-content-center justify-content-md-start">
+                    <li class="nav-item"> <a class="nav-link active" data-bs-toggle="tab" href="#tab-1"> My Profile </a> </li>
+                    <li class="nav-item"> <a class="nav-link" data-bs-toggle="tab" href="#tab-2"> Matches </a> </li>
+                </ul>
+                <div class="tab-content mb-0 pb-0">
+                    <div class="tab-pane fade show active" id="tab-1">
+                        @await Component.InvokeAsync("SaveProfile", new { userId = Model.Id })
+                    </div>
+                    <div class="tab-pane fade" id="tab-2">
+                        ...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section JavaScripts {}
+
+@section ScriptTag {}

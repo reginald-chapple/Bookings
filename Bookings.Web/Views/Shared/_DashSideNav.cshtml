@@ -1,0 +1,140 @@
+<div class="sidebar active">
+    <div class="logo-details">
+        <i class="bx bxs-book-bookmark"></i>
+        <span class="logo_name d-none">Bookings</span>
+    </div>
+    <ul class="nav-links" style="padding-left: 0;">
+        @if (User.Identity!.IsAuthenticated)
+        {
+            @if (User.IsInRole("Administrator"))
+            {
+                <li>
+                    <a asp-area="Administrators" asp-controller="Home" asp-action="Index" class="active">
+                        <i class="bx bxs-dashboard"></i>
+                        <span class="links_name d-none">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="Administrators" asp-controller="Roles" asp-action="Index">
+                        <i class="bx bx-shield-quarter"></i>
+                        <span class="links_name d-none">Roles</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="Administrators" asp-controller="Users" asp-action="Index">
+                        <i class="bx bxs-group"></i>
+                        <span class="links_name d-none">Users</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="Administrators" asp-controller="Categories" asp-action="Index">
+                        <i class="bx bxs-shapes"></i>
+                        <span class="links_name d-none">Categories</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="Administrators" asp-controller="Services" asp-action="Index">
+                        <i class='bx bxs-book-bookmark'></i>
+                        <span class="links_name d-none">Services</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="Administrators" asp-controller="Attractions" asp-action="Index">
+                        <i class="bx bxs-heart"></i>
+                        <span class="links_name d-none">Attractions</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="bx bxs-palette"></i>
+                        <span class="links_name d-none">Skin Complexions</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="bx bx-cog"></i>
+                        <span class="links_name d-none">Setting</span>
+                    </a>
+                </li>
+            }
+            else if (User.IsInRole("Provider"))
+            {
+                <li>
+                    <a asp-area="Accounts" asp-controller="Providers" asp-action="Index" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)!.Value" class="active">
+                        <i class="bx bxs-dashboard"></i>
+                        <span class="links_name d-none">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="Accounts" asp-controller="Providers" asp-action="Services" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)!.Value">
+                        <i class='bx bxs-book-bookmark'></i>
+                        <span class="links_name d-none">Services</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="Accounts" asp-controller="Appointments" asp-action="Bookings" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)!.Value">
+                        <i class='bx bxs-calendar-check'></i>
+                        <span class="links_name d-none">Bookings</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="">
+                        <i class="bx bxs-message-alt-dots"></i>
+                        <span class="links_name d-none">Messages</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="bx bxs-pie-chart-alt-2"></i>
+                        <span class="links_name d-none">Analytics</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="bx bx-cog"></i>
+                        <span class="links_name d-none">Setting</span>
+                    </a>
+                </li>
+            }
+            else if (User.IsInRole("Member"))
+            {
+                <li>
+                    <a asp-area="Members" asp-controller="Home" asp-action="Index" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)!.Value" class="active">
+                        <i class="bx bxs-dashboard"></i>
+                        <span class="links_name d-none">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="Accounts" asp-controller="Appointments" asp-action="MyAppointments" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)!.Value">
+                        <i class='bx bxs-calendar-check'></i>
+                        <span class="links_name d-none">My Appointments</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-area="Members" asp-controller="Home" asp-action="Messages" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)!.Value">
+                        <i class="bx bxs-message-alt-dots"></i>
+                        <span class="links_name d-none">Messages</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="bx bxs-pie-chart-alt-2"></i>
+                        <span class="links_name d-none">Analytics</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="bx bx-cog"></i>
+                        <span class="links_name d-none">Setting</span>
+                    </a>
+                </li>
+            }
+        }
+        <li class="log_out">
+            <a asp-area="Identity" asp-controller="Account" asp-action="Logout">
+                <i class="bx bx-log-out"></i>
+                <span class="links_name d-none">Log out</span>
+            </a>
+        </li>
+    </ul>
+</div>

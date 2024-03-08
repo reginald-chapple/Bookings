@@ -1,0 +1,84 @@
+<div class="col-sm-auto bg-white sticky-top border-end">
+    <div class="d-flex flex-sm-column flex-row flex-nowrap bg-white align-items-center sticky-top">
+        <a href="/" class="d-block p-3 link-dark text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Brand">
+            <i class="bi bi-bootstrap-reboot fs-1"></i>
+        </a>
+        <ul class="nav nav-pills nav-flush flex-sm-column flex-row flex-nowrap mb-auto mx-auto text-center align-items-center">
+            <li class="nav-item">
+                <a asp-controller="Home" asp-action="Index" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                    <i class="bi-house-heart fs-3"></i>
+                </a>
+            </li>
+            @if (User.Identity!.IsAuthenticated)
+            {
+                @if (User.IsInRole("Member"))
+                {
+                    <li>
+                        <a asp-controller="Members" asp-action="Campaigns" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)!.Value" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Campaigns">
+                            <i class="bi bi-heart fs-3"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Members" asp-action="Relationships" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)!.Value" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Relationships">
+                            <i class="bi bi-arrow-through-heart fs-3"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Members" asp-action="Invites" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)!.Value" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Invitations">
+                            <i class="bi bi-envelope-paper-heart fs-3"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Communities">
+                            <i class="bi bi-globe-americas fs-3"></i>
+                        </a>
+                    </li>
+                }
+            }
+        </ul>
+        <div class="dropdown pb-3">
+            <a href="#" class="d-flex align-items-center justify-content-center py-3 px-2 link-dark text-decoration-none dropdown-toggle" id="dropdownNotify3" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-life-preserver fs-3"></i>
+            </a>
+            <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownNotify3">
+                <li><a class="dropdown-item" href="#">Help</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Documentation</a></li>
+                <li><a class="dropdown-item" href="#">FAQ</a></li>
+                <li><a class="dropdown-item" href="#">Contact</a></li>
+            </ul>
+        </div>
+        
+
+        @if (User.Identity!.IsAuthenticated)
+        {
+            <div class="dropdown">
+                <a href="#" class="d-flex align-items-center justify-content-center py-3 px-2 link-dark text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person-circle h3"></i>
+                </a>
+                <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
+                    <li><a class="dropdown-item" href="#">@User.FindFirst("FullName")!.Value</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" asp-controller="Members" asp-action="Resume" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)!.Value">Resume</a></li>
+                    <li><a class="dropdown-item" href="#">Messages (7)</a></li>
+                    <li><a class="dropdown-item" href="#">Notifications (2)</a></li>
+                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" asp-area="Identity" asp-controller="Account" asp-action="Logout">Sign out</a></li>
+                </ul>
+            </div>
+        }
+        else
+        {
+            <div class="dropdown">
+                <a href="#" class="d-flex align-items-center justify-content-center py-3 px-2 link-dark text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person-circle h3"></i>
+                </a>
+                <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
+                    <li><a class="dropdown-item" asp-area="Identity" asp-controller="Account" asp-action="Login">Login</a></li>
+                    <li><a class="dropdown-item" href="#">Sign up</a></li>
+                </ul>
+            </div>
+        }
+    </div>
+</div>

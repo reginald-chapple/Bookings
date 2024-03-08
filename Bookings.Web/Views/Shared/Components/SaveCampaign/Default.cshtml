@@ -1,0 +1,79 @@
+@model Campaign
+
+@{
+    List<Cause> causes = ViewBag.CauseId;
+}
+
+<div class="modal fade" id="saveCampaignModal" tabindex="-1" aria-labelledby="saveCampaignModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="saveCampaignModalLabel">Save Campaign</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="campaign-form" asp-controller="Campaigns" asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="CauseId" class="control-label">Cause</label>
+                        <select asp-for="CauseId" class="form-select">
+                            <option selected>-- Select --</option>
+                            @foreach(var cause in causes)
+                            {
+                                @if (cause.Parent != null)
+                                {
+                                    <option value="@cause.Id">
+                                        @cause.Parent.Name >> @cause.Name
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="@cause.Id">@cause.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Problem" class="control-label"></label>
+                        <textarea asp-for="Problem" class="form-control"></textarea>
+                        <span asp-validation-for="Problem" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Goal" class="control-label"></label>
+                        <textarea asp-for="Goal" class="form-control"></textarea>
+                        <span asp-validation-for="Goal" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Beneficiaries" class="control-label"></label>
+                        <textarea asp-for="Beneficiaries" class="form-control"></textarea>
+                        <span asp-validation-for="Beneficiaries" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Importance" class="control-label"></label>
+                        <textarea asp-for="Importance" class="form-control"></textarea>
+                        <span asp-validation-for="Importance" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Solution" class="control-label"></label>
+                        <textarea asp-for="Solution" class="form-control"></textarea>
+                        <span asp-validation-for="Solution" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="FundraisingGoal" class="control-label"></label>
+                        <input asp-for="FundraisingGoal" class="form-control" />
+                        <span asp-validation-for="FundraisingGoal" class="text-danger"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button type="submit" form="campaign-form" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

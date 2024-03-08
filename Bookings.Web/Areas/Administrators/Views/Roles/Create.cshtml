@@ -1,0 +1,48 @@
+@model ApplicationRole
+
+@{
+    ViewData["Title"] = "Roles";
+}
+
+@section Stylesheets {
+@* <link href="~/vendors/flatpickr/flatpickr.min.css" rel="stylesheet"> *@
+}
+
+<div class="container">
+    <div class="card">
+        <div class="card-header border-bottom-0 pb-0">
+            <div class="row mb-4 gx-6 gy-3 align-items-center justify-content-between">
+                <div class="col-auto">
+                    <h2 class="mb-0">Roles</h2>
+                </div>
+                <div class="col-auto">
+                    <a class="btn btn-primary px-5" asp-controller="Roles" asp-action="Index">
+                        <i class="fa-solid fa-compass me-2"></i>All Roles
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body scrollbar overflow-scroll" style="max-height:18rem;">
+            <form asp-controller="Roles" asp-action="Create" method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group mb-3">
+                    <label asp-for="Name">Name:</label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                    <button type="submit" class="btn btn-primary btn-block w-100">Create</button>
+                </div>
+            </form>   
+        </div>
+    </div>
+    <partial name="_Footer" />
+</div>
+
+@section JavaScripts {
+@* <script src="~/vendors/echarts/echarts.min.js"></script> *@
+}
+
+@section ScriptTag {
+    <partial name="_ValidationScriptsPartial" />
+}

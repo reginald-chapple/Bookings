@@ -1,0 +1,58 @@
+@model InterviewInviteModel
+
+<div class="modal fade" id="interviewInviteModal" tabindex="-1" aria-labelledby="interviewInviteModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="interviewInviteModalLabel">Send interview invite</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="ii-form" asp-controller="Applicants" asp-action="InterviewInvite" asp-route-id="@Model.ApplicantId">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="mb-3">
+                        <label asp-for="Label" class="control-label"></label>
+                        <input asp-for="Label" class="form-control" />
+                        <span asp-validation-for="Label" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Message" class="control-label"></label>
+                        <textarea asp-for="Message" class="form-control"></textarea>
+                        <span asp-validation-for="Message" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Details" class="control-label"></label>
+                        <textarea asp-for="Details" class="form-control"></textarea>
+                        <span asp-validation-for="Details" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Location" class="control-label"></label>
+                        <input asp-for="Location" class="form-control" />
+                        <span asp-validation-for="Location" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Date" class="control-label"></label>
+                        <input asp-for="Date" class="form-control" min="@(DateTime.Now.ToString("yyyy-MM-dd"))" />
+                        <span asp-validation-for="Date" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="StartTime" class="control-label"></label>
+                        <input asp-for="StartTime" class="form-control" />
+                        <span asp-validation-for="StartTime" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="EndTime" class="control-label"></label>
+                        <input asp-for="EndTime" class="form-control" />
+                        <span asp-validation-for="EndTime" class="text-danger"></span>
+                    </div>
+                    <input type="hidden" asp-for="CampaignId" />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button type="submit" form="ii-form" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

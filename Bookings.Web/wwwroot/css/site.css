@@ -1,0 +1,25 @@
+.app-nav {
+  height: 100vh;
+  top: 0px;
+}
+
+.user-avatar {
+  bottom: 1.3rem;
+}
+
+.sidebar-widgetbox {
+  background-color: var(--bs-white);
+  border-radius: var(--bs-card-border-radius);
+}
+
+.overlay-div {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background-color: #000;
+  opacity: .7;
+}
+
+.dropdown-toggle::after { 
+  content: none; 
+}

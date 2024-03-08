@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Echo Company - @ViewData["Title"]</title>
+    <!-- ===============================================-->
+    <!--    Favicons-->
+    <!-- ===============================================-->
+    @* <link rel="apple-touch-icon" sizes="180x180" href="~/assets/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/assets/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/assets/img/favicons/favicon-16x16.png">
+    <link rel="shortcut icon" type="image/x-icon" href="~/assets/img/favicons/favicon.ico">
+    <link rel="manifest" href="~/assets/img/favicons/manifest.json">
+    <meta name="msapplication-TileImage" content="~/assets/img/favicons/mstile-150x150.png"> *@
+    
+    <!-- ===============================================-->
+    <!--    Stylesheets-->
+    <!-- ===============================================-->
+    @await RenderSectionAsync("Stylesheets", required: false)
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link href="~/css/theme.css" type="text/css" rel="stylesheet">
+    <link href="~/css/site.css" type="text/css" rel="stylesheet">
+    @await RenderSectionAsync("StyleTag", required: false)
+
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <partial name="_NavMenu" />
+            <div class="col-sm p-3 min-vh-100">
+                <div class="row">
+                    <div class="col-12 col-lg-8">
+                        @RenderBody()
+                    </div>
+                    <div class="col-lg-4 d-none d-lg-block">
+                        <div class="position-sticky" style="top: 0px">
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Search" />
+                            </div>
+                            @await RenderSectionAsync("SidebarWidgets", required: false)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
+        <button class="btn btn-secondary py-2 dropdown-toggle d-flex align-items-center rounded-circle"
+                id="bd-theme"
+                type="button"
+                aria-expanded="false"
+                data-bs-toggle="dropdown"
+                aria-label="Toggle theme (auto)">
+            <i class="bi bi-bookmark-heart fs-3"></i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
+            <li><a class="dropdown-item" href="#">Bookmark 1</a></li>
+            <li><a class="dropdown-item" href="#">Bookmark 2</a></li>
+            <li><a class="dropdown-item" href="#">Bookmark 3</a></li>
+            <li><a class="dropdown-item" href="#">Bookmark 4</a></li>
+        </ul>
+    </div>
+    
+    <script src="~/lib/signalr/signalr.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("JavaScripts", required: false)
+    @await RenderSectionAsync("ScriptTag", required: false)
+    <script>
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    </script>
+</body>
+</html>

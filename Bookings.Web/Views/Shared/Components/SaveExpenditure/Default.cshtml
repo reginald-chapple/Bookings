@@ -1,0 +1,33 @@
+@model Expenditure
+
+<div class="modal fade" id="saveExpenditureModal" tabindex="-1" aria-labelledby="saveExpenditureModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="saveExpenditureModalLabel">Add Expenditure</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="expenditure-form" asp-controller="Expenditures" asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Item" class="control-label"></label>
+                        <input asp-for="Item" class="form-control" />
+                        <span asp-validation-for="Item" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Cost" class="control-label"></label>
+                        <input asp-for="Cost" class="form-control" />
+                        <span asp-validation-for="Cost" class="text-danger"></span>
+                    </div>
+                    <input type="hidden" asp-for="CampaignId" />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button type="submit" form="expenditure-form" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

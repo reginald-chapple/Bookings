@@ -1,0 +1,81 @@
+<nav class="navbar navbar-expand-md text-white fixed-top bg-voilet">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Echo</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                @if (User.Identity!.IsAuthenticated)
+                {
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Admin
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" asp-area="Administrators" asp-controller="Home" asp-action="Index">Dashboard</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-area="Administrators" asp-controller="Roles" asp-action="Index">Roles</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-area="Administrators" asp-controller="Users" asp-action="Index">Users</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-area="Administrators" asp-controller="Categories" asp-action="Index">Categories</a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </li>
+                    }
+                    else if (User.IsInRole("Member"))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Member
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" asp-area="Accounts" asp-controller="Members" asp-action="Index" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)!.Value">
+                                        Dashboard
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </li>
+                    }
+                    else if (User.IsInRole("Provider"))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Provider
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" asp-area="Accounts" asp-controller="Providers" asp-action="Index" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)!.Value">
+                                        Dashboard
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </li>
+                    }
+                }
+                <partial name="_LoginPartial" />
+            </ul>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-voilet" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>

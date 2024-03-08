@@ -1,0 +1,42 @@
+@model Resume
+
+<div class="modal fade" id="saveResumeModal" tabindex="-1" aria-labelledby="saveResumeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="saveResumeModalLabel">Add Resume</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="resume-form" asp-controller="Resumes" asp-action="Save">
+                    <div class="form-group mb-3">
+                        <label asp-for="Background" class="control-label"></label>
+                        <textarea asp-for="Background" class="form-control"></textarea>
+                        <span asp-validation-for="Background" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Experience" class="control-label"></label>
+                        <textarea asp-for="Experience" class="form-control"></textarea>
+                        <span asp-validation-for="Experience" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Education" class="control-label"></label>
+                        <textarea asp-for="Education" class="form-control"></textarea>
+                        <span asp-validation-for="Education" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label asp-for="Skills" class="control-label"></label>
+                        <textarea asp-for="Skills" class="form-control"></textarea>
+                        <span asp-validation-for="Skills" class="text-danger"></span>
+                    </div>
+                    <input type="hidden" asp-for="UserId" />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button type="submit" form="resume-form" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

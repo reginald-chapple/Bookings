@@ -1,0 +1,56 @@
+@model IEnumerable<ApplicationUser>
+
+@{
+    ViewData["Title"] = "Users";
+}
+
+@section Stylesheets {
+    
+}
+
+<div class="container">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+        <div class="d-flex align-items-center">
+            <div>
+                <h2 class="mb-0"> 
+                    Users
+                </h2>
+            </div>
+        </div>
+        <div>
+            <a class="btn btn-primary" asp-controller="Users" asp-action="Create">
+                <span class="fas fa-plus"></span> Create
+            </a>
+        </div>
+    </div>
+    <div class="row g-3">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var item in Model)
+                {
+                    <tr>
+                        <td>@item.FullName</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <partial name="_Footer" />
+</div>
+
+@section JavaScripts {
+
+}
+
+@section ScriptTag {
+<script src="~/js/site.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    });
+</script>
+}

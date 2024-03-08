@@ -1,0 +1,167 @@
+# Temp
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur fringilla tellus mollis, tempor nunc a, iaculis orci. Aenean quis suscipit ante. Donec blandit sapien in diam scelerisque rhoncus. Sed et mauris quis augue tincidunt semper. Interdum et malesuada fames ac ante ipsum primis in faucibus. In eget sagittis odio, id malesuada nisi. Nam ligula ipsum, commodo vitae posuere ac, semper ut arcu. Nulla urna urna, hendrerit dapibus sem nec, faucibus pellentesque mi. In congue vulputate tristique. Aenean tempor imperdiet justo sed ultrices. Cras fringilla ante tortor, a tempus sapien vulputate vitae.
+
+Nam ac orci felis. Integer et rutrum justo. Nunc rutrum lectus dolor, in faucibus elit iaculis ac. Integer erat sem, consectetur nec commodo non, vestibulum sed purus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque ac quam ante. Vestibulum eu dui sit amet odio ultrices mollis rhoncus quis felis. Sed congue id leo ac auctor. Maecenas non varius massa.
+
+In mollis efficitur neque ac lobortis. Fusce commodo sit amet diam non hendrerit. Nullam volutpat enim odio, ut rutrum sapien bibendum ac. Ut vulputate malesuada mi, porttitor vestibulum lorem porttitor sit amet. Donec fermentum neque quis nibh eleifend dictum. Duis ac dui magna. Aliquam erat volutpat. Nunc diam nisl, faucibus vel risus id, semper dapibus nisi. Nullam imperdiet efficitur nunc vel commodo. Proin a blandit arcu. Fusce ut nisl varius, fermentum diam condimentum, mattis ligula. Donec et imperdiet lectus, et pellentesque felis.
+
+Suspendisse eu lacinia dolor, eget eleifend urna. Curabitur eu massa quis lacus elementum fermentum. Proin sodales risus id velit tristique porta. Vivamus ac sapien at est scelerisque aliquet id eget neque. Sed erat erat, rutrum nec dictum iaculis, vehicula quis mauris. Etiam pharetra quam ac leo dignissim, quis laoreet felis porta. Suspendisse potenti. Mauris vel lacinia nibh. Nunc eget consequat est. Nam quis diam eget dui volutpat ullamcorper. Fusce sit amet viverra metus, efficitur ornare nisi.
+
+Sed felis velit, sodales ut mollis ut, scelerisque eu nibh. Integer egestas semper dui nec ornare. Fusce finibus, leo vel fringilla blandit, tortor ligula viverra nibh, interdum hendrerit sem odio egestas justo. Integer felis elit, tempor ac venenatis id, rutrum eleifend mi. Pellentesque cursus nec urna et faucibus. Donec elit dui, ullamcorper at nibh nec, accumsan tristique mi. Sed eu orci quis arcu fermentum ultricies in quis dui. Vivamus vestibulum ultrices augue at eleifend. Nunc blandit, massa a tristique tincidunt, erat sem varius sem, in volutpat arcu metus ut velit. Suspendisse potenti. Phasellus euismod nulla quam, ac bibendum augue venenatis in. Aliquam vestibulum augue odio, et rutrum dolor sagittis et. Vestibulum et diam volutpat, semper sapien nec, feugiat lorem.
+
+```html
+<input type="date" id="start" name="trip-start" value="2018-07-22" min="2018-01-01" max="2018-12-31" />
+
+<label for="cars">Choose a car:</label>
+<select  name="cars" id="cars">
+  <optgroup label="Swedish Cars">
+    <option value="volvo">Volvo</option>
+    <option value="saab">Saab</option>
+  </optgroup>
+  <optgroup label="German Cars">
+    <option value="mercedes">Mercedes</option>
+    <option value="audi">Audi</option>
+  </optgroup>
+</select>
+```
+
+## Categories
+
+### Campaigns
+Medical
+Memorial
+Natural disasters
+Nonprofit
+Financial emergency
+Animals
+Environment
+Business
+Community
+Creative
+Event
+Faith
+Family
+Sports
+Travel
+Wishes
+
+### Services
+Automotive
+Beauty
+Computer
+Creative
+Cycle
+Event
+Farm and garden
+Financial
+General labor
+Health and wellness
+Household
+Legal
+Lessons
+Marine
+Mobile phones
+Pet
+Real estate
+Skilled trade
+Travel
+Writing and translations
+
+###
+Antiques
+Appliances
+Arts and crafts
+ATV, UTV and Snowmobiles
+Auto parts
+Baby and kid
+Beauty and health
+Bike parts
+Bikes
+Boat parts
+Boats
+Books
+Business
+Cars and trucks
+CDs, DVDs, VHS and Vinyl records
+Clothes and accessories
+Collectibles
+Computer parts
+Computers
+Electronics
+Farm and garden
+Free
+Furniture
+Garage sale
+General
+Heavy equipment
+Household
+Jewelry
+Materials
+Mobile phones
+Motorcycle parts
+Motorcycles
+Music instruments
+Photo and video
+RVs and campers
+Sporting
+Tickets
+Tools
+Toys and games
+Trailers
+Video gaming
+Wanted
+Wheels and tires
+
+dotnet-aspnet-codegenerator controller --controllerName ExpedituresController --controllerNamespace Bookings.Web.Controllers --relativeFolderPath Controllers --model Expediture --dataContext ApplicationDbContext --layout /Views/Shared/_Layout.cshtml
+
+dotnet-aspnet-codegenerator controller --controllerName ObjectivesController --controllerNamespace Bookings.Web.Controllers --relativeFolderPath Controllers --model Objective --dataContext ApplicationDbContext --layout /Views/Shared/_Layout.cshtml
+
+dotnet-aspnet-codegenerator controller --controllerName OpportunitesController --controllerNamespace Bookings.Web.Controllers --relativeFolderPath Controllers --model Opportunity --dataContext ApplicationDbContext --layout /Views/Shared/_Layout.cshtml
+
+## many to many filtering
+```csharp
+profiles = profiles.Where(p => p.Attractions.Any(a => attractions.Contains(a.AttractionId)));
+```
+
+## Values
+Honesty: Being truthful and sincere in one's actions and communication.
+Integrity: Adhering to moral and ethical principles, maintaining consistency in actions and beliefs.
+Respect: Treating others with consideration, dignity, and recognizing their worth.
+Compassion: Showing empathy and concern for the well-being of others, especially in times of need.
+Kindness: Demonstrating benevolence and goodwill toward others.
+Generosity: Willingness to share and provide for others without expecting something in return.
+Fairness: Striving for justice and equality in one's actions and decisions.
+Empathy: Understanding and sharing the feelings of others.
+Responsibility: Being accountable for one's actions and fulfilling obligations.
+Courage: Facing challenges and difficulties with bravery and determination.
+Gratitude: Acknowledging and appreciating the positive aspects of one's life.
+Forgiveness: Letting go of resentment and granting pardon to others.
+Tolerance: Accepting and respecting differences in opinions, beliefs, and lifestyles.
+Humility: Recognizing one's limitations and being modest in achievements.
+Self-discipline: Exercising control over one's behavior and actions.
+Patience: Enduring difficulties with calmness and without complaint.
+Wisdom: Applying knowledge and experience with sound judgment.
+Optimism: Maintaining a positive outlook and hopeful attitude.
+Curiosity: Having a desire to learn, explore, and understand the world.
+Gratitude: Appreciating and expressing thankfulness for the positive aspects of life.
+Loyalty: Remaining steadfast and committed to individuals, groups, or principles.
+Friendship: Building and maintaining meaningful and supportive relationships.
+Love: Showing affection, care, and concern for others.
+Environmental consciousness: Valuing and protecting the natural world.
+Spirituality: Seeking a sense of connection to something beyond oneself.
+Autonomy: Having the freedom to make independent choices.
+Justice: Treating all people fairly and impartially.
+Equality: Ensuring everyone has equal rights and opportunities.
+Cooperation: Working together to achieve a common goal
+Peace: Living in harmony with others and avoiding conflict.
+Freedom: Having the ability to act and live without undue restrictions.
+Trustworthiness: Being reliable and dependable, fostering trust in relationships.
+Patience: Tolerating delays and difficulties with calmness and composure.
+Wisdom: Making sound decisions based on a combination of knowledge, experience, and good judgment.
+Altruism: Selfless concern for the welfare of others, placing their needs above one's own.
+Dignity: Treating oneself and others with dignity, recognizing the inherent worth of every individual.
+Discipline: The ability to adhere to a strict code of conduct and maintain self-control, even in challenging situations.
+Duty: A sense of obligation and responsibility toward one's comrades, leaders, and the mission at hand.
+Selflessness: Putting the needs of others before one's own and being willing to make personal sacrifices for the greater good.
+Skill Mastery: Continuous improvement and dedication to developing and honing one's skills in the art of war.
+Honor: Upholding a strong sense of integrity, honesty, and moral character. Warriors often adhere to a code that emphasizes the importance of honorable behavior.

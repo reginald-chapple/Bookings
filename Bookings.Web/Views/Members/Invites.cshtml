@@ -1,0 +1,182 @@
+@model IEnumerable<Invite>
+
+@{
+    ViewData["Title"] = "Invites";
+}
+
+@section StyleTag {
+    <style>
+        .table > :not(caption) > * > * {
+            background-color: transparent !important;
+        }
+    </style>
+}
+
+@section SidebarWidgets {
+    <partial name="Widgets/_NewsWidget" />
+}
+
+<div class="row">
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-header d-sm-flex align-items-center text-center justify-content-sm-between border-0 pb-0">
+                <h1 class="h4 card-title">Discover Campaigns</h1>
+                <a class="btn btn-primary-soft" role="button" href="#"> 
+                    <i class="bi bi-compass pe-1"></i> All Profiles
+                </a>
+            </div>
+            <div class="card-body">
+                <ul class="nav nav-tabs nav-bottom-line justify-content-center justify-content-md-start">
+                    <li class="nav-item"> <a class="nav-link active" data-bs-toggle="tab" href="#tab-1"> Interviews </a> </li>
+                    <li class="nav-item"> <a class="nav-link" data-bs-toggle="tab" href="#tab-2"> Opportunities </a> </li>
+                </ul>
+                <div class="tab-content mb-0 pb-0">
+                    <div class="tab-pane fade show active" id="tab-1">
+                        <div class="row mb-5">
+                            <div class="d-flex align-items-center justify-content-end my-3">
+                                <div class="ms-3" id="bulk-select-actions">
+                                    <div class="d-flex">
+                                        <select class="form-select form-select-sm" aria-label="Bulk actions">
+                                            <option selected="selected">Bulk actions</option>
+                                            <option value="Delete">Delete</option>
+                                            <option value="Archive">Archive</option>
+                                        </select>
+                                        <button class="btn btn-danger-soft btn-sm mx-2" type="button">Apply</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="table-responsive mx-n1 px-1">
+                                    <table class="table table-sm border-top border-200 fs--1 mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="white-space-nowrap fs--1 align-middle ps-0" style="max-width:20px; width:18px;">
+                                                    <div class="form-check mb-0 fs-0">
+                                                        <input class="form-check-input" id="bulk-select-example" type="checkbox">
+                                                    </div>
+                                                </th>
+                                                <th class="sort align-middle text-uppercase ps-3">Invite</th>
+                                                <th class="sort text-end align-middle text-uppercase pe-0" scope="col">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="list">
+                                            @foreach(var item in Model)
+                                            {
+                                                @if (item.Type == InviteType.Interview)
+                                                {
+                                                    <tr>
+                                                        <td class="fs--1 align-middle">
+                                                            <div class="form-check mb-0 fs-0">
+                                                                <input class="form-check-input" type="checkbox">
+                                                            </div>
+                                                        </td>
+                                                        <td class="align-middle ps-3">
+                                                            <a asp-controller="Invites" asp-action="Interview" asp-route-id="@item.Id">@item.Label</a> 
+                                                        </td>
+                                                        <td class="align-middle white-space-nowrap text-end pe-0">
+                                                            <div class="font-sans-serif btn-reveal-trigger position-static">
+                                                                <button
+                                                                    class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
+                                                                    type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true"
+                                                                    aria-expanded="false" data-bs-reference="parent">
+                                                                    <span class="fas fa-ellipsis-h fs--2"></span>
+                                                                </button>
+                                                                <div class="dropdown-menu dropdown-menu-end py-2">
+                                                                    <a class="dropdown-item" href="#!">View</a>
+                                                                    <a class="dropdown-item" href="#">
+                                                                        Edit
+                                                                    </a>
+                                                                    <a class="dropdown-item" href="#!">Export</a>
+                                                                    <div class="dropdown-divider"></div>
+                                                                    <a class="dropdown-item text-danger" href="#!">Remove</a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab-2">
+                        <div class="row mb-5">
+                            <div class="d-flex align-items-center justify-content-end my-3">
+                                <div class="ms-3" id="bulk-select-actions">
+                                    <div class="d-flex">
+                                        <select class="form-select form-select-sm" aria-label="Bulk actions">
+                                            <option selected="selected">Bulk actions</option>
+                                            <option value="Delete">Delete</option>
+                                            <option value="Archive">Archive</option>
+                                        </select>
+                                        <button class="btn btn-danger-soft btn-sm mx-2" type="button">Apply</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="table-responsive mx-n1 px-1">
+                                    <table class="table table-sm border-top border-200 fs--1 mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="white-space-nowrap fs--1 align-middle ps-0" style="max-width:20px; width:18px;">
+                                                    <div class="form-check mb-0 fs-0">
+                                                        <input class="form-check-input" id="bulk-select-example" type="checkbox">
+                                                    </div>
+                                                </th>
+                                                <th class="sort align-middle text-uppercase ps-3">Invite</th>
+                                                <th class="sort text-end align-middle text-uppercase pe-0" scope="col">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="list">
+                                            @foreach(var item in Model)
+                                            {
+                                                @if (item.Type == InviteType.Opportunity)
+                                                {
+                                                    <tr>
+                                                        <td class="fs--1 align-middle">
+                                                            <div class="form-check mb-0 fs-0">
+                                                                <input class="form-check-input" type="checkbox">
+                                                            </div>
+                                                        </td>
+                                                        <td class="align-middle ps-3">
+                                                            <a href="#">@item.Label</a> 
+                                                        </td>
+                                                        <td class="align-middle white-space-nowrap text-end pe-0">
+                                                            <div class="font-sans-serif btn-reveal-trigger position-static">
+                                                                <button
+                                                                    class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
+                                                                    type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true"
+                                                                    aria-expanded="false" data-bs-reference="parent">
+                                                                    <span class="fas fa-ellipsis-h fs--2"></span>
+                                                                </button>
+                                                                <div class="dropdown-menu dropdown-menu-end py-2">
+                                                                    <a class="dropdown-item" href="#!">View</a>
+                                                                    <a class="dropdown-item" href="#">
+                                                                        Edit
+                                                                    </a>
+                                                                    <a class="dropdown-item" href="#!">Export</a>
+                                                                    <div class="dropdown-divider"></div>
+                                                                    <a class="dropdown-item text-danger" href="#!">Remove</a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section JavaScripts {}
+
+@section ScriptTag {}

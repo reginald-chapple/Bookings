@@ -1,0 +1,162 @@
+@model Campaign
+
+@{
+    ViewData["Title"] = "Campaign";
+}
+
+@section StyleTag {
+    <style>
+        .table > :not(caption) > * > * {
+            background-color: transparent !important;
+        }
+    </style>
+}
+
+@section SidebarWidgets {
+    <partial name="Widgets/_NewsWidget" />
+}
+
+<div class="row">
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-header d-sm-flex align-items-center text-center justify-content-sm-between border-0 pb-0">
+                <h1 class="h4 card-title">Discover Campaigns</h1>
+                @if (User.Identity!.IsAuthenticated && User.IsInRole("Member") && User.FindFirst(ClaimTypes.NameIdentifier)!.Value == Model.ManagerId)
+                {
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <a class="btn btn-primary-soft" asp-controller="Members" asp-action="Campaigns" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)!.Value"> 
+                            <i class="bi bi-person-circle pe-1"></i> My Campaigns
+                        </a>
+                        <a class="btn btn-primary-soft" href="#"> 
+                            <i class="bi bi-compass pe-1"></i> All Campaigns
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <a class="btn btn-primary-soft" href="#">
+                        <i class="bi bi-compass pe-1"></i> Campaigns
+                    </a>
+                }
+            </div>
+            <div class="card-body">
+                <ul class="nav nav-tabs nav-bottom-line justify-content-center justify-content-md-start">
+                    <li class="nav-item"> 
+                        <a class="nav-link" asp-controller="Campaigns" asp-action="Timeline" asp-route-slug="@Model.Slug"> Timeline </a> 
+                    </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link" asp-controller="Campaigns" asp-action="Details" asp-route-slug="@Model.Slug"> Details </a> 
+                    </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link" asp-controller="Campaigns" asp-action="Expenditures" asp-route-slug="@Model.Slug"> Expenditures </a> 
+                    </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link" asp-controller="Campaigns" asp-action="Milestones" asp-route-slug="@Model.Slug"> Milestones </a> 
+                    </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link active" asp-controller="Campaigns" asp-action="Opportunities" asp-route-slug="@Model.Slug"> Opportunities </a> 
+                    </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link" asp-controller="Campaigns" asp-action="Donations" asp-route-slug="@Model.Slug"> Donations </a> 
+                    </li>
+                </ul>
+                <div class="tab-content mb-0 pb-0">
+                    <div class="tab-pane fade show active">
+                        <div class="row mb-5">
+                           @if (User.Identity!.IsAuthenticated && User.IsInRole("Member") && User.FindFirst(ClaimTypes.NameIdentifier)!.Value == Model.ManagerId)
+                            {
+                            <div class="d-flex align-items-center justify-content-end my-3">
+                                <div class="ms-3" id="bulk-select-actions">
+                                    <div class="d-flex">
+                                        <select class="form-select form-select-sm" aria-label="Bulk actions">
+                                            <option selected="selected">Bulk actions</option>
+                                            <option value="Delete">Delete</option>
+                                            <option value="Archive">Archive</option>
+                                        </select>
+                                        <button class="btn btn-danger-soft btn-sm mx-2" type="button">Apply</button>
+                                    </div>
+                                </div>
+                                <div id="bulk-select-replace-element">
+                                    <a data-bs-toggle="modal" data-bs-target="#saveOpportunityModal" class="btn btn-primary-soft btn-sm" role="button">
+                                        <span class="fas fa-plus" data-fa-transform="shrink-3 down-2"></span>
+                                        <span class="ms-1">New</span>
+                                    </a>
+                                </div>
+                            </div>
+                            }
+                            <div id="products-table">
+                                <div class="table-responsive mx-n1 px-1">
+                                    <table class="table table-sm border-top border-200 fs--1 mb-0">
+                                        <thead>
+                                            <tr>
+                                                @if (User.Identity!.IsAuthenticated && User.IsInRole("Member") && User.FindFirst(ClaimTypes.NameIdentifier)!.Value == Model.ManagerId)
+                                                {
+                                                    <th class="white-space-nowrap fs--1 align-middle ps-0" style="max-width:20px; width:18px;">
+                                                        <div class="form-check mb-0 fs-0">
+                                                            <input class="form-check-input" id="bulk-select-example" type="checkbox">
+                                                        </div>
+                                                    </th>
+                                                }
+                                                <th class="sort align-middle text-uppercase ps-3">Title</th>
+                                                @if (User.Identity!.IsAuthenticated && User.IsInRole("Member") && User.FindFirst(ClaimTypes.NameIdentifier)!.Value == Model.ManagerId)
+                                                {
+                                                    <th class="sort text-end align-middle text-uppercase pe-0" scope="col">Actions</th>
+                                                }
+                                            </tr>
+                                        </thead>
+                                        <tbody class="list" id="products-table-body">
+                                            @foreach(var item in Model.Opportunities)
+                                            {
+                                                <tr>
+                                                    @if (User.Identity!.IsAuthenticated && User.IsInRole("Member") && User.FindFirst(ClaimTypes.NameIdentifier)!.Value == Model.ManagerId)
+                                                    {
+                                                        <td class="fs--1 align-middle">
+                                                            <div class="form-check mb-0 fs-0">
+                                                                <input class="form-check-input" type="checkbox">
+                                                            </div>
+                                                        </td>
+                                                    }
+                                                    <td class="align-middle ps-3">
+                                                        <a asp-controller="Opportunities" asp-action="Info" asp-route-id="@item.Id">@item.Title</a>
+                                                    </td>
+                                                    @if (User.Identity!.IsAuthenticated && User.IsInRole("Member") && User.FindFirst(ClaimTypes.NameIdentifier)!.Value == Model.ManagerId)
+                                                    {
+                                                        <td class="align-middle white-space-nowrap text-end pe-0">
+                                                            <div class="font-sans-serif btn-reveal-trigger position-static">
+                                                                <button
+                                                                    class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
+                                                                    type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true"
+                                                                    aria-expanded="false" data-bs-reference="parent">
+                                                                    <span class="fas fa-ellipsis-h fs--2"></span>
+                                                                </button>
+                                                                <div class="dropdown-menu dropdown-menu-end py-2">
+                                                                    <a class="dropdown-item" href="#!">View</a>
+                                                                    <a class="dropdown-item" href="#">
+                                                                        Edit
+                                                                    </a>
+                                                                    <a class="dropdown-item" href="#!">Export</a>
+                                                                    <div class="dropdown-divider"></div>
+                                                                    <a class="dropdown-item text-danger" href="#!">Remove</a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    }
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Component.InvokeAsync("SaveOpportunity", new { campaignId = Model.Id })
+
+@section JavaScripts {}
+
+@section ScriptTag {}
