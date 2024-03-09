@@ -19,6 +19,7 @@ namespace Bookings.Web.Data
         public DbSet<Chat> Chats { get; set; }
         public DbSet<ChatUser> ChatUsers { get; set; }
         public DbSet<ChatMessage> ChatMessages { get; set; }
+        public DbSet<Value> Values { get; set; }
         public DbSet<UserValue> UserValues { get; set; }
         public DbSet<Community> Communities { get; set; }
         public DbSet<CommunityMember> CommunityMembers { get; set; }

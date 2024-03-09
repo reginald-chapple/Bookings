@@ -84,6 +84,51 @@ public class SeederService : ISeederService
         }
     }
 
+    public async Task SeedValuesAsync()
+    {
+        if (!_context.Values.Any())
+        {
+            await _context.Values.AddRangeAsync([
+                new Value { Name = "Honesty", Description = "Being truthful and sincere in one's actions and communication." },
+                new Value { Name = "Integrity", Description = "Adhering to moral and ethical principles, maintaining consistency in actions and beliefs." },
+                new Value { Name = "Respect", Description = "Treating others with consideration, dignity, and recognizing their worth."},
+                new Value { Name = "Compassion", Description = "Showing empathy and concern for the well-being of others, especially in times of need." },
+                new Value { Name = "Kindness", Description = "Demonstrating benevolence and goodwill toward others." },
+                new Value { Name = "Generosity", Description = "Willingness to share and provide for others without expecting something in return." },
+                new Value { Name = "Fairness", Description = "Striving for justice and equality in one's actions and decisions." },
+                new Value { Name = "Empathy", Description = "Understanding and sharing the feelings of others." },
+                new Value { Name = "Responsibility", Description = "Being accountable for one's actions and fulfilling obligations." },
+                new Value { Name = "Courage", Description = "Facing challenges and difficulties with bravery and determination." },
+                new Value { Name = "Gratitude", Description = "Acknowledging and appreciating the positive aspects of one's life." },
+                new Value { Name = "Forgiveness", Description = "Letting go of resentment and granting pardon to others." },
+                new Value { Name = "Tolerance", Description = "Accepting and respecting differences in opinions, beliefs, and lifestyles." },
+                new Value { Name = "Humility", Description = "Recognizing one's limitations and being modest in achievements." },
+                new Value { Name = "Self-discipline", Description = "Exercising control over one's behavior and actions." },
+                new Value { Name = "Patience", Description = "Enduring difficulties with calmness and without complaint." },
+                new Value { Name = "Wisdom", Description = "Applying knowledge and experience with sound judgment." },
+                new Value { Name = "Optimism", Description = "Maintaining a positive outlook and hopeful attitude." },
+                new Value { Name = "Curiosity", Description = "Having a desire to learn, explore, and understand the world."},
+                new Value { Name = "Loyalty", Description = "Remaining steadfast and committed to individuals, groups, or principles." },
+                new Value { Name = "Friendship", Description = "Building and maintaining meaningful and supportive relationships." },
+                new Value { Name = "Love", Description = "Showing affection, care, and concern for others." },
+                new Value { Name = "Environmental consciousness", Description = "Valuing and protecting the natural world." },
+                new Value { Name = "Spirituality", Description = "Seeking a sense of connection to something beyond oneself." },
+                new Value { Name = "Autonomy", Description = "Having the freedom to make independent choices." },
+                new Value { Name = "Justice", Description = "Treating all people fairly and impartially." },
+                new Value { Name = "Equality", Description = "Ensuring everyone has equal rights and opportunities." },
+                new Value { Name = "Cooperation", Description = "Working together to achieve a common goal." },
+                new Value { Name = "Peace", Description = "Living in harmony with others and avoiding conflict." },
+                new Value { Name = "Freedom", Description = "Having the ability to act and live without undue restrictions." },
+                new Value { Name = "Trustworthiness", Description = "Being reliable and dependable, fostering trust in relationships." },
+                new Value { Name = "Dignity", Description = "Treating oneself and others with dignity, recognizing the inherent worth of every individual." },
+                new Value { Name = "Duty", Description = "A sense of obligation and responsibility toward one's comrades, leaders, and the mission at hand." },
+                new Value { Name = "Selflessness", Description = "Putting the needs of others before one's own and being willing to make personal sacrifices for the greater good." },
+                new Value { Name = "Skill Mastery", Description = "Continuous improvement and dedication to developing and honing one's skills in the art of war." },
+                new Value { Name = "Honor", Description = "Upholding a strong sense of integrity, honesty, and moral character. Warriors often adhere to a code that emphasizes the importance of honorable behavior." },
+            ]);
+        }
+    }
+
     public async Task SeedUsersAsync()
     {
         if (!_context.Roles.Any())
@@ -163,6 +208,7 @@ public class SeederService : ISeederService
         await SeedUsersAsync();
         await SeedAttractionsAsync();
         await SeedCausesAsync();
+        await SeedValuesAsync();
         await SeedSkinComplexionsAsync();
         await _context.SaveChangesAsync();
     }

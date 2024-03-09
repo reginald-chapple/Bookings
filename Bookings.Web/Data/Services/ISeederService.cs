@@ -3,6 +3,7 @@ namespace Bookings.Web.Data.Services;
 public interface ISeederService
 {
     Task SeedCausesAsync();
+    Task SeedValuesAsync();
     Task SeedAttractionsAsync();
     Task SeedSkinComplexionsAsync();
     Task SeedUsersAsync();

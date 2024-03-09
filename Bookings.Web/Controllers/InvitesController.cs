@@ -36,6 +36,11 @@ public class InvitesController : Controller
             return NotFound();
         }
 
+        if (invite.InviteeKey != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+        {
+            return RedirectToAction(nameof(AccountController.AccessDenied), "Account", new { area = "Identity" });
+        }
+
         if (!invite.HasViewed)
         {
             invite.HasViewed = true;
@@ -79,6 +84,11 @@ public class InvitesController : Controller
         if (invite == null)
         {
             return NotFound();
+        }
+
+        if (invite.InviteeKey != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+        {
+            return RedirectToAction(nameof(AccountController.AccessDenied), "Account", new { area = "Identity" });
         }
 
         // add user to meeting update invite
