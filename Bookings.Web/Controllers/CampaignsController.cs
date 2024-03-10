@@ -43,6 +43,35 @@ public class CampaignsController : Controller
     }
 
     [Route("{slug}")]
+    public async Task<IActionResult> Public(string slug)
+    {
+        if (string.IsNullOrEmpty(slug) || string.IsNullOrWhiteSpace(slug))
+        {
+            return NotFound();
+        }
+
+        var campaign = await _context.Campaigns
+            .Include(c => c.Cause)
+            .Include(c => c.Expenditures)
+            .Include(c => c.Milestones)
+                .ThenInclude(m => m.ActionItems)
+            .FirstOrDefaultAsync(u => u.Slug == slug );
+
+        if (campaign == null)
+        {
+            return NotFound();
+        }
+
+        var model = new CampaignDetailsModel
+        {
+            Creator = await _userService.GetCreatorAsync(campaign.CreatedBy),
+            Campaign = campaign
+        };
+
+        return View(model);
+    }
+
+    [Route("{slug}/Timeline")]
     public async Task<IActionResult> Timeline(string slug)
     {
         if (string.IsNullOrEmpty(slug) || string.IsNullOrWhiteSpace(slug))

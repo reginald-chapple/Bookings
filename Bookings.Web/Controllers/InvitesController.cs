@@ -108,7 +108,7 @@ public class InvitesController : Controller
 
             meeting.Attendees.Add(new MeetingAttendee
             {
-                AttendeeId = invite.InviterKey
+                AttendeeId = invite.CreatedBy
             });
 
             invite.Status = InviteStatus.Accepted;

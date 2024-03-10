@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using Bookings.Web.Data;
+using Bookings.Web.Data.Services;
 using Bookings.Web.Domain;
 using Bookings.Web.Identity.Controllers;
 using Bookings.Web.Infrastructure.Helpers;
@@ -16,10 +17,12 @@ namespace Bookings.Web.Controllers;
 public class ApplicantsController : Controller
 {
     private readonly ApplicationDbContext _context;
+    private readonly IUserService _userService;
 
-    public ApplicantsController(ApplicationDbContext context)
+    public ApplicantsController(ApplicationDbContext context, IUserService userService)
     {
         _context = context;
+        _userService = userService;
     }
 
     [Route("{id}/Details")]
@@ -33,7 +36,6 @@ public class ApplicantsController : Controller
         var applicant = await _context.Applicants
             .Include(a => a.Opportunity)
             .Include(a => a.Resume)
-                .ThenInclude(a => a!.User)
             .FirstOrDefaultAsync(a => a.Id == id);
 
         if (applicant == null)
@@ -64,7 +66,6 @@ public class ApplicantsController : Controller
 
         var applicant = await _context.Applicants
             .Include(a => a.Resume)
-                .ThenInclude(a => a!.User)
             .FirstOrDefaultAsync(a => a.Id == id);
 
         if (applicant == null)
@@ -99,10 +100,9 @@ public class ApplicantsController : Controller
                     Label = model.Label,
                     Message = model.Message,
                     Type = InviteType.Interview,
-                    InviteeKey = applicant.Resume!.UserId,
-                    InviteeName = applicant.Resume!.User!.FullName,
-                    InviterKey = User.FindFirst(ClaimTypes.NameIdentifier)!.Value,
-                    InviterName = User.FindFirst("FullName")!.Value,
+                    InviteeKey = applicant.Resume!.CreatedBy,
+                    InviteeName = applicant.Resume!.Applicant,
+                    CreatedBy = User.FindFirst(ClaimTypes.NameIdentifier)!.Value,
                     EntityId = meeting.Id,
                     EntityType = EntityType.Meeting
                 };
@@ -130,7 +130,6 @@ public class ApplicantsController : Controller
         var applicant = await _context.Applicants
             .Include(a => a.Opportunity)
             .Include(a => a.Resume)
-                .ThenInclude(a => a!.User)
             .FirstOrDefaultAsync(a => a.Id == id);
 
         if (applicant == null)
@@ -148,7 +147,7 @@ public class ApplicantsController : Controller
                     _context.Volunteers.Add(new Volunteer
                     {
                         OpportunityId = applicant.OpportunityId,
-                        UserId = applicant.Resume!.UserId
+                        UserId = applicant.CreatedBy
                     });
                     _context.Update(applicant);
                     _context.SaveChanges();

@@ -94,7 +94,6 @@ public class OpportunitiesController : Controller
         var opportunity = await _context.Opportunities
             .Include(o => o.Applicants)
                 .ThenInclude(a => a.Resume)
-                    .ThenInclude(r => r!.User)
             .FirstOrDefaultAsync(o => o.Id == id);
 
         if (opportunity == null)
@@ -123,7 +122,7 @@ public class OpportunitiesController : Controller
         if (_signInManager.IsSignedIn(HttpContext.User))
         {
             var resumeId = _context.Resumes
-                .Where(r => r.UserId == User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+                .Where(r => r.CreatedBy == User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
                 .Select(r => r.Id)
                 .FirstOrDefault();
 

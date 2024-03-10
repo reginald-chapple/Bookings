@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bookings.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240309213634_Start")]
-    partial class Start
+    [Migration("20240310185506_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,7 +32,21 @@ namespace Bookings.Web.Data.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DeleteDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DeletedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<bool>("IsCompleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Label")
@@ -43,6 +57,10 @@ namespace Bookings.Web.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Updated")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -61,7 +79,21 @@ namespace Bookings.Web.Data.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DeleteDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DeletedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<bool>("HasViewed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
                     b.Property<long>("OpportunityId")
@@ -75,6 +107,10 @@ namespace Bookings.Web.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Updated")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -542,15 +578,25 @@ namespace Bookings.Web.Data.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("DonorEmail")
+                    b.Property<string>("CreatedBy")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("DonorName")
+                    b.Property<DateTime?>("DeleteDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DeletedBy")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Updated")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -579,7 +625,21 @@ namespace Bookings.Web.Data.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DeleteDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DeletedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<bool>("IsAcquired")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Item")
@@ -587,6 +647,10 @@ namespace Bookings.Web.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("Updated")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -647,7 +711,15 @@ namespace Bookings.Web.Data.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime?>("DeleteDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DeletedBy")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<long?>("EntityId")
@@ -667,13 +739,8 @@ namespace Bookings.Web.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("InviterKey")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("InviterName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Label")
                         .IsRequired()
@@ -692,8 +759,9 @@ namespace Bookings.Web.Data.Migrations
                     b.Property<DateTime>("Updated")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("WasDeleted")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -762,7 +830,18 @@ namespace Bookings.Web.Data.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<DateOnly>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DeleteDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DeletedBy")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Details")
@@ -776,6 +855,9 @@ namespace Bookings.Web.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("EntityType")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Location")
@@ -794,6 +876,10 @@ namespace Bookings.Web.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("Updated")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -837,7 +923,18 @@ namespace Bookings.Web.Data.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime?>("Deadline")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DeleteDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DeletedBy")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Details")
@@ -845,6 +942,9 @@ namespace Bookings.Web.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsCompleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Label")
@@ -856,6 +956,10 @@ namespace Bookings.Web.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("Updated")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -898,6 +1002,17 @@ namespace Bookings.Web.Data.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DeleteDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DeletedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Details")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -905,11 +1020,18 @@ namespace Bookings.Web.Data.Migrations
                     b.Property<bool>("IsClosed")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("Updated")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -1039,11 +1161,26 @@ namespace Bookings.Web.Data.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Applicant")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Background")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("Created")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DeleteDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DeletedBy")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Education")
@@ -1054,6 +1191,9 @@ namespace Bookings.Web.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Skills")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -1061,14 +1201,11 @@ namespace Bookings.Web.Data.Migrations
                     b.Property<DateTime>("Updated")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("UpdatedBy")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
 
                     b.ToTable("Resumes");
                 });
@@ -1588,17 +1725,6 @@ namespace Bookings.Web.Data.Migrations
                     b.Navigation("Post");
                 });
 
-            modelBuilder.Entity("Bookings.Web.Domain.Resume", b =>
-                {
-                    b.HasOne("Bookings.Web.Domain.ApplicationUser", "User")
-                        .WithOne("Resume")
-                        .HasForeignKey("Bookings.Web.Domain.Resume", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Bookings.Web.Domain.TimelineEntry", b =>
                 {
                     b.HasOne("Bookings.Web.Domain.Campaign", "Campaign")
@@ -1719,8 +1845,6 @@ namespace Bookings.Web.Data.Migrations
                     b.Navigation("Meetings");
 
                     b.Navigation("Notifications");
-
-                    b.Navigation("Resume");
 
                     b.Navigation("UserRoles");
 

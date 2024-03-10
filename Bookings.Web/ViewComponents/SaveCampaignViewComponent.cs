@@ -16,7 +16,7 @@ public class SaveCampaignViewComponent : ViewComponent
 
     public IViewComponentResult Invoke()
     {
-        ViewData["CauseId"] = _context.Causes.Include(c => c.Parent).ToList();
+        ViewData["CauseId"] = _context.Causes.Include(c => c.Children).ToList();
         return View(new Campaign());
     }
 }

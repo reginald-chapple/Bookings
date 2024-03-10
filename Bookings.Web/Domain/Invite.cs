@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Bookings.Web.Domain;
 
-public class Invite : Entity
+public class Invite : AuditableEntity
 {
     public long Id { get; set; }
 
@@ -16,17 +16,10 @@ public class Invite : Entity
 
     public InviteType Type { get; set; }
 
-    public bool HasViewed { get; set; } = false; // only invitee can view anyone else will have there account locked. If the cuurent user doesn't match the invitee key.
-
-    public bool WasDeleted { get; set; } = false;
-
-    public DateTime? DeleteDate { get; set; }
+    public bool HasViewed { get; set; } = false;
 
     public string InviteeKey { get; set; } = string.Empty;
     public string InviteeName { get; set; } = string.Empty;
-
-    public string InviterKey { get; set; } = string.Empty;
-    public string InviterName { get; set; } = string.Empty;
 
     public long? EntityId { get; set; }
     public EntityType EntityType { get; set; } = EntityType.None;

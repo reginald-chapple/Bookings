@@ -15,9 +15,9 @@ public class SaveResumeViewComponent : ViewComponent
 
     public IViewComponentResult Invoke(string userId)
     {
-        Resume resume = _context.Resumes.FirstOrDefault(m => m.UserId == userId) ?? new Resume
+        Resume resume = _context.Resumes.FirstOrDefault(m => m.CreatedBy == userId) ?? new Resume
         {
-            UserId = userId
+            CreatedBy = userId
         };
 
         return View(resume);

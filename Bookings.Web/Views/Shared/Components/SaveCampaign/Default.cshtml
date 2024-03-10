@@ -25,15 +25,16 @@
                             <option selected>-- Select --</option>
                             @foreach(var cause in causes)
                             {
-                                @if (cause.Parent != null)
+                                @if (cause.Parent == null)
                                 {
                                     <option value="@cause.Id">
-                                        @cause.Parent.Name >> @cause.Name
+                                        @cause.Name
                                     </option>
-                                }
-                                else
-                                {
-                                    <option value="@cause.Id">@cause.Name</option>
+                                    @foreach(var child in cause.Children)
+                                    {
+                                        <option value="@child.Id">@cause.Name >> @child.Name</option>
+                                    }
+
                                 }
                             }
                         </select>

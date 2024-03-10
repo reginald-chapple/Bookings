@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Bookings.Web.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Start : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -144,16 +144,17 @@ namespace Bookings.Web.Data.Migrations
                     Status = table.Column<int>(type: "INTEGER", nullable: false),
                     Type = table.Column<int>(type: "INTEGER", nullable: false),
                     HasViewed = table.Column<bool>(type: "INTEGER", nullable: false),
-                    WasDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
-                    DeleteDate = table.Column<DateTime>(type: "TEXT", nullable: true),
                     InviteeKey = table.Column<string>(type: "TEXT", nullable: false),
                     InviteeName = table.Column<string>(type: "TEXT", nullable: false),
-                    InviterKey = table.Column<string>(type: "TEXT", nullable: false),
-                    InviterName = table.Column<string>(type: "TEXT", nullable: false),
                     EntityId = table.Column<long>(type: "INTEGER", nullable: true),
                     EntityType = table.Column<int>(type: "INTEGER", nullable: false),
                     Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
+                    DeleteDate = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    CreatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    DeletedBy = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -176,7 +177,12 @@ namespace Bookings.Web.Data.Migrations
                     EntityId = table.Column<long>(type: "INTEGER", nullable: true),
                     EntityType = table.Column<int>(type: "INTEGER", nullable: false),
                     Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
+                    DeleteDate = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    CreatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    DeletedBy = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -196,6 +202,29 @@ namespace Bookings.Web.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Notifications", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Resumes",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "TEXT", nullable: false),
+                    Applicant = table.Column<string>(type: "TEXT", nullable: false),
+                    Skills = table.Column<string>(type: "TEXT", nullable: false),
+                    Experience = table.Column<string>(type: "TEXT", nullable: false),
+                    Education = table.Column<string>(type: "TEXT", nullable: false),
+                    Background = table.Column<string>(type: "TEXT", nullable: false),
+                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
+                    DeleteDate = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    CreatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    DeletedBy = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Resumes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -361,30 +390,6 @@ namespace Bookings.Web.Data.Migrations
                     table.ForeignKey(
                         name: "FK_Relationships_AspNetUsers_TargetId",
                         column: x => x.TargetId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Resumes",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "TEXT", nullable: false),
-                    Skills = table.Column<string>(type: "TEXT", nullable: false),
-                    Experience = table.Column<string>(type: "TEXT", nullable: false),
-                    Education = table.Column<string>(type: "TEXT", nullable: false),
-                    Background = table.Column<string>(type: "TEXT", nullable: false),
-                    UserId = table.Column<string>(type: "TEXT", nullable: false),
-                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Resumes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Resumes_AspNetUsers_UserId",
-                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -651,11 +656,14 @@ namespace Bookings.Web.Data.Migrations
                     Id = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Amount = table.Column<decimal>(type: "TEXT", precision: 8, scale: 2, nullable: false),
-                    DonorEmail = table.Column<string>(type: "TEXT", nullable: false),
-                    DonorName = table.Column<string>(type: "TEXT", nullable: false),
                     CampaignId = table.Column<long>(type: "INTEGER", nullable: false),
                     Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
+                    DeleteDate = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    CreatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    DeletedBy = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -680,7 +688,12 @@ namespace Bookings.Web.Data.Migrations
                     AcquisitionDate = table.Column<DateTime>(type: "TEXT", nullable: true),
                     CampaignId = table.Column<long>(type: "INTEGER", nullable: false),
                     Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
+                    DeleteDate = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    CreatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    DeletedBy = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -707,7 +720,12 @@ namespace Bookings.Web.Data.Migrations
                     CompletionDate = table.Column<DateTime>(type: "TEXT", nullable: true),
                     CampaignId = table.Column<long>(type: "INTEGER", nullable: false),
                     Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
+                    DeleteDate = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    CreatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    DeletedBy = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -731,7 +749,12 @@ namespace Bookings.Web.Data.Migrations
                     IsClosed = table.Column<bool>(type: "INTEGER", nullable: false),
                     CampaignId = table.Column<long>(type: "INTEGER", nullable: false),
                     Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
+                    DeleteDate = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    CreatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    DeletedBy = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -833,7 +856,12 @@ namespace Bookings.Web.Data.Migrations
                     CompletionDate = table.Column<DateTime>(type: "TEXT", nullable: true),
                     MilestoneId = table.Column<long>(type: "INTEGER", nullable: false),
                     Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
+                    DeleteDate = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    CreatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    DeletedBy = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -857,7 +885,12 @@ namespace Bookings.Web.Data.Migrations
                     Status = table.Column<int>(type: "INTEGER", nullable: false),
                     OpportunityId = table.Column<long>(type: "INTEGER", nullable: false),
                     Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
+                    DeleteDate = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    CreatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    DeletedBy = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1076,12 +1109,6 @@ namespace Bookings.Web.Data.Migrations
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Resumes_UserId",
-                table: "Resumes",
-                column: "UserId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_TimelineEntries_CampaignId",
                 table: "TimelineEntries",
                 column: "CampaignId");
@@ -1205,10 +1232,10 @@ namespace Bookings.Web.Data.Migrations
                 name: "Values");
 
             migrationBuilder.DropTable(
-                name: "Opportunities");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Opportunities");
 
             migrationBuilder.DropTable(
                 name: "Forums");

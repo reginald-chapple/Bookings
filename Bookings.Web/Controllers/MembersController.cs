@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Bookings.Web.Data;
 using Bookings.Web.Data.Services;
+using Bookings.Web.Domain;
 using Bookings.Web.Identity.Controllers;
 using Bookings.Web.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -128,7 +129,7 @@ public class MembersController : Controller
             return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
         }
 
-        var user = await _context.Users.Include(u => u.Resume).FirstOrDefaultAsync(u => u.Id == id);
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
 
         if (user == null)
         {
@@ -140,6 +141,12 @@ public class MembersController : Controller
             return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
         }
 
-        return View(user);
+        var model = new UserResumeModel
+        {
+            Creator = await _userService.GetCreatorAsync(user.Id),
+            Resume = _context.Resumes.FirstOrDefault(r => r.CreatedBy == user.Id) ?? null
+        };
+
+        return View(model);
     }
 }

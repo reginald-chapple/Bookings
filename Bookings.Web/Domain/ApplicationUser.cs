@@ -20,7 +20,6 @@ public class ApplicationUser : IdentityUser<string>
     public IFormFile? ImageUpload { get; set; }
 
     public virtual MatchProfile? MatchProfile { get; set; }
-    public virtual Resume? Resume { get; set; }
 
     public virtual ICollection<ApplicationUserRole> UserRoles { get; set; } = [];
     public virtual ICollection<UserNotification> Notifications { get; set; } = [];

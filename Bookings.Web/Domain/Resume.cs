@@ -2,9 +2,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Bookings.Web.Domain;
 
-public class Resume : Entity
+public class Resume : AuditableEntity
 {
     public string Id { get; set; } = Guid.NewGuid().ToString();
+
+    public string Applicant { get; set; } = string.Empty;
 
     [DataType(DataType.Text)]
     public string Skills { get; set; } = string.Empty;
@@ -17,9 +19,6 @@ public class Resume : Entity
 
     [DataType(DataType.Text)]
     public string Background { get; set; } = string.Empty;
-
-    public string UserId { get; set; } = string.Empty;
-    public virtual ApplicationUser? User { get; set; }
 
     public virtual ICollection<Applicant> Applications { get; set; } = [];
 }
