@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Bookings.Web.Domain;
 
-public class Applicant : Entity
+public class Applicant : AuditableEntity
 {
     public long Id { get; set; }
 

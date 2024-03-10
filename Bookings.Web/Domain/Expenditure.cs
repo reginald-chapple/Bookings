@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bookings.Web.Domain;
 
-public class Expenditure : Entity
+public class Expenditure : AuditableEntity
 {
     public Expenditure() {}
     

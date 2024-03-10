@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Bookings.Web.Data;
 using Bookings.Web.Domain;
 using Bookings.Web.Models;
@@ -21,6 +22,7 @@ public class ActionItemsController : Controller
     {
         if (ModelState.IsValid)
         {
+            item.CreatedBy = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
             await _context.AddAsync(item);
             await _context.SaveChangesAsync();
         }

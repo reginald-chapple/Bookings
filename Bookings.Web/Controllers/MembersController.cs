@@ -1,6 +1,8 @@
 using System.Security.Claims;
 using Bookings.Web.Data;
+using Bookings.Web.Data.Services;
 using Bookings.Web.Identity.Controllers;
+using Bookings.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,10 +14,12 @@ namespace Bookings.Web.Controllers;
 public class MembersController : Controller
 {
     private readonly ApplicationDbContext _context;
+    private readonly IUserService _userService;
 
-    public MembersController(ApplicationDbContext context)
+    public MembersController(ApplicationDbContext context, IUserService userService)
     {
         _context = context;
+        _userService = userService;
     }
 
     [Route("{id}/Campaigns")]
@@ -31,10 +35,7 @@ public class MembersController : Controller
             return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
         }
 
-        var user = await _context.Users
-            .Include(u => u.Campaigns)
-                .ThenInclude(c => c.Cause)
-            .FirstOrDefaultAsync(u => u.Id == id);
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
 
         if (user == null)
         {
@@ -46,7 +47,14 @@ public class MembersController : Controller
             return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
         }
 
-        return View(user);
+        var campaigns = await _context.Campaigns.Where(c => c.CreatedBy == user.Id).ToListAsync();
+        var model = new CreatorCampaignsModel
+        {
+            Creator = await _userService.GetCreatorAsync(user.Id),
+            Campaigns = campaigns
+        };
+
+        return View(model);
     }
 
     [Route("{id}/Relationships")]

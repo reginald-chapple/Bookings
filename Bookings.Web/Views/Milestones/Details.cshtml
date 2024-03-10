@@ -15,7 +15,7 @@
         <div class="card h-100">
             <div class="card-header d-sm-flex align-items-center text-center justify-content-sm-between border-0 pb-0">
                 <h1 class="h4 card-title">Discover Campaigns</h1>
-                @if (User.Identity!.IsAuthenticated && User.IsInRole("Member") && User.FindFirst(ClaimTypes.NameIdentifier)!.Value == Model.Campaign!.ManagerId)
+                @if (User.Identity!.IsAuthenticated && User.IsInRole("Member") && User.FindFirst(ClaimTypes.NameIdentifier)!.Value == Model.Campaign!.CreatedBy)
                 {
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <a class="btn btn-primary-soft" asp-controller="Campaigns" asp-action="Details" asp-route-slug="@Model.Campaign.Slug"> 

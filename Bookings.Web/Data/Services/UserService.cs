@@ -2,6 +2,7 @@ using System.Security.Claims;
 using Bookings.Web.Domain;
 using Bookings.Web.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bookings.Web.Data.Services
 {
@@ -60,6 +61,15 @@ namespace Bookings.Web.Data.Services
         public string GetCurrentUserId(ClaimsPrincipal User)
         {
             return User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+        }
+
+        public async Task<CreatorModel> GetCreatorAsync(string createdBy)
+        {
+            var user = await _context.Users
+                .Where(u => u.Id == createdBy)
+                .Select(u => new CreatorModel { Id = u.Id, Email = u.Email!, FullName = u.FullName, Image = u.Image })
+                .FirstOrDefaultAsync();
+            return user!;
         }
     }
 }

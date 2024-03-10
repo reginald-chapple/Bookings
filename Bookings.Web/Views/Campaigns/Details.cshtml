@@ -1,4 +1,4 @@
-@model Campaign
+@model CampaignDetailsModel
 
 @{
     ViewData["Title"] = "Campaign";
@@ -15,7 +15,7 @@
         <div class="card h-100">
             <div class="card-header d-sm-flex align-items-center text-center justify-content-sm-between border-0 pb-0">
                 <h1 class="h4 card-title">Discover Campaigns</h1>
-                @if (User.Identity!.IsAuthenticated && User.IsInRole("Member") && User.FindFirst(ClaimTypes.NameIdentifier)!.Value == Model.ManagerId)
+                @if (User.Identity!.IsAuthenticated && User.IsInRole("Member") && User.FindFirst(ClaimTypes.NameIdentifier)!.Value == Model.Creator!.Id)
                 {
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <a class="btn btn-primary-soft" asp-controller="Members" asp-action="Campaigns" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)!.Value"> 
@@ -36,22 +36,22 @@
             <div class="card-body">
                 <ul class="nav nav-tabs nav-bottom-line justify-content-center justify-content-md-start">
                     <li class="nav-item"> 
-                        <a class="nav-link" asp-controller="Campaigns" asp-action="Timeline" asp-route-slug="@Model.Slug"> Timeline </a> 
+                        <a class="nav-link" asp-controller="Campaigns" asp-action="Timeline" asp-route-slug="@Model.Campaign!.Slug"> Timeline </a> 
                     </li>
                     <li class="nav-item"> 
-                        <a class="nav-link active" asp-controller="Campaigns" asp-action="Details" asp-route-slug="@Model.Slug"> Details </a> 
+                        <a class="nav-link active" asp-controller="Campaigns" asp-action="Details" asp-route-slug="@Model.Campaign!.Slug"> Details </a> 
                     </li>
                     <li class="nav-item"> 
-                        <a class="nav-link" asp-controller="Campaigns" asp-action="Expenditures" asp-route-slug="@Model.Slug"> Expenditures </a> 
+                        <a class="nav-link" asp-controller="Campaigns" asp-action="Expenditures" asp-route-slug="@Model.Campaign!.Slug"> Expenditures </a> 
                     </li>
                     <li class="nav-item"> 
-                        <a class="nav-link" asp-controller="Campaigns" asp-action="Milestones" asp-route-slug="@Model.Slug"> Milestones </a> 
+                        <a class="nav-link" asp-controller="Campaigns" asp-action="Milestones" asp-route-slug="@Model.Campaign!.Slug"> Milestones </a> 
                     </li>
                     <li class="nav-item"> 
-                        <a class="nav-link" asp-controller="Campaigns" asp-action="Opportunities" asp-route-slug="@Model.Slug"> Opportunities </a> 
+                        <a class="nav-link" asp-controller="Campaigns" asp-action="Opportunities" asp-route-slug="@Model.Campaign!.Slug"> Opportunities </a> 
                     </li>
                     <li class="nav-item"> 
-                        <a class="nav-link" asp-controller="Campaigns" asp-action="Donations" asp-route-slug="@Model.Slug"> Donations </a> 
+                        <a class="nav-link" asp-controller="Campaigns" asp-action="Donations" asp-route-slug="@Model.Campaign!.Slug"> Donations </a> 
                     </li>
                 </ul>
                 <div class="tab-content mb-0 pb-0">
@@ -62,7 +62,7 @@
                                     <div class="p-3">
                                         <i class="bi bi-heart fs-2"></i>
                                         <div class="">
-                                            <h5 class="mb-0">@Model.Cause!.Name</h5>
+                                            <h5 class="mb-0">@Model.Campaign!.Cause!.Name</h5>
                                             <p class="mb-0">Cause</p>
                                         </div>
                                     </div>
@@ -84,7 +84,7 @@
                                     <div class="p-3">
                                         <i class="bi bi-arrow-through-heart fs-2"></i>
                                         <div class="">
-                                            <h5 class="mb-0">$@Model.FundraisingGoal.ToString("0.00")</h5>
+                                            <h5 class="mb-0">$@Model.Campaign!.FundraisingGoal.ToString("0.00")</h5>
                                             <p class="mb-0">Fundraising Goal</p>
                                         </div>
                                     </div>
@@ -98,16 +98,16 @@
                                         <div class="d-flex align-items-center mb-3">
                                             <!-- Avatar -->
                                             <div class="avatar avatar-story avatar-xxl me-2">
-                                                <a href="#!"> <img class="avatar-img rounded-circle" src="~/media/members/@(Model.Manager!.Image)" alt=""> </a>
+                                                <a href="#!"> <img class="avatar-img rounded-circle" src="~/media/members/@(Model.Creator!.Image)" alt=""> </a>
                                             </div>
                                             <!-- Info -->
                                             <div>
                                                 <div class="nav nav-divider">
-                                                    <h5 class="nav-item mb-0"> <a href="#!"> @Model.Manager!.FullName </a></h5>
+                                                    <h5 class="nav-item mb-0"> <a href="#!"> @Model.Creator!.FullName </a></h5>
                                                 </div>
                                                 <p class="mb-0 small">Occupation</p>
                                             </div>
-                                        </div>
+                                        </div> 
                                         <p>
                                             In mollis efficitur neque ac lobortis. Fusce commodo sit amet diam non hendrerit. Nullam volutpat enim odio, ut rutrum sapien bibendum ac. Ut vulputate malesuada mi, porttitor vestibulum lorem porttitor sit amet. Donec fermentum neque quis nibh eleifend dictum. Duis ac dui magna. Aliquam erat volutpat. Nunc diam nisl, faucibus vel risus id, semper dapibus nisi. Nullam imperdiet efficitur nunc vel commodo. Proin a blandit arcu. Fusce ut nisl varius, fermentum diam condimentum, mattis ligula. Donec et imperdiet lectus, et pellentesque felis.
                                         </p>
@@ -115,19 +115,19 @@
                                 </div>
 
                                 <h4>Problem</h4>
-                                <p>@Model.Problem</p>
+                                <p>@Model.Campaign!.Problem</p>
 
                                 <h4>Goal</h4>
-                                <p>@Model.Goal</p>
+                                <p>@Model.Campaign!.Goal</p>
 
                                 <h4>Beneficiaries</h4>
-                                <p>@Model.Beneficiaries</p>
+                                <p>@Model.Campaign!.Beneficiaries</p>
 
                                 <h4>Importance</h4>
-                                <p>@Model.Importance</p>
+                                <p>@Model.Campaign!.Importance</p>
 
                                 <h4>Solution</h4>
-                                <p>@Model.Solution</p>
+                                <p>@Model.Campaign!.Solution</p>
                             </div>
                         </div>
                     </div>

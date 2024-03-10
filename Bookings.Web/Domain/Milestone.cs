@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bookings.Web.Domain;
 
-public class Milestone : Entity
+public class Milestone : AuditableEntity
 {
     public long Id { get; set; }
 
@@ -20,10 +20,6 @@ public class Milestone : Entity
     public bool IsCompleted { get; set; } = false;
 
     public DateTime? CompletionDate { get; set; }
-
-    public bool IsDeleted { get; set; } = false;
-
-    public DateTime? DeleteDate { get; set; }
 
     public long CampaignId { get; set; }
     public virtual Campaign? Campaign { get; set; }

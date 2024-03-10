@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Bookings.Web.Data;
 using Bookings.Web.Domain;
+using System.Security.Claims;
 
 namespace Bookings.Web.Controllers
 {
@@ -21,6 +22,7 @@ namespace Bookings.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                expenditure.CreatedBy = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
                 _context.Add(expenditure);
                 await _context.SaveChangesAsync();
                 return Redirect(HttpContext.Request.Headers.Referer!);

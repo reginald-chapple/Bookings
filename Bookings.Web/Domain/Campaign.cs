@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bookings.Web.Domain;
 
-public class Campaign : Entity
+public class Campaign : AuditableEntity
 {
     public Campaign() {}
     
@@ -36,17 +36,10 @@ public class Campaign : Entity
 
     public ProgressStatus Status { get; set; } = ProgressStatus.Draft;
 
-    public bool IsDeleted { get; set; } = false;
-
-    public DateTime? DeleteDate { get; set; }
-
     [DataType(DataType.Date)]
     public DateOnly? Deadline { get; set; }
 
     public DateTime? PublishDate { get; set; }
-
-    public string ManagerId { get; set; } = string.Empty;
-    public virtual ApplicationUser? Manager { get; set; }
 
     public long CauseId { get; set; }
     public virtual Cause? Cause { get; set; }

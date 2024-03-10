@@ -84,7 +84,8 @@ public class ApplicantsController : Controller
                 StartTime = model.StartTime,
                 EndTime = model.EndTime,
                 EntityId = model.CampaignId,
-                EntityType = EntityType.Campaign
+                EntityType = EntityType.Campaign,
+                CreatedBy = User.FindFirst(ClaimTypes.NameIdentifier)!.Value
             };
             applicant.Status = ApplicantStatus.Interview;
             _context.Update(applicant);

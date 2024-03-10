@@ -23,7 +23,7 @@
         <div class="card h-100">
             <div class="card-header d-sm-flex align-items-center text-center justify-content-sm-between border-0 pb-0">
                 <h1 class="h4 card-title">Discover Campaigns</h1>
-                @if (User.Identity!.IsAuthenticated && User.IsInRole("Member") && User.FindFirst(ClaimTypes.NameIdentifier)!.Value == Model.ManagerId)
+                @if (User.Identity!.IsAuthenticated && User.IsInRole("Member") && User.FindFirst(ClaimTypes.NameIdentifier)!.Value == Model.CreatedBy)
                 {
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <a class="btn btn-primary-soft" asp-controller="Members" asp-action="Campaigns" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)!.Value"> 
@@ -71,7 +71,7 @@
                         </div> *@
 
                         <div class="row mb-5">
-                           @if (User.Identity!.IsAuthenticated && User.IsInRole("Member") && User.FindFirst(ClaimTypes.NameIdentifier)!.Value == Model.ManagerId)
+                           @if (User.Identity!.IsAuthenticated && User.IsInRole("Member") && User.FindFirst(ClaimTypes.NameIdentifier)!.Value == Model.CreatedBy)
                             {
                             <div class="d-flex align-items-center justify-content-end my-3">
                                 <div class="ms-3" id="bulk-select-actions">
@@ -97,7 +97,7 @@
                                     <table class="table table-sm border-top border-200 fs--1 mb-0">
                                         <thead>
                                             <tr>
-                                                @if (User.Identity!.IsAuthenticated && User.IsInRole("Member") && User.FindFirst(ClaimTypes.NameIdentifier)!.Value == Model.ManagerId)
+                                                @if (User.Identity!.IsAuthenticated && User.IsInRole("Member") && User.FindFirst(ClaimTypes.NameIdentifier)!.Value == Model.CreatedBy)
                                                 {
                                                     <th class="white-space-nowrap fs--1 align-middle ps-0" style="max-width:20px; width:18px;">
                                                         <div class="form-check mb-0 fs-0">
@@ -107,7 +107,7 @@
                                                 }
                                                 <th class="sort align-middle text-uppercase ps-3">Item</th>
                                                 <th class="sort align-middle text-uppercase ps-3">Cost</th>
-                                                @if (User.Identity!.IsAuthenticated && User.IsInRole("Member") && User.FindFirst(ClaimTypes.NameIdentifier)!.Value == Model.ManagerId)
+                                                @if (User.Identity!.IsAuthenticated && User.IsInRole("Member") && User.FindFirst(ClaimTypes.NameIdentifier)!.Value == Model.CreatedBy)
                                                 {
                                                     <th class="sort text-end align-middle text-uppercase pe-0" scope="col">Actions</th>
                                                 }
@@ -117,7 +117,7 @@
                                             @foreach(var item in Model.Expenditures)
                                             {
                                                 <tr>
-                                                    @if (User.Identity!.IsAuthenticated && User.IsInRole("Member") && User.FindFirst(ClaimTypes.NameIdentifier)!.Value == Model.ManagerId)
+                                                    @if (User.Identity!.IsAuthenticated && User.IsInRole("Member") && User.FindFirst(ClaimTypes.NameIdentifier)!.Value == Model.CreatedBy)
                                                     {
                                                         <td class="fs--1 align-middle">
                                                             <div class="form-check mb-0 fs-0">
@@ -129,7 +129,7 @@
                                                         @item.Item
                                                     </td>
                                                     <td class="align-middle ps-3">@item.Cost.ToString("0.00")</td>
-                                                    @if (User.Identity!.IsAuthenticated && User.IsInRole("Member") && User.FindFirst(ClaimTypes.NameIdentifier)!.Value == Model.ManagerId)
+                                                    @if (User.Identity!.IsAuthenticated && User.IsInRole("Member") && User.FindFirst(ClaimTypes.NameIdentifier)!.Value == Model.CreatedBy)
                                                     {
                                                         <td class="align-middle white-space-nowrap text-end pe-0">
                                                             <div class="font-sans-serif btn-reveal-trigger position-static">

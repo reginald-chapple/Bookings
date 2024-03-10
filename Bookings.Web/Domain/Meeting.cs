@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Bookings.Web.Domain;
 
-public class Meeting : Entity
+public class Meeting : AuditableEntity
 {
     public long Id { get; set; }
 
@@ -14,10 +14,6 @@ public class Meeting : Entity
     public string Details { get; set; } = string.Empty;
 
     public string Location { get; set; } = string.Empty;
-
-    public bool IsDeleted { get; set; } = false;
-
-    public DateTime? DeleteDate { get; set; }
 
     [DataType(DataType.Date)]
     public DateOnly Date { get; set; }

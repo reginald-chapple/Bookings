@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Bookings.Web.Data.EntityConfigurations;
+using System.Security.Claims;
 
 namespace Bookings.Web.Data
 {
@@ -48,13 +49,6 @@ namespace Bookings.Web.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
-            builder.Entity<ApplicationUser>()
-                .HasMany(a => a.Campaigns)
-                .WithOne(c => c.Manager)
-                .HasForeignKey("ManagerId")
-                .OnDelete(DeleteBehavior.Cascade)
-                .IsRequired();
 
             builder.Entity<ApplicationUserRole>(userRole =>
             {

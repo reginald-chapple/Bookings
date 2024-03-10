@@ -22,8 +22,7 @@ public class DonationsController : Controller
     {
         if (ModelState.IsValid)
         {
-            donation.DonorEmail = User.FindFirst(ClaimTypes.Email)!.Value;
-            donation.DonorName = User.FindFirst("FullName")!.Value;
+            donation.CreatedBy = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
             _context.Add(donation);
             await _context.SaveChangesAsync();
             return Redirect(HttpContext.Request.Headers.Referer!);

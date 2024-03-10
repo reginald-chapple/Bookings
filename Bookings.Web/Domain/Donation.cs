@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bookings.Web.Domain;
 
-public class Donation : Entity
+public class Donation : AuditableEntity
 {
     public Donation() {}
     
@@ -10,9 +10,6 @@ public class Donation : Entity
 
     [Precision(8, 2)]
     public decimal Amount { get; set; } = 0.0m;
-
-    public string DonorEmail { get; set; } = string.Empty;
-    public string DonorName { get; set; } = string.Empty;
 
     public long CampaignId { get; set; }
     public virtual Campaign? Campaign { get; set; }

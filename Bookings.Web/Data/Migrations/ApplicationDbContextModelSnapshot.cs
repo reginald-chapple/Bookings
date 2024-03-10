@@ -29,13 +29,7 @@ namespace Bookings.Web.Data.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("DeleteDate")
-                        .HasColumnType("TEXT");
-
                     b.Property<bool>("IsCompleted")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Label")
@@ -244,10 +238,18 @@ namespace Bookings.Web.Data.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<DateOnly?>("Deadline")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("DeleteDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DeletedBy")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<decimal>("FundraisingGoal")
@@ -267,10 +269,6 @@ namespace Bookings.Web.Data.Migrations
 
                     b.Property<bool>("IsPublished")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("ManagerId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -297,11 +295,13 @@ namespace Bookings.Web.Data.Migrations
                     b.Property<DateTime>("Updated")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CauseId");
-
-                    b.HasIndex("ManagerId");
 
                     b.ToTable("Campaigns");
                 });
@@ -762,9 +762,6 @@ namespace Bookings.Web.Data.Migrations
                     b.Property<DateOnly>("Date")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("DeleteDate")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Details")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -776,9 +773,6 @@ namespace Bookings.Web.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("EntityType")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Location")
@@ -843,17 +837,11 @@ namespace Bookings.Web.Data.Migrations
                     b.Property<DateTime?>("Deadline")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("DeleteDate")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Details")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsCompleted")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Label")
@@ -1384,15 +1372,7 @@ namespace Bookings.Web.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Bookings.Web.Domain.ApplicationUser", "Manager")
-                        .WithMany("Campaigns")
-                        .HasForeignKey("ManagerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Cause");
-
-                    b.Navigation("Manager");
                 });
 
             modelBuilder.Entity("Bookings.Web.Domain.Cause", b =>
@@ -1727,8 +1707,6 @@ namespace Bookings.Web.Data.Migrations
 
             modelBuilder.Entity("Bookings.Web.Domain.ApplicationUser", b =>
                 {
-                    b.Navigation("Campaigns");
-
                     b.Navigation("Chats");
 
                     b.Navigation("Communities");

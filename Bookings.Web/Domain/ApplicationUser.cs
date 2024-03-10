@@ -26,7 +26,6 @@ public class ApplicationUser : IdentityUser<string>
     public virtual ICollection<UserNotification> Notifications { get; set; } = [];
     public virtual ICollection<UserValue> Values { get; set; } = [];
     public virtual ICollection<ChatUser> Chats { get; set; } = [];
-    public virtual ICollection<Campaign> Campaigns { get; set; } = [];
     public virtual ICollection<MeetingAttendee> Meetings { get; set; } = [];
     public virtual ICollection<Volunteer> VolunteerWork { get; set; } = [];
     public virtual ICollection<CommunityMember> Communities { get; set; } = [];

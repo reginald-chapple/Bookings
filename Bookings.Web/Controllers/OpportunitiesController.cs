@@ -35,6 +35,7 @@ public class OpportunitiesController : Controller
     {
         if (ModelState.IsValid)
         {
+            opportunity.CreatedBy = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
             await _context.AddAsync(opportunity);
             await _context.SaveChangesAsync();
         }

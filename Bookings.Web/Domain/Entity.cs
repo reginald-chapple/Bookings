@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Bookings.Web.Domain
-{
-    public abstract class Entity : IEntity
-    {
-        [ScaffoldColumn(false)]
-        public DateTime Created { get; set; }
+namespace Bookings.Web.Domain;
 
-        [ScaffoldColumn(false)]
-        public DateTime Updated { get; set; }
-    }
+public abstract class Entity : IEntity
+{
+    [ScaffoldColumn(false)]
+    public DateTime Created { get; set; }
+
+    [ScaffoldColumn(false)]
+    public DateTime Updated { get; set; }
 }
+

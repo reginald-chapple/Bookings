@@ -1,7 +1,9 @@
 using System.Security.Claims;
 using Bookings.Web.Data;
+using Bookings.Web.Data.Services;
 using Bookings.Web.Domain;
 using Bookings.Web.Infrastructure.Helpers;
+using Bookings.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,10 +13,12 @@ namespace Bookings.Web.Controllers;
 public class CampaignsController : Controller
 {
     private readonly ApplicationDbContext _context;
+    private readonly IUserService _userService;
 
-    public CampaignsController(ApplicationDbContext context)
+    public CampaignsController(ApplicationDbContext context, IUserService userService)
     {
         _context = context;
+        _userService = userService;
     }
 
     public IActionResult Index()
@@ -30,7 +34,7 @@ public class CampaignsController : Controller
         if (ModelState.IsValid)
         {
             campaign.Slug = $"{FriendlyUrlHelper.GetFriendlyTitle(campaign.Name)}-{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()}";
-            campaign.ManagerId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            campaign.CreatedBy = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
             await _context.AddAsync(campaign);
             await _context.SaveChangesAsync();
             return Redirect(HttpContext.Request.Headers.Referer!);
@@ -68,7 +72,6 @@ public class CampaignsController : Controller
 
         var campaign = await _context.Campaigns
             .Include(c => c.Cause)
-            .Include(c => c.Manager)
             .FirstOrDefaultAsync(u => u.Slug == slug );
 
         if (campaign == null)
@@ -76,7 +79,13 @@ public class CampaignsController : Controller
             return NotFound();
         }
 
-        return View(campaign);
+        var model = new CampaignDetailsModel
+        {
+            Creator = await _userService.GetCreatorAsync(campaign.CreatedBy),
+            Campaign = campaign
+        };
+
+        return View(model);
     }
 
     [Route("{slug}/Expenditures")]

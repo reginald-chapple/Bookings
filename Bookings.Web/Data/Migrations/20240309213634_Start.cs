@@ -170,8 +170,6 @@ namespace Bookings.Web.Data.Migrations
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Details = table.Column<string>(type: "TEXT", nullable: false),
                     Location = table.Column<string>(type: "TEXT", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
-                    DeleteDate = table.Column<DateTime>(type: "TEXT", nullable: true),
                     Date = table.Column<DateOnly>(type: "TEXT", nullable: false),
                     StartTime = table.Column<TimeOnly>(type: "TEXT", nullable: false),
                     EndTime = table.Column<TimeOnly>(type: "TEXT", nullable: false),
@@ -214,6 +212,22 @@ namespace Bookings.Web.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SkinComplexions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Values",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Values", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -323,6 +337,36 @@ namespace Bookings.Web.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Relationships",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    IsPrivate = table.Column<bool>(type: "INTEGER", nullable: false),
+                    Type = table.Column<int>(type: "INTEGER", nullable: false),
+                    SeekerId = table.Column<string>(type: "TEXT", nullable: false),
+                    TargetId = table.Column<string>(type: "TEXT", nullable: false),
+                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Relationships", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Relationships_AspNetUsers_SeekerId",
+                        column: x => x.SeekerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Relationships_AspNetUsers_TargetId",
+                        column: x => x.TargetId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Resumes",
                 columns: table => new
                 {
@@ -362,24 +406,20 @@ namespace Bookings.Web.Data.Migrations
                     Importance = table.Column<string>(type: "TEXT", nullable: false),
                     Solution = table.Column<string>(type: "TEXT", nullable: false),
                     Status = table.Column<int>(type: "INTEGER", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
-                    DeleteDate = table.Column<DateTime>(type: "TEXT", nullable: true),
                     Deadline = table.Column<DateOnly>(type: "TEXT", nullable: true),
                     PublishDate = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    ManagerId = table.Column<string>(type: "TEXT", nullable: false),
                     CauseId = table.Column<long>(type: "INTEGER", nullable: false),
                     Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
+                    DeleteDate = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    CreatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    DeletedBy = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Campaigns", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Campaigns_AspNetUsers_ManagerId",
-                        column: x => x.ManagerId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Campaigns_Causes_CauseId",
                         column: x => x.CauseId,
@@ -579,6 +619,32 @@ namespace Bookings.Web.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserValues",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "TEXT", nullable: false),
+                    ValueId = table.Column<long>(type: "INTEGER", nullable: false),
+                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserValues", x => new { x.ValueId, x.UserId });
+                    table.ForeignKey(
+                        name: "FK_UserValues_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserValues_Values_ValueId",
+                        column: x => x.ValueId,
+                        principalTable: "Values",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Donations",
                 columns: table => new
                 {
@@ -639,8 +705,6 @@ namespace Bookings.Web.Data.Migrations
                     Deadline = table.Column<DateTime>(type: "TEXT", nullable: true),
                     IsCompleted = table.Column<bool>(type: "INTEGER", nullable: false),
                     CompletionDate = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
-                    DeleteDate = table.Column<DateTime>(type: "TEXT", nullable: true),
                     CampaignId = table.Column<long>(type: "INTEGER", nullable: false),
                     Created = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
@@ -767,8 +831,6 @@ namespace Bookings.Web.Data.Migrations
                     Label = table.Column<string>(type: "TEXT", nullable: false),
                     IsCompleted = table.Column<bool>(type: "INTEGER", nullable: false),
                     CompletionDate = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
-                    DeleteDate = table.Column<DateTime>(type: "TEXT", nullable: true),
                     MilestoneId = table.Column<long>(type: "INTEGER", nullable: false),
                     Created = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
@@ -923,11 +985,6 @@ namespace Bookings.Web.Data.Migrations
                 column: "CauseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Campaigns_ManagerId",
-                table: "Campaigns",
-                column: "ManagerId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Causes_ParentId",
                 table: "Causes",
                 column: "ParentId");
@@ -1004,6 +1061,16 @@ namespace Bookings.Web.Data.Migrations
                 column: "ForumId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Relationships_SeekerId",
+                table: "Relationships",
+                column: "SeekerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Relationships_TargetId",
+                table: "Relationships",
+                column: "TargetId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Reply_PostId",
                 table: "Reply",
                 column: "PostId");
@@ -1022,6 +1089,11 @@ namespace Bookings.Web.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_UserNotifications_UserId",
                 table: "UserNotifications",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserValues_UserId",
+                table: "UserValues",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -1085,10 +1157,16 @@ namespace Bookings.Web.Data.Migrations
                 name: "MeetingAttendees");
 
             migrationBuilder.DropTable(
+                name: "Relationships");
+
+            migrationBuilder.DropTable(
                 name: "Reply");
 
             migrationBuilder.DropTable(
                 name: "UserNotifications");
+
+            migrationBuilder.DropTable(
+                name: "UserValues");
 
             migrationBuilder.DropTable(
                 name: "Volunteers");
@@ -1124,16 +1202,19 @@ namespace Bookings.Web.Data.Migrations
                 name: "Notifications");
 
             migrationBuilder.DropTable(
+                name: "Values");
+
+            migrationBuilder.DropTable(
                 name: "Opportunities");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Forums");
 
             migrationBuilder.DropTable(
                 name: "Campaigns");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Causes");

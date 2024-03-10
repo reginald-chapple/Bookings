@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Bookings.Web.Domain;
 
-public class Opportunity : Entity
+public class Opportunity : AuditableEntity
 {
     public long Id { get; set; }
 
