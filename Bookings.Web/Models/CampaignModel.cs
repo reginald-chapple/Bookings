@@ -7,6 +7,8 @@ public class CampaignDetailsModel
     public virtual CreatorModel? Creator { get; set; }
 
     public virtual Campaign? Campaign { get; set; }
+
+    public virtual ICollection<ActionItem> ActionItems { get; set; } = [];
 }
 
 public class CreatorCampaignsModel

@@ -26,7 +26,6 @@ namespace Bookings.Web.Data
         public DbSet<CommunityMember> CommunityMembers { get; set; }
         public DbSet<Cause> Causes { get; set; }
         public DbSet<Campaign> Campaigns { get; set; }
-        public DbSet<Milestone> Milestones { get; set; }
         public DbSet<ActionItem> ActionItems { get; set; }
         public DbSet<Resume> Resumes { get; set; }
         public DbSet<Opportunity> Opportunities { get; set; }

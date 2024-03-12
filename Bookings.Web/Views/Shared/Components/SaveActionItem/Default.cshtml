@@ -11,12 +11,18 @@
             <div class="modal-body">
                 <form id="ai-form" asp-controller="ActionItems" asp-action="Create">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label asp-for="Label" class="control-label"></label>
                         <input asp-for="Label" class="form-control" />
                         <span asp-validation-for="Label" class="text-danger"></span>
                     </div>
-                    <input type="hidden" asp-for="MilestoneId" />
+                    <div class="mb-3">
+                        <label asp-for="Details" class="control-label"></label>
+                        <textarea asp-for="Details" class="form-control"></textarea>
+                        <span asp-validation-for="Details" class="text-danger"></span>
+                    </div>
+                    <input type="hidden" asp-for="ParentId" />
+                    <input type="hidden" asp-for="CampaignId" />
                 </form>
             </div>
             <div class="modal-footer">

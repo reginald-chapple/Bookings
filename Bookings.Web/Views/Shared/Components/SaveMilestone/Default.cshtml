@@ -1,4 +1,4 @@
-@model Milestone
+@model ActionItem
 
 <div class="modal fade" id="saveMilestoneModal" tabindex="-1" aria-labelledby="saveMilestoneModalLabel"
     aria-hidden="true">
@@ -11,10 +11,15 @@
             <div class="modal-body">
                 <form id="milestone-form" asp-controller="Milestones" asp-action="Create">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label asp-for="Label" class="control-label"></label>
                         <input asp-for="Label" class="form-control" />
                         <span asp-validation-for="Label" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Details" class="control-label"></label>
+                        <textarea asp-for="Details" class="form-control"></textarea>
+                        <span asp-validation-for="Details" class="text-danger"></span>
                     </div>
                     <input type="hidden" asp-for="CampaignId" />
                 </form>

@@ -5,11 +5,12 @@ namespace Bookings.Web.ViewComponents;
 
 public class SaveActionItemViewComponent : ViewComponent
 {
-    public IViewComponentResult Invoke(long milestoneId)
+    public IViewComponentResult Invoke(long parentId, long campaignId)
     {
         return View(new ActionItem
         {
-            MilestoneId = milestoneId
+            ParentId = parentId,
+            CampaignId = campaignId
         });
     }
 }

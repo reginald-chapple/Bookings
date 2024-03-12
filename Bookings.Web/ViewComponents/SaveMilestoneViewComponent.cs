@@ -7,7 +7,7 @@ public class SaveMilestoneViewComponent : ViewComponent
 {
     public IViewComponentResult Invoke(long campaignId)
     {
-        return View(new Milestone
+        return View(new ActionItem
         {
             CampaignId = campaignId
         });

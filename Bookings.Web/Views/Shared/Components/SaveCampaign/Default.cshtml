@@ -40,6 +40,11 @@
                         </select>
                     </div>
                     <div class="form-group mb-3">
+                        <label asp-for="Reason" class="control-label"></label>
+                        <textarea asp-for="Reason" class="form-control"></textarea>
+                        <span asp-validation-for="Reason" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
                         <label asp-for="Problem" class="control-label"></label>
                         <textarea asp-for="Problem" class="form-control"></textarea>
                         <span asp-validation-for="Problem" class="text-danger"></span>

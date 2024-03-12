@@ -20,6 +20,9 @@ public class Campaign : AuditableEntity
     public decimal FundraisingGoal { get; set; } = 0.0m;
 
     [DataType(DataType.Text)]
+    public string Reason { get; set; } = string.Empty;
+
+    [DataType(DataType.Text)]
     public string Problem { get; set; } = string.Empty;
 
     [DataType(DataType.Text)]
@@ -46,7 +49,7 @@ public class Campaign : AuditableEntity
 
     // public long CityId { get; set; }
     // public virtual City? City { get; set; }
-    public virtual ICollection<Milestone> Milestones { get; set; } = [];
+    public virtual ICollection<ActionItem> ActionItems { get; set; } = [];
     public virtual ICollection<Opportunity> Opportunities { get; set; } = [];
     public virtual ICollection<Donation> Donations { get; set; } = [];
     public virtual ICollection<Expenditure> Expenditures { get; set; } = [];

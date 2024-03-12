@@ -18,11 +18,12 @@ public class ActionItemsController : Controller
     [Route("Create")]
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Label,MilestoneId")] ActionItem item)
+    public async Task<IActionResult> Create([Bind("Id,Label,Details,CampaignId,ParentId")] ActionItem item)
     {
         if (ModelState.IsValid)
         {
             item.CreatedBy = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            item.Type = ActionItemType.Task;
             await _context.AddAsync(item);
             await _context.SaveChangesAsync();
         }

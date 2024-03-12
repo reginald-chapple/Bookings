@@ -20,11 +20,12 @@ public class MilestonesController : Controller
     [Route("Create")]
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Label,CampaignId")] Milestone milestone)
+    public async Task<IActionResult> Create([Bind("Id,Label,Details,CampaignId")] ActionItem milestone)
     {
         if (ModelState.IsValid)
         {
             milestone.CreatedBy = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            milestone.Type = ActionItemType.Milestone;
             await _context.AddAsync(milestone);
             await _context.SaveChangesAsync();
         }
@@ -39,8 +40,8 @@ public class MilestonesController : Controller
             return NotFound();
         }
 
-        var milestone = await _context.Milestones
-            .Include(m => m.ActionItems)
+        var milestone = await _context.ActionItems
+            .Include(m => m.Children)
             .Include(m => m.Campaign)
                 .ThenInclude(c => c!.Cause)
             .FirstOrDefaultAsync(m => m.Id == id);
@@ -50,7 +51,7 @@ public class MilestonesController : Controller
             return NotFound();
         }
 
-        if (milestone.Campaign!.CreatedBy != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+        if (milestone.CreatedBy != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
         {
             return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
         }

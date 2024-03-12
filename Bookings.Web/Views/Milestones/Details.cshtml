@@ -1,4 +1,4 @@
-@model Milestone
+@model ActionItem
 
 @{
     ViewData["Title"] = "Milestone";
@@ -118,11 +118,9 @@
                                     <div class="d-flex align-items-center">
                                         <span class="bi bi-check2-square me-2 text-700 fs--1"></span>
                                         <h5 class="text-1100 mb-0 me-2">
-                                            @Model.ActionItems.Count()<span class="text-900 fw-normal ms-2">task(s)</span>
+                                            @Model.Children.Count()<span class="text-900 fw-normal ms-2">tasks</span>
                                         </h5>
-                                        <a class="fw-bold fs--1 mt-1" href="#!" data-bs-toggle="modal" data-bs-target="#saveActionItemModal">
-                                            Add task <span class="bi bi-plus-circle me-2 fs--2"></span>
-                                        </a>
+                                       <span class="fw-bold"> @Model.Children.Where(a => a.IsCompleted).Count() / @Model.Children.Count() Completed</span>
                                     </div>
                                 </div>
                             </div>
@@ -155,7 +153,7 @@
                                     </div>
                                     <div class="card-body py-0" style="max-height: 250px; overflow-y: scroll;">
                                         <div class="row p-1">
-                                            @foreach(var item in Model.ActionItems)
+                                            @foreach(var item in Model.Children)
                                             {
                                                 @if (item.IsCompleted)
                                                 {
@@ -194,14 +192,18 @@
                                         </div>
                                     </div>
                                     <div class="card-footer py-4">
-                                        <span> @Model.ActionItems.Where(a => a.IsCompleted).Count() / @Model.ActionItems.Count() Completed</span>
+                                        <a class="fw-bold fs--1 mt-1" href="#!" data-bs-toggle="modal" data-bs-target="#saveActionItemModal">
+                                            Add task
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-                            <h3 class="text-1100 mb-4">Details</h3>
-                            <p class="text-800 mb-4">
-                                @Model.Details
-                            </p>
+                            <div class="col-12 mt-5">
+                                <h3 class="text-1100">Details</h3>
+                                <p class="text-800 mb-4">
+                                    @Model.Details
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -210,10 +212,8 @@
     </div>
 </div>
 
-@await Component.InvokeAsync("SaveActionItem", new { milestoneId = Model.Id })
+@await Component.InvokeAsync("SaveActionItem", new { parentId = Model.Id, campaignId = Model.CampaignId })
 
-@section JavaScripts {
-    <script src="~/lib/echarts/echarts.min.js"></script>
-}
+@section JavaScripts {}
 
 @section ScriptTag {}

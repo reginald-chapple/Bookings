@@ -29,7 +29,7 @@ public class CampaignsController : Controller
     [Route("Create")]
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Name,Problem,Goal,Beneficiaries,Importance,Solution,FundraisingGoal,CauseId")] Campaign campaign)
+    public async Task<IActionResult> Create([Bind("Id,Name,Reason,Problem,Goal,Beneficiaries,Importance,Solution,FundraisingGoal,CauseId")] Campaign campaign)
     {
         if (ModelState.IsValid)
         {
@@ -53,8 +53,6 @@ public class CampaignsController : Controller
         var campaign = await _context.Campaigns
             .Include(c => c.Cause)
             .Include(c => c.Expenditures)
-            .Include(c => c.Milestones)
-                .ThenInclude(m => m.ActionItems)
             .FirstOrDefaultAsync(u => u.Slug == slug );
 
         if (campaign == null)
@@ -62,10 +60,16 @@ public class CampaignsController : Controller
             return NotFound();
         }
 
+        var actionItems = _context.ActionItems
+            .Where(a => a.CampaignId == campaign.Id && a.Type == ActionItemType.Milestone)
+            .Include(a => a.Children)
+            .ToList();
+
         var model = new CampaignDetailsModel
         {
             Creator = await _userService.GetCreatorAsync(campaign.CreatedBy),
-            Campaign = campaign
+            Campaign = campaign,
+            ActionItems = actionItems
         };
 
         return View(model);
@@ -186,7 +190,7 @@ public class CampaignsController : Controller
         }
 
         var campaign = await _context.Campaigns
-            .Include(c => c.Milestones)
+            .Include(c => c.ActionItems)
             .FirstOrDefaultAsync(u => u.Slug == slug );
 
         if (campaign == null)
