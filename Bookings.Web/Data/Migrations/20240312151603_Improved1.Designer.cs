@@ -3,6 +3,7 @@ using System;
 using Bookings.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bookings.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240312151603_Improved1")]
+    partial class Improved1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.1");
@@ -497,22 +500,11 @@ namespace Bookings.Web.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<long>("CauseId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("DeleteDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("DeletedBy")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsEnabled")
                         .HasColumnType("INTEGER");
@@ -524,11 +516,9 @@ namespace Bookings.Web.Data.Migrations
                     b.Property<DateTime>("Updated")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("CauseId");
 
                     b.ToTable("Communities");
                 });
@@ -1145,9 +1135,6 @@ namespace Bookings.Web.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<long>("CommunityId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
 
@@ -1184,8 +1171,6 @@ namespace Bookings.Web.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CommunityId");
 
                     b.HasIndex("ParentId");
 
@@ -1475,6 +1460,17 @@ namespace Bookings.Web.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Bookings.Web.Domain.Community", b =>
+                {
+                    b.HasOne("Bookings.Web.Domain.Cause", "Cause")
+                        .WithMany("Communities")
+                        .HasForeignKey("CauseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cause");
+                });
+
             modelBuilder.Entity("Bookings.Web.Domain.CommunityMember", b =>
                 {
                     b.HasOne("Bookings.Web.Domain.Community", "Community")
@@ -1606,17 +1602,9 @@ namespace Bookings.Web.Data.Migrations
 
             modelBuilder.Entity("Bookings.Web.Domain.Topic", b =>
                 {
-                    b.HasOne("Bookings.Web.Domain.Community", "Community")
-                        .WithMany("Topics")
-                        .HasForeignKey("CommunityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Bookings.Web.Domain.Topic", "Parent")
                         .WithMany("Children")
                         .HasForeignKey("ParentId");
-
-                    b.Navigation("Community");
 
                     b.Navigation("Parent");
                 });
@@ -1759,6 +1747,8 @@ namespace Bookings.Web.Data.Migrations
                     b.Navigation("Campaigns");
 
                     b.Navigation("Children");
+
+                    b.Navigation("Communities");
                 });
 
             modelBuilder.Entity("Bookings.Web.Domain.Chat", b =>
@@ -1771,8 +1761,6 @@ namespace Bookings.Web.Data.Migrations
             modelBuilder.Entity("Bookings.Web.Domain.Community", b =>
                 {
                     b.Navigation("Members");
-
-                    b.Navigation("Topics");
                 });
 
             modelBuilder.Entity("Bookings.Web.Domain.Conversation", b =>

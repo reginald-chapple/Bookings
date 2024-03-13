@@ -36,10 +36,9 @@ namespace Bookings.Web.Data
         public DbSet<Invite> Invites { get; set; }
         public DbSet<MeetingAttendee> MeetingAttendees { get; set; }        
         public DbSet<Volunteer> Volunteers { get; set; }
-        public DbSet<TimelineEntry> TimelineEntries { get; set; }
-        public DbSet<Forum> Forums { get; set; }
-        public DbSet<Post> Posts { get; set; }
-        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Topic> Topics { get; set; }
+        public DbSet<Conversation> Conversations { get; set; }
+        public DbSet<Reply> Replies { get; set; }
         public DbSet<MatchProfile> MatchProfiles { get; set; }
         public DbSet<Attraction> Attractions { get; set; }
         public DbSet<SkinComplexion> SkinComplexions { get; set; }

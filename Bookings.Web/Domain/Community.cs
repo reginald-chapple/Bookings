@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Bookings.Web.Domain;
 
-public class Community : Entity
+public class Community : AuditableEntity
 {
     public long Id { get; set; }
 
@@ -13,8 +13,6 @@ public class Community : Entity
 
     public bool IsEnabled { get; set; } = false;
 
-    public long CauseId { get; set; }
-    public virtual Cause? Cause { get; set; }
-
     public ICollection<CommunityMember> Members { get; set; } = [];
+    public ICollection<Topic> Topics { get; set; } = [];
 }

@@ -84,7 +84,6 @@ public class CampaignsController : Controller
         }
 
         var campaign = await _context.Campaigns
-            .Include(c => c.Timeline)
             .FirstOrDefaultAsync(u => u.Slug == slug );
 
         if (campaign == null)

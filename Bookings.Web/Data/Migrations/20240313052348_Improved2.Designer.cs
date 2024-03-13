@@ -3,6 +3,7 @@ using System;
 using Bookings.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bookings.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240313052348_Improved2")]
+    partial class Improved2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.1");
@@ -497,6 +500,9 @@ namespace Bookings.Web.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<long>("CauseId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
 
@@ -529,6 +535,8 @@ namespace Bookings.Web.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CauseId");
 
                     b.ToTable("Communities");
                 });
@@ -1475,6 +1483,17 @@ namespace Bookings.Web.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Bookings.Web.Domain.Community", b =>
+                {
+                    b.HasOne("Bookings.Web.Domain.Cause", "Cause")
+                        .WithMany("Communities")
+                        .HasForeignKey("CauseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cause");
+                });
+
             modelBuilder.Entity("Bookings.Web.Domain.CommunityMember", b =>
                 {
                     b.HasOne("Bookings.Web.Domain.Community", "Community")
@@ -1759,6 +1778,8 @@ namespace Bookings.Web.Data.Migrations
                     b.Navigation("Campaigns");
 
                     b.Navigation("Children");
+
+                    b.Navigation("Communities");
                 });
 
             modelBuilder.Entity("Bookings.Web.Domain.Chat", b =>

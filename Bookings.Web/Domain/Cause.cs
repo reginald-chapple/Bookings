@@ -13,5 +13,4 @@ public class Cause : Entity
 
     public virtual ICollection<Cause> Children { get; set; } = [];
     public virtual ICollection<Campaign> Campaigns { get; set; } = [];
-    public virtual ICollection<Community> Communities { get; set; } = [];
 }

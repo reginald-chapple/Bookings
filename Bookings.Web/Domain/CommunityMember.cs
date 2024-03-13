@@ -5,6 +5,7 @@ namespace Bookings.Web.Domain;
 public class CommunityMember : Entity
 {
     public CommunityRole Role { get; set; } = CommunityRole.Member;
+    
     public long CommunityId { get; set; }
     public virtual Community? Community { get; set; }
 

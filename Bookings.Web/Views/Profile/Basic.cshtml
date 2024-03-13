@@ -1,0 +1,47 @@
+@model ApplicationUser
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+@section StyleTag{}
+
+@section SidebarWidgets {
+    <partial name="Widgets/_NewsWidget" />
+}
+
+<div class="row">
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-header d-sm-flex align-items-center text-center justify-content-sm-between border-0 pb-0">
+                <h1 class="h4 card-title">Discover Campaigns</h1>
+                <a class="btn btn-primary-soft" href="#"> 
+                    <i class="bi bi-compass pe-1"></i> Campaigns
+                </a>
+            </div>
+            <div class="card-body">
+                <ul class="nav nav-tabs nav-bottom-line justify-content-center justify-content-md-start">
+                    <li class="nav-item"> 
+                        <a class="nav-link active" asp-controller="Profile" asp-action="Basic" asp-route-id="@Model.Id"> Basic </a> 
+                    </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link" asp-controller="Profile" asp-action="Values" asp-route-id="@Model.Id"> Values </a> 
+                    </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link" asp-controller="Profile" asp-action="Dating" asp-route-id="@Model.Id"> Dating </a> 
+                    </li>
+                </ul>
+                <div class="tab-content mb-0 pb-0">
+                    <div class="tab-pane fade show active">
+                        ...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section JavaScripts {
+}
+
+@section ScriptTag {}
