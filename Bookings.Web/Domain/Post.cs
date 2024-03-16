@@ -2,8 +2,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Bookings.Web.Domain;
 
-public class Conversation : AuditableEntity
+public class Post : AuditableEntity
 {
+    public Post() {}
+    
     public long Id { get; set; }
 
     public string Subject { get; set; } = string.Empty;
@@ -11,8 +13,8 @@ public class Conversation : AuditableEntity
     [DataType(DataType.Text)]
     public string Content { get; set; } = string.Empty;
 
-    public long TopicId { get; set; }
-    public virtual Topic? Topic { get; set; }
+    public long? CommunityId { get; set; }
+    public virtual Community? Community { get; set; }
 
     public virtual ICollection<Reply> Replies { get; set; } = [];
 }

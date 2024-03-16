@@ -3,6 +3,7 @@ using System;
 using Bookings.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bookings.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240315101511_Improved5")]
+    partial class Improved5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.1");
@@ -66,9 +69,6 @@ namespace Bookings.Web.Data.Migrations
                     b.Property<decimal>("PercentageComplete")
                         .HasPrecision(5, 2)
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("State")
-                        .HasColumnType("INTEGER");
 
                     b.Property<int>("Type")
                         .HasColumnType("INTEGER");
@@ -257,6 +257,27 @@ namespace Bookings.Web.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Bookings.Web.Domain.Attraction", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Label")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Attractions");
                 });
 
             modelBuilder.Entity("Bookings.Web.Domain.Campaign", b =>
@@ -635,47 +656,6 @@ namespace Bookings.Web.Data.Migrations
                     b.ToTable("Expenditures");
                 });
 
-            modelBuilder.Entity("Bookings.Web.Domain.Follow", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("DeleteDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("DeletedBy")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("Updated")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Follows");
-                });
-
             modelBuilder.Entity("Bookings.Web.Domain.Invite", b =>
                 {
                     b.Property<long>("Id")
@@ -740,6 +720,59 @@ namespace Bookings.Web.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Invites");
+                });
+
+            modelBuilder.Entity("Bookings.Web.Domain.MatchProfile", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("BodyType")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("ComplexionId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("EyeColor")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("GenderIdentity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("HairColor")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("HasChildren")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsDrinker")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsSmoker")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Sexuality")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ComplexionId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("MatchProfiles");
                 });
 
             modelBuilder.Entity("Bookings.Web.Domain.Meeting", b =>
@@ -910,6 +943,9 @@ namespace Bookings.Web.Data.Migrations
                     b.Property<long?>("CommunityId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<long?>("Communityd")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -958,19 +994,16 @@ namespace Bookings.Web.Data.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("DeleteDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("DeletedBy")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool>("IsPrivate")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("SeekerId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("TargetId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("Type")
                         .HasColumnType("INTEGER");
@@ -978,17 +1011,11 @@ namespace Bookings.Web.Data.Migrations
                     b.Property<DateTime>("Updated")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("SeekerId");
+
+                    b.HasIndex("TargetId");
 
                     b.ToTable("Relationships");
                 });
@@ -1094,6 +1121,31 @@ namespace Bookings.Web.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Resumes");
+                });
+
+            modelBuilder.Entity("Bookings.Web.Domain.SkinComplexion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("HexCode")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ScalePosition")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SkinComplexions");
                 });
 
             modelBuilder.Entity("Bookings.Web.Domain.UserNotification", b =>
@@ -1431,13 +1483,19 @@ namespace Bookings.Web.Data.Migrations
                     b.Navigation("Campaign");
                 });
 
-            modelBuilder.Entity("Bookings.Web.Domain.Follow", b =>
+            modelBuilder.Entity("Bookings.Web.Domain.MatchProfile", b =>
                 {
+                    b.HasOne("Bookings.Web.Domain.SkinComplexion", "Complexion")
+                        .WithMany("Profiles")
+                        .HasForeignKey("ComplexionId");
+
                     b.HasOne("Bookings.Web.Domain.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                        .WithOne("MatchProfile")
+                        .HasForeignKey("Bookings.Web.Domain.MatchProfile", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Complexion");
 
                     b.Navigation("User");
                 });
@@ -1483,13 +1541,21 @@ namespace Bookings.Web.Data.Migrations
 
             modelBuilder.Entity("Bookings.Web.Domain.Relationship", b =>
                 {
-                    b.HasOne("Bookings.Web.Domain.ApplicationUser", "User")
-                        .WithMany("Relationships")
-                        .HasForeignKey("UserId")
+                    b.HasOne("Bookings.Web.Domain.ApplicationUser", "Seeker")
+                        .WithMany()
+                        .HasForeignKey("SeekerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.HasOne("Bookings.Web.Domain.ApplicationUser", "Target")
+                        .WithMany()
+                        .HasForeignKey("TargetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Seeker");
+
+                    b.Navigation("Target");
                 });
 
             modelBuilder.Entity("Bookings.Web.Domain.Reply", b =>
@@ -1618,11 +1684,11 @@ namespace Bookings.Web.Data.Migrations
 
                     b.Navigation("Communities");
 
+                    b.Navigation("MatchProfile");
+
                     b.Navigation("Meetings");
 
                     b.Navigation("Notifications");
-
-                    b.Navigation("Relationships");
 
                     b.Navigation("UserRoles");
 
@@ -1695,6 +1761,11 @@ namespace Bookings.Web.Data.Migrations
             modelBuilder.Entity("Bookings.Web.Domain.Resume", b =>
                 {
                     b.Navigation("Applications");
+                });
+
+            modelBuilder.Entity("Bookings.Web.Domain.SkinComplexion", b =>
+                {
+                    b.Navigation("Profiles");
                 });
 
             modelBuilder.Entity("Bookings.Web.Domain.Value", b =>

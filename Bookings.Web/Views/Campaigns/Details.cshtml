@@ -15,29 +15,17 @@
         <div class="card h-100">
             <div class="card-header d-sm-flex align-items-center text-center justify-content-sm-between border-0 pb-0">
                 <h1 class="h4 card-title">Discover Campaigns</h1>
-                @if (User.Identity!.IsAuthenticated && User.IsInRole("Member") && User.FindFirst(ClaimTypes.NameIdentifier)!.Value == Model.Creator!.Id)
-                {
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <a class="btn btn-primary-soft" asp-controller="Members" asp-action="Campaigns" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)!.Value"> 
-                            <i class="bi bi-person-circle pe-1"></i> My Campaigns
-                        </a>
-                        <a class="btn btn-primary-soft" href="#"> 
-                            <i class="bi bi-compass pe-1"></i> All Campaigns
-                        </a>
-                    </div>
-                }
-                else
-                {
-                    <a class="btn btn-primary-soft" href="#">
-                        <i class="bi bi-compass pe-1"></i> Campaigns
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <a class="btn btn-primary-soft" asp-controller="Members" asp-action="Campaigns" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)!.Value"> 
+                        <i class="bi bi-person-circle pe-1"></i> My Campaigns
                     </a>
-                }
+                    <a class="btn btn-primary-soft" href="#"> 
+                        <i class="bi bi-globe-americas pe-1"></i> Community
+                    </a>
+                </div>
             </div>
             <div class="card-body">
                 <ul class="nav nav-tabs nav-bottom-line justify-content-center justify-content-md-start">
-                    <li class="nav-item"> 
-                        <a class="nav-link" asp-controller="Campaigns" asp-action="Timeline" asp-route-slug="@Model.Campaign!.Slug"> Timeline </a> 
-                    </li>
                     <li class="nav-item"> 
                         <a class="nav-link active" asp-controller="Campaigns" asp-action="Details" asp-route-slug="@Model.Campaign!.Slug"> Details </a> 
                     </li>

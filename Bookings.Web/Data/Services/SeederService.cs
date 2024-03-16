@@ -17,24 +17,6 @@ public class SeederService : ISeederService
         _userManager = userManager;
     }
 
-    public async Task SeedAttractionsAsync()
-    {
-        if (!_context.Attractions.Any())
-        {
-            await _context.Attractions.AddRangeAsync([
-                new Attraction{ Label = "Men" },
-                new Attraction{ Label = "Women" },
-                new Attraction{ Label = "Lesbian" },
-                new Attraction{ Label = "Gay" },
-                new Attraction{ Label = "Bisexual Women" },
-                new Attraction{ Label = "Bisexual Men" },
-                new Attraction{ Label = "Transgender Men" },
-                new Attraction{ Label = "Transgender Women" },
-                new Attraction{ Label = "Non-binary" },
-            ]);
-        }
-    }
-
     public async Task SeedCausesAsync()
     {
         if (!_context.Causes.Any())
@@ -184,32 +166,56 @@ public class SeederService : ISeederService
         await _roleManager.CreateAsync(role);
     }
 
-    public async Task SeedSkinComplexionsAsync()
+    public async Task SeedUserValuesAsync()
     {
-        if (!_context.SkinComplexions.Any())
+        if (!_context.UserValues.Any())
         {
-            await _context.SkinComplexions.AddRangeAsync([
-                new SkinComplexion { ScalePosition = "Monk 01", HexCode = "#F6EDE4" },
-                new SkinComplexion { ScalePosition = "Monk 02", HexCode = "#F3E7DB" },
-                new SkinComplexion { ScalePosition = "Monk 03", HexCode = "#F7EAD0" },
-                new SkinComplexion { ScalePosition = "Monk 04", HexCode = "#EADABA" },
-                new SkinComplexion { ScalePosition = "Monk 05", HexCode = "#D7BD96" },
-                new SkinComplexion { ScalePosition = "Monk 06", HexCode = "#A07E56" },
-                new SkinComplexion { ScalePosition = "Monk 07", HexCode = "#825C43" },
-                new SkinComplexion { ScalePosition = "Monk 08", HexCode = "#604134" },
-                new SkinComplexion { ScalePosition = "Monk 09", HexCode = "#3A312A" },
-                new SkinComplexion { ScalePosition = "Monk 10", HexCode = "#292420" },
+            await _context.UserValues.AddRangeAsync([
+                // aaliyah.ayad@local.com
+                new UserValue { UserId = "1c73cce6-69c8-4561-a63d-7b7651151fda", ValueId = 1 },
+                new UserValue { UserId = "1c73cce6-69c8-4561-a63d-7b7651151fda", ValueId = 2 },
+                new UserValue { UserId = "1c73cce6-69c8-4561-a63d-7b7651151fda", ValueId = 3 },
+                new UserValue { UserId = "1c73cce6-69c8-4561-a63d-7b7651151fda", ValueId = 4 },
+                new UserValue { UserId = "1c73cce6-69c8-4561-a63d-7b7651151fda", ValueId = 5 },
+                new UserValue { UserId = "1c73cce6-69c8-4561-a63d-7b7651151fda", ValueId = 6 },
+                // sammy.bear@local.com
+                new UserValue { UserId = "cf24ce35-2505-455d-b995-4c36bdc30079", ValueId = 1 },
+                new UserValue { UserId = "cf24ce35-2505-455d-b995-4c36bdc30079", ValueId = 2 },
+                new UserValue { UserId = "cf24ce35-2505-455d-b995-4c36bdc30079", ValueId = 3 },
+                new UserValue { UserId = "cf24ce35-2505-455d-b995-4c36bdc30079", ValueId = 5 },
+                new UserValue { UserId = "cf24ce35-2505-455d-b995-4c36bdc30079", ValueId = 6 },
+                new UserValue { UserId = "cf24ce35-2505-455d-b995-4c36bdc30079", ValueId = 7 },
+                // min.an@local.com
+                new UserValue { UserId = "bf8dd2a7-ad39-42dc-9c4c-82f8bd2b184c", ValueId = 1 },
+                new UserValue { UserId = "bf8dd2a7-ad39-42dc-9c4c-82f8bd2b184c", ValueId = 2 },
+                new UserValue { UserId = "bf8dd2a7-ad39-42dc-9c4c-82f8bd2b184c", ValueId = 3 },
+                new UserValue { UserId = "bf8dd2a7-ad39-42dc-9c4c-82f8bd2b184c", ValueId = 4 },
+                new UserValue { UserId = "bf8dd2a7-ad39-42dc-9c4c-82f8bd2b184c", ValueId = 6 },
+                new UserValue { UserId = "bf8dd2a7-ad39-42dc-9c4c-82f8bd2b184c", ValueId = 8 },
+                // eddie.moss@local.com
+                new UserValue { UserId = "bedcc188-598a-458e-894e-819170beb9ae", ValueId = 1 },
+                new UserValue { UserId = "bedcc188-598a-458e-894e-819170beb9ae", ValueId = 2 },
+                new UserValue { UserId = "bedcc188-598a-458e-894e-819170beb9ae", ValueId = 3 },
+                new UserValue { UserId = "bedcc188-598a-458e-894e-819170beb9ae", ValueId = 6 },
+                new UserValue { UserId = "bedcc188-598a-458e-894e-819170beb9ae", ValueId = 7 },
+                new UserValue { UserId = "bedcc188-598a-458e-894e-819170beb9ae", ValueId = 9 },
+                // wade.rivers@local.com
+                new UserValue { UserId = "3751fc55-8e51-46a0-abd3-c4ae867b2f53", ValueId = 1 },
+                new UserValue { UserId = "3751fc55-8e51-46a0-abd3-c4ae867b2f53", ValueId = 2 },
+                new UserValue { UserId = "3751fc55-8e51-46a0-abd3-c4ae867b2f53", ValueId = 3 },
+                new UserValue { UserId = "3751fc55-8e51-46a0-abd3-c4ae867b2f53", ValueId = 9 },
+                new UserValue { UserId = "3751fc55-8e51-46a0-abd3-c4ae867b2f53", ValueId = 10 },
+                new UserValue { UserId = "3751fc55-8e51-46a0-abd3-c4ae867b2f53", ValueId = 11 },
             ]);
         }
     }
 
     public async Task RunAllAsync() 
     {
+        await SeedUserValuesAsync();
         await SeedUsersAsync();
-        await SeedAttractionsAsync();
         await SeedCausesAsync();
         await SeedValuesAsync();
-        await SeedSkinComplexionsAsync();
         await _context.SaveChangesAsync();
     }
 }

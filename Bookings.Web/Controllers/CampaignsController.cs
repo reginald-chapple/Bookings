@@ -35,6 +35,7 @@ public class CampaignsController : Controller
         {
             campaign.Slug = $"{FriendlyUrlHelper.GetFriendlyTitle(campaign.Name)}-{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()}";
             campaign.CreatedBy = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            campaign.Community = new Community { CreatedBy = User.FindFirst(ClaimTypes.NameIdentifier)!.Value };
             await _context.AddAsync(campaign);
             await _context.SaveChangesAsync();
             return Redirect(HttpContext.Request.Headers.Referer!);
@@ -198,6 +199,32 @@ public class CampaignsController : Controller
         }
 
         return View(campaign);
+    }
+
+    [Route("{slug}/Community")]
+    public async Task<IActionResult> Community(string slug)
+    {
+        if (string.IsNullOrEmpty(slug) || string.IsNullOrWhiteSpace(slug))
+        {
+            return NotFound();
+        }
+
+        var campaign = await _context.Campaigns
+            .Include(c => c.Community)
+            .FirstOrDefaultAsync(u => u.Slug == slug );
+
+        if (campaign == null)
+        {
+            return NotFound();
+        }
+
+        var model = new CampaignDetailsModel
+        {
+            Creator = await _userService.GetCreatorAsync(campaign.CreatedBy),
+            Campaign = campaign
+        };
+
+        return View(model);
     }
 
     [Route("{id}/GetCampaign")]

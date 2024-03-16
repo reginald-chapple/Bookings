@@ -1,0 +1,27 @@
+@model ApplicationUser
+
+@{
+    ViewData["Title"] = "Member";
+}
+
+@section StyleTag{}
+
+@section SidebarWidgets {
+    <partial name="Widgets/_NewsWidget" />
+}
+
+<div class="row gy-3">
+    <div class="col-12">
+        <partial name="Members/_ShareForm" />
+    </div>
+
+    <div class="col-12">
+        @await Component.InvokeAsync("UserFeed", new { userId = Model.Id })
+    </div>    
+</div>
+
+<vc:save-post></vc:save-post>
+
+@section JavaScripts {}
+
+@section ScriptTag {}

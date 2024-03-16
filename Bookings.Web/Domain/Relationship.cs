@@ -2,19 +2,14 @@ using System.ComponentModel;
 
 namespace Bookings.Web.Domain;
 
-public class Relationship : Entity
+public class Relationship : AuditableEntity
 {
     public long Id { get; set; }
 
-    public bool IsPrivate { get; set; }
-
     public RelationshipType Type { get; set; }
 
-    public string SeekerId { get; set; } = string.Empty;
-    public virtual ApplicationUser? Seeker { get; set; }
-
-    public string TargetId { get; set; } = string.Empty;
-    public virtual ApplicationUser? Target { get; set; }
+    public string UserId { get; set; } = string.Empty;
+    public virtual ApplicationUser? User { get; set; }
 }
 
 public enum RelationshipType
@@ -23,10 +18,8 @@ public enum RelationshipType
     Family,
     [Description("Friend")]
     Friend,
-    [Description("Acquaintance")]
-    Acquaintance,
-    [Description("Romantic")]
-    Romantic,
+    [Description("Follow")]
+    Follow,
     [Description("Professional")]
     Professional
 }

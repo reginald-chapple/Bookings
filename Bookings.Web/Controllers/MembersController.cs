@@ -58,6 +58,70 @@ public class MembersController : Controller
         return View(model);
     }
 
+    [Route("{id}/Feed")]
+    public async Task<IActionResult> Feed(string id)
+    {
+        if (string.IsNullOrEmpty(id) || string.IsNullOrWhiteSpace(id))
+        {
+            return NotFound();
+        }
+
+        if (id != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+        {
+            return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
+        }
+
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        if (user.Id != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+        {
+            return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
+        }
+
+        return View(user);
+    }
+
+
+    [Route("{id}/Communities")]
+    public async Task<IActionResult> Communities(string id)
+    {
+        if (string.IsNullOrEmpty(id) || string.IsNullOrWhiteSpace(id))
+        {
+            return NotFound();
+        }
+
+        if (id != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+        {
+            return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
+        }
+
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        if (user.Id != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+        {
+            return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
+        }
+
+        var community = await _context.Communities.Where(c => c.CreatedBy == user.Id).FirstOrDefaultAsync();
+        var model = new CommunityDetailsModel
+        {
+            Creator = await _userService.GetCreatorAsync(user.Id),
+            Community = community
+        };
+
+        return View(model);
+    }
+
     [Route("{id}/Relationships")]
     public async Task<IActionResult> Relationships(string id)
     {
@@ -71,7 +135,7 @@ public class MembersController : Controller
             return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
         }
 
-        var user = await _context.Users.Include(u => u.MatchProfile).FirstOrDefaultAsync(u => u.Id == id);
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
 
         if (user == null)
         {
@@ -99,7 +163,7 @@ public class MembersController : Controller
             return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
         }
 
-        var user = await _context.Users.Include(u => u.MatchProfile).FirstOrDefaultAsync(u => u.Id == id);
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
 
         if (user == null)
         {

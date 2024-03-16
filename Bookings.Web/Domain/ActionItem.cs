@@ -22,6 +22,8 @@ public class ActionItem : AuditableEntity
 
     public DateTime? CompletionDate { get; set; }
 
+    public ActionItemState State { get; set; } = ActionItemState.Pending;
+
     public ActionItemType Type { get; set; }
 
     public long CampaignId { get; set; }
@@ -39,4 +41,18 @@ public enum ActionItemType
     Milestone,
     [Description("Task")]
     Task
+}
+
+public enum ActionItemState
+{
+    [Description("Pending")]
+    Pending,
+    [Description("Ongoing")]
+    Ongoing,
+    [Description("Postponed")]
+    Postponed,
+    [Description("Completed")]
+    Completed,
+    [Description("Canceled")]
+    Canceled
 }

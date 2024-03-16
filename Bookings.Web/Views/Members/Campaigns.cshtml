@@ -1,4 +1,4 @@
-@model CreatorCampaignsModel;
+@model CreatorCampaignsModel
 
 @{
     ViewData["Title"] = "Campaigns";
@@ -71,7 +71,7 @@
                                                         </div>
                                                     </td>
                                                     <td class="align-middle ps-3">
-                                                        <a asp-controller="Campaigns" asp-action="Timeline" asp-route-slug="@item.Slug">@item.Name</a> 
+                                                        <a asp-controller="Campaigns" asp-action="Details" asp-route-slug="@item.Slug">@item.Name</a> 
                                                     </td>
                                                     <td class="align-middle ps-3">@item.Slug</td>
                                                     <td class="align-middle white-space-nowrap text-end pe-0">

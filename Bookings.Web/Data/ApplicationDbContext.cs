@@ -36,12 +36,9 @@ namespace Bookings.Web.Data
         public DbSet<Invite> Invites { get; set; }
         public DbSet<MeetingAttendee> MeetingAttendees { get; set; }        
         public DbSet<Volunteer> Volunteers { get; set; }
-        public DbSet<Topic> Topics { get; set; }
-        public DbSet<Conversation> Conversations { get; set; }
+        public DbSet<Follow> Follows { get; set; }
+        public DbSet<Post> Posts { get; set; }
         public DbSet<Reply> Replies { get; set; }
-        public DbSet<MatchProfile> MatchProfiles { get; set; }
-        public DbSet<Attraction> Attractions { get; set; }
-        public DbSet<SkinComplexion> SkinComplexions { get; set; }
         public DbSet<Relationship> Relationships { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

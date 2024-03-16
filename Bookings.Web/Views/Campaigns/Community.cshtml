@@ -1,0 +1,27 @@
+@model CampaignDetailsModel
+
+@{
+    ViewData["Title"] = "Community";
+}
+
+@section StyleTag{}
+
+@section SidebarWidgets {
+    <partial name="Widgets/_NewsWidget" />
+}
+
+<div class="row gy-3">
+    <div class="col-12">
+        <partial name="Communities/_ShareForm" />
+    </div>
+
+    <div class="col-12">
+        @await Component.InvokeAsync("CommunityFeed", new { communityId = Model.Campaign!.Community!.Id })
+    </div>    
+</div>
+
+@await Component.InvokeAsync("SaveCommunityPost", new { communityId = Model.Campaign!.Community!.Id })
+
+@section JavaScripts {}
+
+@section ScriptTag {}

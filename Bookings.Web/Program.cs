@@ -5,6 +5,7 @@ using Bookings.Web.Data.Services;
 using Bookings.Web.Domain;
 using Bookings.Web.Hubs;
 using Bookings.Web.Data.Repository;
+using Bookings.Web.Data.Recommenders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,6 +48,8 @@ builder.Services.AddTransient<IChatService, ChatService>();
 builder.Services.AddTransient<IFileService, FileService>();
 builder.Services.AddTransient<ISeederService, SeederService>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IRecommender, Recommender>();
+builder.Services.AddTransient<IUserRecommender, UserRecommender>();
 builder.Services.AddControllers().AddNewtonsoftJson(opt =>
     opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
 );

@@ -1,0 +1,14 @@
+@model CampaignDetailsModel
+
+<div class="sidebar-widgetbox p-3">
+    <div>
+        <h3 class="fs-3">Join our community!</h3>
+    </div>
+    <div class="row align-items-center my-4">
+        <div class="col-12">
+            <a class="btn btn-primary-soft w-100" asp-controller="Campaigns" asp-action="Community" asp-route-slug="@Model.Campaign!.Slug">
+                Join
+            </a>
+        </div>
+    </div>
+</div>

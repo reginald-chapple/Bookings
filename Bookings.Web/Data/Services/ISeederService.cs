@@ -4,8 +4,7 @@ public interface ISeederService
 {
     Task SeedCausesAsync();
     Task SeedValuesAsync();
-    Task SeedAttractionsAsync();
-    Task SeedSkinComplexionsAsync();
+    Task SeedUserValuesAsync();
     Task SeedUsersAsync();
     Task CreateUserAsync(string fullName, string userName, string email, string password, string imageName, string role);
     Task CreateRoleAsync(string roleName);

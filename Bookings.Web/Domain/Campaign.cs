@@ -44,6 +44,8 @@ public class Campaign : AuditableEntity
 
     public DateTime? PublishDate { get; set; }
 
+    public virtual Community? Community { get; set; }
+
     public long CauseId { get; set; }
     public virtual Cause? Cause { get; set; }
 

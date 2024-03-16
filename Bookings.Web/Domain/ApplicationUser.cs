@@ -19,13 +19,12 @@ public class ApplicationUser : IdentityUser<string>
     [PhotoExtension]
     public IFormFile? ImageUpload { get; set; }
 
-    public virtual MatchProfile? MatchProfile { get; set; }
-
     public virtual ICollection<ApplicationUserRole> UserRoles { get; set; } = [];
     public virtual ICollection<UserNotification> Notifications { get; set; } = [];
     public virtual ICollection<UserValue> Values { get; set; } = [];
     public virtual ICollection<ChatUser> Chats { get; set; } = [];
     public virtual ICollection<MeetingAttendee> Meetings { get; set; } = [];
     public virtual ICollection<Volunteer> VolunteerWork { get; set; } = [];
+    public virtual ICollection<Relationship> Relationships { get; set; } = [];
     public virtual ICollection<CommunityMember> Communities { get; set; } = [];
 }
