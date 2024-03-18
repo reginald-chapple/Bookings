@@ -15,28 +15,19 @@
         <div class="card h-100">
             <div class="card-header d-sm-flex align-items-center text-center justify-content-sm-between border-0 pb-0">
                 <h1 class="h4 card-title">Discover Campaigns</h1>
-                @if (User.Identity!.IsAuthenticated && User.IsInRole("Member") && User.FindFirst(ClaimTypes.NameIdentifier)!.Value == Model.Campaign!.CreatedBy)
-                {
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <a class="btn btn-primary-soft" asp-controller="Campaigns" asp-action="Details" asp-route-slug="@Model.Campaign.Slug"> 
-                            <i class="bi bi-heart pe-1"></i> Campaign
-                        </a>
-                        <a class="btn btn-primary-soft" asp-controller="Members" asp-action="Campaigns" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)!.Value"> 
-                            <i class="bi bi-person-circle pe-1"></i> My Campaigns
-                        </a>
-                    </div>
-                }
-                else
-                {
-                    <a class="btn btn-primary-soft" href="#">
-                        <i class="bi bi-compass pe-1"></i> Campaigns
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <a class="btn btn-primary-soft" asp-controller="Campaigns" asp-action="Details" asp-route-slug="@Model.Campaign!.Slug"> 
+                        <i class="bi bi-heart pe-1"></i> Campaign
                     </a>
-                }
+                    <a class="btn btn-primary-soft" asp-controller="Campaigns" asp-action="Community" asp-route-slug="@Model.Campaign!.Slug"> 
+                        <i class="bi bi-share pe-1"></i> Community
+                    </a>
+                </div>
             </div>
             <div class="card-body">
-                <div class="row g-0">
+                <div class="row">
                     <div class="col-12 px-0">
-                        <div class="mb-5">
+                        <div>
                             <div class="d-flex justify-content-between">
                                 <h2 class="text-black fw-bolder mb-2">@Model.Label</h2>
                                 <div class="font-sans-serif btn-reveal-trigger">
@@ -53,156 +44,174 @@
                                     </div>
                                 </div>
                             </div>
-                            <span class="badge badge-primary-soft p-2">
-                                Ongoing<span class="ms-1 bi bi-stopwatch"></span>
-                            </span>
+                            <div>
+                                <button type="button" class="btn rounded-3 ms-auto btn-primary-soft btn-sm">
+                                    <i class="bi bi-stopwatch"></i>
+                                </button>
+                                <button type="button" class="btn rounded-3 ms-auto btn-success-soft btn-sm">
+                                    <i class="bi bi-check-lg"></i>
+                                </button>
+                                <button type="button" class="btn rounded-3 ms-auto btn-warning-soft btn-sm">
+                                    <i class="bi bi-pause-fill"></i>
+                                </button>
+                                <button type="button" class="btn rounded-3 ms-auto btn-danger-soft btn-sm">
+                                    <i class="bi bi-x-lg"></i>
+                                </button>
+                            </div>
                         </div>
-                        <div class="row gx-0 gx-sm-5 gy-8 mb-8">
-                            <div class="col-12 col-xl-3 col-xxl-4 pe-xl-0">
-                                <div class="mb-4">
-                                    <div class="row gx-0 gx-sm-7">
-                                        <div class="col-12 col-sm-auto">
-                                            <table class="lh-sm mb-4 mb-sm-0 mb-xl-4">
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="py-1" colspan="2">
-                                                            <div class="d-flex">
-                                                                <h5 class="text-900">@Model.Campaign!.Name</h5>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="align-top py-1">
-                                                            <div class="d-flex">
-                                                                <span class="bi bi-heart me-2 text-700 fs--1"></span>
-                                                                <h5 class="text-900 mb-0 text-nowrap">Cause :</h5>
-                                                            </div>
-                                                        </td>
-                                                        <td class="ps-1 py-1 fw-bold text-1000">
-                                                            @Model.Campaign.Cause!.Name
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="align-top py-1">
-                                                            <div class="d-flex">
-                                                                <span class="bi bi-cash-coin me-2 text-700 fs--1"></span>
-                                                                <h5 class="text-900 mb-0 text-nowrap">Budget : </h5>
-                                                            </div>
-                                                        </td>
-                                                        <td class="fw-bold ps-1 py-1 text-1000">$8,742</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="col-12 col-sm-auto">
-                                            <table class="lh-sm">
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="align-top py-1 text-900 text-nowrap fw-bold">Started : </td>
-                                                        <td class="text-600 fw-bold ps-3">@Model.Created.ToString("MMM dd, yyyy")</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="align-top py-1 text-900 text-nowrap fw-bold">Deadline :</td>
-                                                        <td class="text-600 fw-bold ps-3">@(Model.Deadline == null ? "TBD" : Model.Deadline.Value.ToString("MMM dd, yyyy"))</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="align-top py-1 text-900 text-nowrap fw-bold">Progress :</td>
-                                                        <td class="text-primary fw-bold ps-3">@(Model.PercentageComplete)%</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="d-flex align-items-center">
-                                        <span class="bi bi-check2-square me-2 text-700 fs--1"></span>
-                                        <h5 class="text-1100 mb-0 me-2">
-                                            @Model.Children.Count()<span class="text-900 fw-normal ms-2">tasks</span>
-                                        </h5>
-                                       <span class="fw-bold"> @Model.Children.Where(a => a.IsCompleted).Count() / @Model.Children.Count() Completed</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="row g-2 mb-4">
+                        <div class="col-sm-4">
+                            <div class="d-flex border rounded-3">
+                                <div class="p-3">
+                                    <i class="bi bi-heart fs-2"></i>
+                                    <div class="">
+                                        <h5 class="mb-0">@Model.Campaign!.Cause!.Name</h5>
+                                        <p class="mb-0">Cause</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-xl-9 col-xxl-8 mb-4">
-                                <div class="card bg-transparent h-100">
-                                    <div class="card-header pb-0">
-                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="d-flex border rounded-3">
+                                <div class="p-3">
+                                    <i class="bi bi-calendar-check fs-2"></i>
+                                    <div class="">
+                                        <h5 class="mb-0">04/01/2024</h5>
+                                        <p class="mb-0">Deadline</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="d-flex border rounded-3">
+                                <div class="p-3">
+                                    <i class="bi bi-arrow-through-heart fs-2"></i>
+                                    <div class="">
+                                        <h5 class="mb-0">$@Model.Campaign!.FundraisingGoal.ToString("0.00")</h5>
+                                        <p class="mb-0">Fundraising Goal</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 ">
+                        <div class="border rounded-3 mb-3">
+                            <div class="p-3">
+                                <p class="text-800">
+                                    @Model.Details
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 mb-4">
+                        <div class="card bg-transparent h-100">
+                            <div class="card-header pb-0">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div class="">
+                                        <h5 class="text-1100">Action items</h5>
+                                        <p class="mb-0 text-700">
+                                            <a class="fw-bold fs--1 mt-1" href="#!" data-bs-toggle="modal" data-bs-target="#saveActionItemModal">
+                                                Add task
+                                            </a>
+                                        </p>
+                                    </div>
+                                    <div class="">
+                                        <div class="d-flex align-items-center justify-content-between">
                                             <div class="">
-                                                <h5 class="text-1100">Action items</h5>
-                                                <p class="mb-0 text-700">Task list</p>
-                                            </div>
-                                            <div class="">
-                                                <div class="d-flex align-items-center justify-content-between">
-                                                    <div class="">
-                                                        <div class="search-box w-100 mb-2 mb-sm-0" style="max-width:30rem;">
-                                                            <form class="position-relative" data-bs-toggle="search" data-bs-display="static">
-                                                                <div class="input-group mb-3">
-                                                                    <input type="search" class="form-control" placeholder="Search tasks" aria-label="Search" aria-describedby="button-addon2">
-                                                                    <button class="btn btn-primary-soft" type="button" id="button-addon2">
-                                                                        <i class="bi bi-search"></i>
-                                                                    </button>
-                                                                </div>
-                                                                @* <span class="bi bi-search search-box-icon"></span> *@
-                                                            </form>
+                                                <div class="search-box w-100 mb-2 mb-sm-0" style="max-width:30rem;">
+                                                    <form class="position-relative" data-bs-toggle="search" data-bs-display="static">
+                                                        <div class="input-group mb-3">
+                                                            <input type="search" class="form-control" placeholder="Search tasks" aria-label="Search" aria-describedby="button-addon2">
+                                                            <button class="btn btn-primary-soft" type="button" id="button-addon2">
+                                                                <i class="bi bi-search"></i>
+                                                            </button>
                                                         </div>
-                                                    </div>
+                                                        @* <span class="bi bi-search search-box-icon"></span> *@
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-body py-0" style="max-height: 250px; overflow-y: scroll;">
-                                        <div class="row p-1">
-                                            @foreach(var item in Model.Children)
-                                            {
-                                                @if (item.IsCompleted)
-                                                {
-                                                    <div class="col-12 p-2">
-                                                        <div class="border-bottom border-200 gx-0 flex-1 cursor-pointer pb-3">
-                                                            <div class="mb-1 mb-md-0 d-flex justify-content-between align-items-center lh-1">
-                                                                <input class="form-check-input my-1 me-2" type="checkbox" id="checkbox-todo-@item.Id" checked="true" disabled />
-                                                                <label class="form-check-label mb-1 mb-md-0 mb-xl-1 mb-xxl-0 fs-0 me-2 line-clamp-1 text-900 cursor-pointer">
-                                                                    <span class="fw-bold text-decoration-line-through">@item.Label</span>
-                                                                    <span class="text-700 fs--2 mb-md-0 me-2 me-md-3 me-xl-2 me-xxl-3 mt-2 mb-0 d-block">@item.CompletionDate!.Value.ToString("MMM dd, yyyy hh:mm tt")</span>
-                                                                </label>
-                                                                <button type="button" class="btn ms-auto btn-primary-soft btn-sm" disabled>COMPLETED</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                }
-                                                else
-                                                {
-                                                    <div class="col-12 p-2">
-                                                        <div class="border-bottom border-200 gx-0 flex-1 cursor-pointer pb-3">
-                                                            <form id="ai-form-@item.Id" asp-controller="ActionItems" asp-action="CompleteTask" asp-route-id="@item.Id">
-                                                                <div class="mb-1 mb-md-0 d-flex justify-content-between align-items-center lh-1">
-                                                                    <input name="IsCompleted" value="true" class="form-check-input my-1 me-2" type="checkbox" />
-                                                                    <label for="action-item-@item.Id" class="form-check-label mb-1 mb-md-0 mb-xl-1 mb-xxl-0 fs-0 me-2 line-clamp-1 text-900 cursor-pointer">
-                                                                        <span class="fw-bold">@item.Label</span>
-                                                                        <span class="text-700 fs--2 mb-md-0 me-2 me-md-3 me-xl-2 me-xxl-3 mt-2 mb-0 d-block">@item.Created.ToString("MMM dd, yyyy hh:mm tt")</span>
-                                                                    </label>
-                                                                    <button type="submit" form="ai-form-@item.Id" class="btn ms-auto btn-primary-soft btn-sm">COMPLETE</button>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                }         
-                                            }
-                                            
-                                        </div>
-                                    </div>
-                                    <div class="card-footer py-4">
-                                        <a class="fw-bold fs--1 mt-1" href="#!" data-bs-toggle="modal" data-bs-target="#saveActionItemModal">
-                                            Add task
-                                        </a>
-                                    </div>
                                 </div>
                             </div>
-                            <div class="col-12 mt-5">
-                                <h3 class="text-1100">Details</h3>
-                                <p class="text-800 mb-4">
-                                    @Model.Details
-                                </p>
+                            <div class="card-body py-0" style="max-height: 250px; overflow-y: scroll;">
+                                <div class="row p-1">
+                                    @foreach(var item in Model.Children)
+                                    {
+                                        @if (item.IsCompleted)
+                                        {
+                                            <div class="border-bottom border-200 gx-0 flex-1 cursor-pointer pb-3">
+                                                <div class="mb-1 mb-md-0 d-flex justify-content-between align-items-center lh-1">
+                                                    <div>
+                                                        <input name="IsCompleted" value="true" class="form-check-input my-1 me-2" type="checkbox" />
+                                                        <label for="item-1" class="form-check-label mb-1 mb-md-0 mb-xl-1 mb-xxl-0 fs-0 me-2 line-clamp-1 text-900 cursor-pointer">
+                                                            <span class="fw-bold">@item.Label</span>
+                                                            <span class="text-700 fs--2 mb-md-0 me-2 me-md-3 me-xl-2 me-xxl-3 mt-2 mb-0 d-block">Mar 10, 2024 12:22 PM</span>
+                                                        </label>
+                                                    </div>
+                                                    <div>
+                                                        <button type="button" class="btn rounded-3 ms-auto btn-primary-soft btn-sm">
+                                                            <i class="bi bi-stopwatch"></i>
+                                                        </button>
+                                                        <button type="button" class="btn rounded-3 ms-auto btn-success-soft btn-sm">
+                                                            <i class="bi bi-check-lg"></i>
+                                                        </button>
+                                                        <button type="button" class="btn rounded-3 ms-auto btn-warning-soft btn-sm">
+                                                            <i class="bi bi-pause-fill"></i>
+                                                        </button>
+                                                        <button type="button" class="btn rounded-3 ms-auto btn-danger-soft btn-sm">
+                                                            <i class="bi bi-x-lg"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-12 p-2">
+                                                <div class="border-bottom border-200 gx-0 flex-1 cursor-pointer pb-3">
+                                                    <div class="mb-1 mb-md-0 d-flex justify-content-between align-items-center lh-1">
+                                                        <div>
+                                                            <input name="IsCompleted" value="true" class="form-check-input my-1 me-2" type="checkbox" />
+                                                            <label for="item-1" class="form-check-label mb-1 mb-md-0 mb-xl-1 mb-xxl-0 fs-0 me-2 line-clamp-1 text-900 cursor-pointer">
+                                                                <span class="fw-bold">@item.Label</span>
+                                                                <span class="text-700 fs--2 mb-md-0 me-2 me-md-3 me-xl-2 me-xxl-3 mt-2 mb-0 d-block">Mar 10, 2024 12:22 PM</span>
+                                                            </label>
+                                                        </div>
+                                                        <div>
+                                                            <button type="button" class="btn rounded-3 ms-auto btn-primary-soft btn-sm">
+                                                                <i class="bi bi-stopwatch"></i>
+                                                            </button>
+                                                            <button type="button" class="btn rounded-3 ms-auto btn-success-soft btn-sm">
+                                                                <i class="bi bi-check-lg"></i>
+                                                            </button>
+                                                            <button type="button" class="btn rounded-3 ms-auto btn-warning-soft btn-sm">
+                                                                <i class="bi bi-pause-fill"></i>
+                                                            </button>
+                                                            <button type="button" class="btn rounded-3 ms-auto btn-danger-soft btn-sm">
+                                                                <i class="bi bi-x-lg"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }         
+                                    }
+                                    
+                                </div>
+                            </div>
+                            <div class="card-footer py-4">
+                                <p class="mb-0 text-700">Task list</p>
                             </div>
                         </div>
                     </div>

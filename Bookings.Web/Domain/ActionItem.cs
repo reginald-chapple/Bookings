@@ -6,7 +6,7 @@ namespace Bookings.Web.Domain;
 
 public class ActionItem : AuditableEntity
 {
-     public long Id { get; set; }
+    public long Id { get; set; }
 
     public string Label { get; set; } = string.Empty;
 

@@ -21,23 +21,14 @@
         <div class="card h-100">
             <div class="card-header d-sm-flex align-items-center text-center justify-content-sm-between border-0 pb-0">
                 <h1 class="h4 card-title">Discover Campaigns</h1>
-                @if (User.Identity!.IsAuthenticated && User.IsInRole("Member") && User.FindFirst(ClaimTypes.NameIdentifier)!.Value == Model.CreatedBy)
-                {
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <a class="btn btn-primary-soft" asp-controller="Members" asp-action="Campaigns" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)!.Value"> 
-                            <i class="bi bi-person-circle pe-1"></i> My Campaigns
-                        </a>
-                        <a class="btn btn-primary-soft" href="#"> 
-                            <i class="bi bi-compass pe-1"></i> All Campaigns
-                        </a>
-                    </div>
-                }
-                else
-                {
-                    <a class="btn btn-primary-soft" href="#">
-                        <i class="bi bi-compass pe-1"></i> Campaigns
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <a class="btn btn-primary-soft" asp-controller="Members" asp-action="Campaigns" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)!.Value"> 
+                        <i class="bi bi-person-circle pe-1"></i> My Campaigns
                     </a>
-                }
+                    <a class="btn btn-primary-soft" asp-controller="Campaigns" asp-action="Community" asp-route-slug="@Model.Slug"> 
+                        <i class="bi bi-share pe-1"></i> Community
+                    </a>
+                </div>
             </div>
             <div class="card-body">
                 <ul class="nav nav-tabs nav-bottom-line justify-content-center justify-content-md-start">
