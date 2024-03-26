@@ -52,8 +52,8 @@ public class InvitesController : Controller
         return Redirect(HttpContext.Request.Headers.Referer!);
     }
 
-    [Route("{id}/Interview")]
-    public async Task<IActionResult> Interview(long? id)
+    [Route("{id}/Details")]
+    public async Task<IActionResult> Details(long? id)
     {
         if (id == null)
         {
@@ -96,13 +96,17 @@ public class InvitesController : Controller
                 MeetingId = m.Id
             }).FirstOrDefault();
 
+        var  meetingAttendees = _context.MeetingAttendees.Where(a => a.MeetingId == model!.MeetingId).Select(m => m.AttendeeId).ToList();
+
+        ViewData["IsAttending"] = meetingAttendees.Contains(invite.InviteeKey);
+
         return View(model);
     }
 
-    [Route("{id}/Interview")]
+    [Route("{id}/Accept")]
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Interview(long? id, [Bind("MeetingId")] AcceptInterviewModel model)
+    public async Task<IActionResult> Accept(long? id, [Bind("MeetingId")] AcceptInviteModel model)
     {
         if (id == null)
         {
@@ -134,11 +138,6 @@ public class InvitesController : Controller
             meeting.Attendees.Add(new MeetingAttendee
             {
                 AttendeeId = invite.InviteeKey
-            });
-
-            meeting.Attendees.Add(new MeetingAttendee
-            {
-                AttendeeId = invite.CreatedBy
             });
 
             invite.Status = InviteStatus.Accepted;

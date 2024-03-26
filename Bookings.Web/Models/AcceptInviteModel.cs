@@ -1,6 +1,6 @@
 namespace Bookings.Web.Models;
 
-public class AcceptInterviewModel
+public class AcceptInviteModel
 {
     public long MeetingId { get; set; }
 }

@@ -1,0 +1,30 @@
+@model IEnumerable<MeetingAttendee>
+
+<div class="card bg-transparent">
+    <div class="card-header d-sm-flex justify-content-between align-items-center border-0">
+        <h5 class="card-title text-uppercase">Attending <span class="badge bg-danger bg-opacity-10 text-danger">@Model.Count()</span></h5>
+        <a class="btn btn-primary-soft btn-sm" href="#!" data-bs-toggle="modal" data-bs-target="#sendInviteModal"> Send invites</a>
+    </div>
+    <div class="card-body position-relative pt-0">
+        <div class="row g-3">
+            @foreach(var item in Model)
+            {
+                <div class="col-6">
+                    <div class="card shadow-none text-center h-100">
+                        <div class="card-body p-2 pb-0">
+                            <div class="avatar avatar-story avatar-xl">
+                                <a href="#!"><img class="avatar-img rounded-circle" src="~/media/members/@(item.Attendee!.Image)" alt=""></a>
+                            </div>
+                            <h6 class="card-title mb-1 mt-3"> <a href="#!"> @item.Attendee.FullName </a></h6>
+                            <p class="mb-0 small lh-sm">16 mutual connections</p>
+                        </div>
+                        <div class="card-footer p-2 border-0">
+                            <button class="btn btn-sm btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="Send message"> <i class="bi bi-chat-left-text"></i> </button>
+                            <button class="btn btn-sm btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Remove friend"> <i class="bi bi-person-x"></i> </button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

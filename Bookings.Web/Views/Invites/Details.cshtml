@@ -30,7 +30,7 @@
             <h3>@Model.Label</h3>
             <p>@Model.Message</p>
 
-            <h4>Interview details</h4>
+            <h4>Meeting details</h4>
             <p>@Model.Details</p>
         </div>
         <div class="col-12 col-xl-5">
@@ -74,13 +74,24 @@
                                 </td>
                                 <td class="ps-1 py-1 text-1000 text-end">@Model.EndTime.ToString("MMM dd, yyyy hh:mm tt")</td>
                             </tr>
+                            <tr>
+                                <td class="align-top py-1 text-start">
+                                    <div class="d-flex">
+                                        <span class="bi bi-calendar-check me-2 text-700 fs--1"></span>
+                                        <span class="text-900 fw-bold mb-0 text-nowrap">Attending : </span>
+                                    </div>
+                                </td>
+                                <td class="ps-1 py-1 text-1000 text-end">
+                                    @(Model.Status == InviteStatus.Accepted ? "Yes" : "No")
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
                 @if (Model.Status == InviteStatus.Pending)
                 {
                     <div class="col-12 mb-3">
-                        <form asp-controller="Invites" asp-action="Interview" asp-route-id="@Model.InviteId">
+                        <form asp-controller="Invites" asp-action="Accept" asp-route-id="@Model.InviteId">
                             <input type="hidden" name="MeetingId" value="@Model.MeetingId" />
                             <button type="submit" class="btn btn-primary-soft w-100">Accept</button>
                         </form>
