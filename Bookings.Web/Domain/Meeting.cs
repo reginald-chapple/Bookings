@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Bookings.Web.Domain;
@@ -15,17 +16,26 @@ public class Meeting : AuditableEntity
 
     public string Location { get; set; } = string.Empty;
 
-    [DataType(DataType.Date)]
-    public DateOnly Date { get; set; }
+    public MeetingVisibility Visibility { get; set; }
 
-    [DataType(DataType.Time)]
-    public TimeOnly StartTime { get; set; }
+    [DataType(DataType.DateTime)]
+    public DateTime StartTime { get; set; }
 
-    [DataType(DataType.Time)]
-    public TimeOnly EndTime { get; set; }
+    [DataType(DataType.DateTime)]
+    public DateTime EndTime { get; set; }
 
-    public long? EntityId { get; set; }
-    public EntityType EntityType { get; set; } = EntityType.None;
+    public long CampaignId { get; set; }
+    public virtual Campaign? Campaign { get; set; }
 
     public virtual ICollection<MeetingAttendee> Attendees { get; set; } = [];
+}
+
+public enum MeetingVisibility
+{
+    [Description("Private")]
+    Private,
+    [Description("Team")]
+    Team,
+    [Description("Public")]
+    Public
 }

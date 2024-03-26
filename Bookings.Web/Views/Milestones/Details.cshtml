@@ -26,7 +26,7 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-12 px-0">
+                    <div class="col-12 mb-4">
                         <div>
                             <div class="d-flex justify-content-between">
                                 <h2 class="text-black fw-bolder mb-2">@Model.Label</h2>
@@ -45,55 +45,65 @@
                                 </div>
                             </div>
                             <div>
-                                <button type="button" class="btn rounded-3 ms-auto btn-primary-soft btn-sm">
-                                    <i class="bi bi-stopwatch"></i>
-                                </button>
-                                <button type="button" class="btn rounded-3 ms-auto btn-success-soft btn-sm">
-                                    <i class="bi bi-check-lg"></i>
-                                </button>
-                                <button type="button" class="btn rounded-3 ms-auto btn-warning-soft btn-sm">
-                                    <i class="bi bi-pause-fill"></i>
-                                </button>
-                                <button type="button" class="btn rounded-3 ms-auto btn-danger-soft btn-sm">
-                                    <i class="bi bi-x-lg"></i>
-                                </button>
+                                <form class="d-inline" asp-controller="ActionItems" asp-action="UpdateState" asp-route-id="@Model.Id">
+                                    <input type="hidden" name="State" value="@((int)ActionItemState.Ongoing)" />
+                                    <button type="submit" class="btn rounded-3 ms-auto btn-primary@(Model.State == ActionItemState.Ongoing ? "" : "-soft") btn-sm">
+                                        <i class="bi bi-stopwatch"></i>
+                                    </button>
+                                </form>
+                                <form class="d-inline" asp-controller="ActionItems" asp-action="UpdateState" asp-route-id="@Model.Id">
+                                    <input type="hidden" name="State" value="@((int)ActionItemState.Completed)" />
+                                    <button type="submit" class="btn rounded-3 ms-auto btn-success@(Model.State == ActionItemState.Completed ? "" : "-soft") btn-sm">
+                                        <i class="bi bi-check-lg"></i>
+                                    </button>
+                                </form>
+                                <form class="d-inline" asp-controller="ActionItems" asp-action="UpdateState" asp-route-id="@Model.Id">
+                                    <input type="hidden" name="State" value="@((int)ActionItemState.Postponed)" />
+                                    <button type="submit" class="btn rounded-3 ms-auto btn-warning@(Model.State == ActionItemState.Postponed ? "" : "-soft") btn-sm">
+                                        <i class="bi bi-pause-fill"></i>
+                                    </button>
+                                </form>
+                                <form class="d-inline" asp-controller="ActionItems" asp-action="UpdateState" asp-route-id="@Model.Id">
+                                    <input type="hidden" name="State" value="@((int)ActionItemState.Canceled)" />
+                                    <button type="submit" class="btn rounded-3 ms-auto btn-danger@(Model.State == ActionItemState.Canceled ? "" : "-soft") btn-sm">
+                                        <i class="bi bi-x-lg"></i>
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="row g-2 mb-4">
-                        <div class="col-sm-4">
-                            <div class="d-flex border rounded-3">
-                                <div class="p-3">
-                                    <i class="bi bi-heart fs-2"></i>
-                                    <div class="">
-                                        <h5 class="mb-0">@Model.Campaign!.Cause!.Name</h5>
-                                        <p class="mb-0">Cause</p>
-                                    </div>
+                <div class="row g-2 mb-4">
+                    <div class="col-sm-4">
+                        <div class="d-flex border rounded-3">
+                            <div class="p-3">
+                                <i class="bi bi-heart fs-2"></i>
+                                <div class="">
+                                    <h5 class="mb-0">@Model.Campaign!.Cause!.Name</h5>
+                                    <p class="mb-0">Cause</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-4">
-                            <div class="d-flex border rounded-3">
-                                <div class="p-3">
-                                    <i class="bi bi-calendar-check fs-2"></i>
-                                    <div class="">
-                                        <h5 class="mb-0">04/01/2024</h5>
-                                        <p class="mb-0">Deadline</p>
-                                    </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="d-flex border rounded-3">
+                            <div class="p-3">
+                                <i class="bi bi-calendar-check fs-2"></i>
+                                <div class="">
+                                    <h5 class="mb-0">04/01/2024</h5>
+                                    <p class="mb-0">Deadline</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-4">
-                            <div class="d-flex border rounded-3">
-                                <div class="p-3">
-                                    <i class="bi bi-arrow-through-heart fs-2"></i>
-                                    <div class="">
-                                        <h5 class="mb-0">$@Model.Campaign!.FundraisingGoal.ToString("0.00")</h5>
-                                        <p class="mb-0">Fundraising Goal</p>
-                                    </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="d-flex border rounded-3">
+                            <div class="p-3">
+                                <i class="bi bi-arrow-through-heart fs-2"></i>
+                                <div class="">
+                                    <h5 class="mb-0">$@Model.Campaign!.FundraisingGoal.ToString("0.00")</h5>
+                                    <p class="mb-0">Fundraising Goal</p>
                                 </div>
                             </div>
                         </div>
@@ -148,30 +158,32 @@
                                 <div class="row p-1">
                                     @foreach(var item in Model.Children)
                                     {
-                                        @if (item.IsCompleted)
+                                        @if (item.State == ActionItemState.Completed)
                                         {
-                                            <div class="border-bottom border-200 gx-0 flex-1 cursor-pointer pb-3">
-                                                <div class="mb-1 mb-md-0 d-flex justify-content-between align-items-center lh-1">
-                                                    <div>
-                                                        <input name="IsCompleted" value="true" class="form-check-input my-1 me-2" type="checkbox" />
-                                                        <label for="item-1" class="form-check-label mb-1 mb-md-0 mb-xl-1 mb-xxl-0 fs-0 me-2 line-clamp-1 text-900 cursor-pointer">
-                                                            <span class="fw-bold">@item.Label</span>
-                                                            <span class="text-700 fs--2 mb-md-0 me-2 me-md-3 me-xl-2 me-xxl-3 mt-2 mb-0 d-block">Mar 10, 2024 12:22 PM</span>
-                                                        </label>
-                                                    </div>
-                                                    <div>
-                                                        <button type="button" class="btn rounded-3 ms-auto btn-primary-soft btn-sm">
-                                                            <i class="bi bi-stopwatch"></i>
-                                                        </button>
-                                                        <button type="button" class="btn rounded-3 ms-auto btn-success-soft btn-sm">
-                                                            <i class="bi bi-check-lg"></i>
-                                                        </button>
-                                                        <button type="button" class="btn rounded-3 ms-auto btn-warning-soft btn-sm">
-                                                            <i class="bi bi-pause-fill"></i>
-                                                        </button>
-                                                        <button type="button" class="btn rounded-3 ms-auto btn-danger-soft btn-sm">
-                                                            <i class="bi bi-x-lg"></i>
-                                                        </button>
+                                            <div class="col-12 p-2">
+                                                <div class="border-bottom border-200 gx-0 flex-1 cursor-pointer pb-3">
+                                                    <div class="mb-1 mb-md-0 d-flex justify-content-between align-items-center lh-1">
+                                                        <div>
+                                                            <input class="form-check-input my-1 me-2" type="checkbox" checked />
+                                                            <label for="item-1" class="form-check-label mb-1 mb-md-0 mb-xl-1 mb-xxl-0 fs-0 me-2 line-clamp-1 text-900 cursor-pointer">
+                                                                <span class="fw-bold text-decoration-line-through">@item.Label</span>
+                                                                <span class="text-700 fs--2 mb-md-0 me-2 me-md-3 me-xl-2 me-xxl-3 mt-2 mb-0 d-block">Mar 10, 2024 12:22 PM</span>
+                                                            </label>
+                                                        </div>
+                                                        <div>
+                                                            <button type="button" class="btn rounded-3 ms-auto btn-primary-soft btn-sm">
+                                                                <i class="bi bi-stopwatch"></i>
+                                                            </button>
+                                                            <button type="button" class="btn rounded-3 ms-auto btn-success btn-sm">
+                                                                <i class="bi bi-check-lg"></i>
+                                                            </button>
+                                                            <button type="button" class="btn rounded-3 ms-auto btn-warning-soft btn-sm">
+                                                                <i class="bi bi-pause-fill"></i>
+                                                            </button>
+                                                            <button type="button" class="btn rounded-3 ms-auto btn-danger-soft btn-sm">
+                                                                <i class="bi bi-x-lg"></i>
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -182,25 +194,37 @@
                                                 <div class="border-bottom border-200 gx-0 flex-1 cursor-pointer pb-3">
                                                     <div class="mb-1 mb-md-0 d-flex justify-content-between align-items-center lh-1">
                                                         <div>
-                                                            <input name="IsCompleted" value="true" class="form-check-input my-1 me-2" type="checkbox" />
+                                                            <input class="form-check-input my-1 me-2" type="checkbox" @(item.State == ActionItemState.Postponed || item.State == ActionItemState.Canceled ? Html.Raw("disabled") : "") />
                                                             <label for="item-1" class="form-check-label mb-1 mb-md-0 mb-xl-1 mb-xxl-0 fs-0 me-2 line-clamp-1 text-900 cursor-pointer">
-                                                                <span class="fw-bold">@item.Label</span>
+                                                                <span class="fw-bold @(item.State == ActionItemState.Postponed || item.State == ActionItemState.Canceled ? "text-decoration-line-through" : "")">@item.Label</span>
                                                                 <span class="text-700 fs--2 mb-md-0 me-2 me-md-3 me-xl-2 me-xxl-3 mt-2 mb-0 d-block">Mar 10, 2024 12:22 PM</span>
                                                             </label>
                                                         </div>
                                                         <div>
-                                                            <button type="button" class="btn rounded-3 ms-auto btn-primary-soft btn-sm">
-                                                                <i class="bi bi-stopwatch"></i>
-                                                            </button>
-                                                            <button type="button" class="btn rounded-3 ms-auto btn-success-soft btn-sm">
-                                                                <i class="bi bi-check-lg"></i>
-                                                            </button>
-                                                            <button type="button" class="btn rounded-3 ms-auto btn-warning-soft btn-sm">
-                                                                <i class="bi bi-pause-fill"></i>
-                                                            </button>
-                                                            <button type="button" class="btn rounded-3 ms-auto btn-danger-soft btn-sm">
-                                                                <i class="bi bi-x-lg"></i>
-                                                            </button>
+                                                           <form class="d-inline" asp-controller="ActionItems" asp-action="UpdateState" asp-route-id="@item.Id">
+                                                                <input type="hidden" name="State" value="@((int)ActionItemState.Ongoing)" />
+                                                                <button type="submit" class="btn rounded-3 ms-auto btn-primary@(item.State == ActionItemState.Ongoing ? "" : "-soft") btn-sm">
+                                                                    <i class="bi bi-stopwatch"></i>
+                                                                </button>
+                                                            </form>
+                                                            <form class="d-inline" asp-controller="ActionItems" asp-action="UpdateState" asp-route-id="@item.Id">
+                                                                <input type="hidden" name="State" value="@((int)ActionItemState.Completed)" />
+                                                                <button type="submit" class="btn rounded-3 ms-auto btn-success@(item.State == ActionItemState.Completed ? "" : "-soft") btn-sm">
+                                                                    <i class="bi bi-check-lg"></i>
+                                                                </button>
+                                                            </form>
+                                                            <form class="d-inline" asp-controller="ActionItems" asp-action="UpdateState" asp-route-id="@item.Id">
+                                                                <input type="hidden" name="State" value="@((int)ActionItemState.Postponed)" />
+                                                                <button type="submit" class="btn rounded-3 ms-auto btn-warning@(item.State == ActionItemState.Postponed ? "" : "-soft") btn-sm">
+                                                                    <i class="bi bi-pause-fill"></i>
+                                                                </button>
+                                                            </form>
+                                                            <form class="d-inline" asp-controller="ActionItems" asp-action="UpdateState" asp-route-id="@item.Id">
+                                                                <input type="hidden" name="State" value="@((int)ActionItemState.Canceled)" />
+                                                                <button type="submit" class="btn rounded-3 ms-auto btn-danger@(item.State == ActionItemState.Canceled ? "" : "-soft") btn-sm">
+                                                                    <i class="bi bi-x-lg"></i>
+                                                                </button>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>

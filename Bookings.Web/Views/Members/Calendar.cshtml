@@ -1,0 +1,82 @@
+@model ApplicationUser
+
+@{
+    ViewData["Title"] = "Calendar";
+}
+
+@section StyleTag {
+    <style>
+        .fc .fc-daygrid-day.fc-day-today {
+            background-color: rgba(15, 111, 236, 0.1);
+        }
+        .fc-daygrid-day-number {
+            color: #0f6fec;
+        }
+        .fc .fc-button-primary {
+            background-color: #0f6fec;
+            border-color: #0f6fec;
+            color: var(--fc-button-text-color);
+        }
+    </style>
+}
+
+@section SidebarWidgets {
+    <partial name="Widgets/_NewsWidget" />
+}
+
+<div class="row">
+    <div class="col">
+        <div class="card h-100">
+             <div class="card-header d-sm-flex align-items-center text-center justify-content-sm-between border-0 pb-0">
+                <h1 class="h4 card-title">Discover Campaigns</h1>
+                <div class="dropdown">
+                    <a href="#" class="text-secondary btn btn-secondary-soft-hover py-1 px-2" id="cardFeedAction1"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-three-dots"></i>
+                    </a>
+                    <!-- Card feed action dropdown menu -->
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction1">
+                        <li><a class="dropdown-item" href="#"> <i class="bi bi-info-circle fa-fw pe-2"></i>About</a></li>
+                        <li><a class="dropdown-item" href="#"> <i class="bi bi-inbox fa-fw pe-2"></i>Contact</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#"> <i class="bi bi-question-circle fa-fw pe-2"></i>FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card-body">
+                <ul class="nav nav-tabs nav-bottom-line justify-content-center justify-content-md-start">
+                    <li class="nav-item"> <a class="nav-link active" data-bs-toggle="tab" href="#tab-1"> Calendar </a> </li>
+                    <li class="nav-item"> <a class="nav-link" data-bs-toggle="tab" href="#tab-2"> List </a> </li>
+                </ul>
+                <div class="tab-content mb-0 pb-0">
+                    <div class="tab-pane fade show active" id="tab-1">
+                        <div id="calendar"></div>
+                    </div>
+                    <div class="tab-pane fade" id="tab-2">
+                        ...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section JavaScripts {
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+}
+
+@section ScriptTag {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                height: 700,
+                events: "/Calendar/GetMyMeetings",
+            });
+            calendar.render();
+        });
+    </script>
+}

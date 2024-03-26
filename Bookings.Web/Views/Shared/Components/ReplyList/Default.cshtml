@@ -1,0 +1,47 @@
+@model IEnumerable<ReplyAuthorModel>
+
+@foreach(var item in Model)
+{
+    
+    <li class="comment-item">
+        <div class="d-flex position-relative">
+            <!-- Avatar -->
+            <div class="avatar avatar-xs">
+                <a href="#!"><img class="avatar-img rounded-circle" src="~/media/members/@(item.Creator!.Image)" alt=""></a>
+            </div>
+            <div class="ms-2">
+                <!-- Comment by -->
+                <div class="bg-light rounded-start-top-0 p-3 rounded">
+                    <div class="d-flex justify-content-between">
+                        <h6 class="mb-1"> <a href="#!"> @item.Creator.FullName </a></h6>
+                        <small class="ms-2">@item.Reply!.EntityAge()</small>
+                    </div>
+                    <p class="small mb-0">@item.Reply!.Content</p>
+                </div>
+                <ul class="nav nav-divider py-2 small">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#!"> Like (3)</a>
+                    </li>
+                    <li class="nav-item">
+                        <a data-parent="@item.Reply.Id" class="nav-link" href="#!"> Reply</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#!"> View 5 replies</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        @if (item.Reply.Children.Any())
+        {
+            @await Component.InvokeAsync("NestedReply", new { parentId = item.Reply.Id })
+        }
+        <a href="#!" role="button" class="btn btn-link btn-link-loader btn-sm text-secondary d-flex align-items-center mb-3 ms-5" data-bs-toggle="button" aria-pressed="true">
+            <div class="spinner-dots me-2">
+                <span class="spinner-dot"></span>
+                <span class="spinner-dot"></span>
+                <span class="spinner-dot"></span>
+            </div>
+            Load more replies 
+        </a>
+    </li>
+}

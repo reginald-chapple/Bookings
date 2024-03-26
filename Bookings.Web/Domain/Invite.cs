@@ -5,6 +5,8 @@ namespace Bookings.Web.Domain;
 
 public class Invite : AuditableEntity
 {
+    public Invite() {}
+
     public long Id { get; set; }
 
     public string Label { get; set; } = string.Empty;
@@ -19,7 +21,6 @@ public class Invite : AuditableEntity
     public bool HasViewed { get; set; } = false;
 
     public string InviteeKey { get; set; } = string.Empty;
-    public string InviteeName { get; set; } = string.Empty;
 
     public long? EntityId { get; set; }
     public EntityType EntityType { get; set; } = EntityType.None;

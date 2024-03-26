@@ -15,14 +15,11 @@ public class InterviewInviteModel
 
     public string Location { get; set; } = string.Empty;
 
-    [DataType(DataType.Date)]
-    public DateOnly Date { get; set; }
+    [DataType(DataType.Time)]
+    public DateTime StartTime { get; set; }
 
     [DataType(DataType.Time)]
-    public TimeOnly StartTime { get; set; }
-
-    [DataType(DataType.Time)]
-    public TimeOnly EndTime { get; set; }
+    public DateTime EndTime { get; set; }
 
     public InviteStatus Status { get; set; } = InviteStatus.Pending;
 

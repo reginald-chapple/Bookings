@@ -3,10 +3,14 @@ using Bookings.Web.Data;
 using Bookings.Web.Data.Services;
 using Bookings.Web.Domain;
 using Bookings.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bookings.Web.Controllers;
 
+[Authorize(Roles = "Member")]
+[Route("[controller]")]
 public class PostsController : Controller
 {
     private readonly ApplicationDbContext _context;
@@ -44,5 +48,29 @@ public class PostsController : Controller
             await _context.SaveChangesAsync();
         }
         return Redirect(HttpContext.Request.Headers.Referer!);
+    }
+
+    [Route("{id}")]
+    public async Task<IActionResult> Details(long? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        var post = await _context.Posts.FirstAsync(p => p.Id == id);
+
+        if (post == null)
+        {
+            return NotFound();
+        }
+
+        var model = new PostAuthorModel
+        {
+            Creator = await _userService.GetCreatorAsync(post.CreatedBy),
+            Post = post
+        };
+
+        return View(model);
     }
 }

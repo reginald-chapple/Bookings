@@ -76,16 +76,15 @@ public class CampaignsController : Controller
         return View(model);
     }
 
-    [Route("{slug}/Timeline")]
-    public async Task<IActionResult> Timeline(string slug)
+    [Route("{slug}/Events")]
+    public async Task<IActionResult> Events(string slug)
     {
         if (string.IsNullOrEmpty(slug) || string.IsNullOrWhiteSpace(slug))
         {
             return NotFound();
         }
 
-        var campaign = await _context.Campaigns
-            .FirstOrDefaultAsync(u => u.Slug == slug );
+        var campaign = await _context.Campaigns.Include(c => c.Meetings.OrderByDescending(m => m.StartTime)).FirstOrDefaultAsync(u => u.Slug == slug );
 
         if (campaign == null)
         {

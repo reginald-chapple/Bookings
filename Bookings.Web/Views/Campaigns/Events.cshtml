@@ -1,0 +1,100 @@
+@model Campaign
+
+@{
+    ViewData["Title"] = "Events";
+}
+
+@section StyleTag {}
+
+@section SidebarWidgets {
+    <partial name="Widgets/_NewsWidget" />
+}
+
+<div class="row">
+    <div class="col">
+        <div class="card h-100">
+             <div class="card-header d-sm-flex align-items-center text-center justify-content-sm-between border-0 pb-0">
+                <h1 class="h4 card-title">Discover Campaigns</h1>
+                <a class="btn btn-primary-soft" href="#" data-bs-toggle="modal" data-bs-target="#saveMeetingModal"> 
+                    <i class="bi bi-plus-lg pe-1"></i> Add Event
+                </a>
+            </div>
+            <div class="card-body">
+                <ul class="nav nav-tabs nav-bottom-line justify-content-center justify-content-md-start">
+                    <li class="nav-item"> 
+                        <a class="nav-link" asp-controller="Campaigns" asp-action="Details" asp-route-slug="@Model.Slug"> Details </a> 
+                    </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link" asp-controller="Campaigns" asp-action="Expenditures" asp-route-slug="@Model.Slug"> Expenditures </a> 
+                    </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link" asp-controller="Campaigns" asp-action="Milestones" asp-route-slug="@Model.Slug"> Milestones </a> 
+                    </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link" asp-controller="Campaigns" asp-action="Opportunities" asp-route-slug="@Model.Slug"> Opportunities </a> 
+                    </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link active" asp-controller="Campaigns" asp-action="Events" asp-route-slug="@Model.Slug"> Events </a> 
+                    </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link" asp-controller="Campaigns" asp-action="Donations" asp-route-slug="@Model.Slug"> Donations </a> 
+                    </li>
+                </ul>
+                 <div class="tab-content mb-0 pb-0">
+                    <div class="tab-pane fade show active">
+                        <div class="row">
+                            @foreach(var item in Model.Meetings)
+                            {
+                                <div class="col-12">
+                                    <div class="card bg-transparent mb-2">
+                                        <div class="card-header d-sm-flex align-items-center text-center justify-content-sm-between border-0 pb-0">
+                                            <h4 class="card-title text-uppercase mt-0">
+                                                <a asp-controller="Events" asp-action="Details" asp-route-id="@item.Id">@item.Name</a>
+                                            </h4>
+                                            <div class="dropdown">
+                                                <a href="#" class="text-secondary btn btn-secondary-soft-hover py-1 px-2" id="cardFeedAction@(item.Id)"
+                                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="bi bi-three-dots"></i>
+                                                </a>
+                                                <!-- Card feed action dropdown menu -->
+                                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction@(item.Id)">
+                                                    <li><a class="dropdown-item" href="#"> <i class="bi bi-info-circle fa-fw pe-2"></i>About</a></li>
+                                                    <li><a class="dropdown-item" href="#"> <i class="bi bi-inbox fa-fw pe-2"></i>Contact</a></li>
+                                                    <li>
+                                                        <hr class="dropdown-divider">
+                                                    </li>
+                                                    <li><a class="dropdown-item" href="#"> <i class="bi bi-question-circle fa-fw pe-2"></i>FAQ</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="card-text mb-3">
+                                                @item.Details.Truncate(500)
+                                            </div>
+                                            <ul class="list-inline mt-auto">
+                                                <li class="list-inline-item"><strong>Campaign :</strong></li>
+                                                <li class="list-inline-item">@Model.Name</li>
+                                            </ul>
+                                        </div>
+                                        <div class="card-footer">
+                                            <div class="d-flex align-items-center text-center justify-content-between">
+                                                <div><i class="bi bi-calendar-check"></i> @item.StartTime.ToString("dddd MMMM dd, yyyy hh:mm tt")</div>
+                                                <div><i class="bi bi-geo-alt"></i> @item.Location</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Component.InvokeAsync("SaveMeeting", new { campaignId = Model.Id })
+
+@section JavaScripts {}
+
+@section ScriptTag {}

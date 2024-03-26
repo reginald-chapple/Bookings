@@ -1,0 +1,126 @@
+@model PostAuthorModel
+
+@{
+    ViewData["Title"] = "Community";
+}
+
+@section StyleTag{}
+
+@section SidebarWidgets {
+    <partial name="Widgets/_NewsWidget" />
+}
+
+<div class="row">
+    <div class="col-12 mx-auto">
+        <div class="card card-body">
+            <div class="d-flex align-items-center justify-content-between my-3">
+                <div class="d-flex align-items-center">
+                    <!-- Avatar -->
+                    <div class="avatar avatar-story me-2">
+                        <a href="#!"> <img class="avatar-img rounded-circle" src="~/media/members/@(Model.Creator!.Image)" alt=""> </a>
+                    </div>
+                    <!-- Info -->
+                    <div>
+                        <div class="nav nav-divider">
+                            <h6 class="nav-item card-title mb-0"> <a href="#!"> @Model.Creator.FullName</a></h6>
+                            <span class="nav-item small"> @Model.Post!.EntityAge()</span>
+                        </div>
+                        <p class="mb-0 small">Web Developer at Webestica</p>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a href="#" class="text-secondary btn btn-secondary-soft-hover py-1 px-2" id="cardFeedAction" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-three-dots"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction">
+                        <li><a class="dropdown-item" href="#"> <i class="bi bi-bookmark fa-fw pe-2"></i>Save post</a></li>
+                        <li><a class="dropdown-item" href="#"> <i class="bi bi-person-x fa-fw pe-2"></i>Unfollow lori ferguson </a></li>
+                        <li><a class="dropdown-item" href="#"> <i class="bi bi-x-circle fa-fw pe-2"></i>Hide post</a></li>
+                        <li><a class="dropdown-item" href="#"> <i class="bi bi-slash-circle fa-fw pe-2"></i>Block</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#"> <i class="bi bi-flag fa-fw pe-2"></i>Report post</a></li>
+                    </ul>
+                </div>
+            </div>
+            <h1 class="h4">@Model.Post!.Subject</h1>
+            <p>@Model.Post.Content</p>
+            <ul class="nav nav-stack flex-wrap small mb-3">
+                <li class="nav-item">
+                    <a class="nav-link" href="#!"> <i class="bi bi-hand-thumbs-up-fill pe-1"></i>(56)</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#!"> <i class="bi bi-chat-fill pe-1"></i>(12)</a>
+                </li>
+                <!-- Card share action START -->
+                <li class="nav-item dropdown ms-sm-auto">
+                    <a class="nav-link mb-0" href="#" id="cardShareAction" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-reply-fill flip-horizontal ps-1"></i>(3)
+                    </a>
+                    <!-- Card share action dropdown menu -->
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardShareAction">
+                        <li><a class="dropdown-item" href="#"> <i class="bi bi-envelope fa-fw pe-2"></i>Send via Direct Message</a></li>
+                        <li><a class="dropdown-item" href="#"> <i class="bi bi-bookmark-check fa-fw pe-2"></i>Bookmark </a></li>
+                        <li><a class="dropdown-item" href="#"> <i class="bi bi-link fa-fw pe-2"></i>Copy link to post</a></li>
+                        <li><a class="dropdown-item" href="#"> <i class="bi bi-share fa-fw pe-2"></i>Share post via …</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#"> <i class="bi bi-pencil-square fa-fw pe-2"></i>Share to News Feed</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="d-flex mb-3">
+                <!-- Avatar -->
+                <div class="avatar avatar-xs me-2">
+                    <a href="#!"> <img class="avatar-img rounded-circle" src="~/media/members/@(User.FindFirst("Image")!.Value)" alt=""> </a>
+                </div>
+                <!-- Comment box  -->
+                <form class="position-relative w-100">
+                    <textarea class="form-control pe-4 bg-light" rows="1" placeholder="Add a comment..." data-bs-toggle="modal" data-bs-target="#saveReplyModal"></textarea>
+                </form>
+            </div>
+            <ul class="comment-wrap list-unstyled">
+                @await Component.InvokeAsync("ReplyList", new { postId = Model.Post.Id })
+            </ul>
+        </div>
+    </div>
+</div>
+
+@await Component.InvokeAsync("SaveReply", new { postId = Model.Post.Id })
+
+@section JavaScripts {}
+
+@section ScriptTag {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const myModalEl = document.getElementById('saveReplyModal');
+            const modal = new bootstrap.Modal('#saveReplyModal');
+            const parentId = document.getElementById('ParentId');
+
+            // Select all elements with the data-parent attribute
+            const elements = document.querySelectorAll('[data-parent]');
+
+            // Add click event listener to each element
+            elements.forEach(element => {
+                element.addEventListener('click', event => {
+                    // Prevent default action (if necessary)
+                    event.preventDefault();
+                    
+                    // Get the value of the data-parent attribute
+                    const parentValue = element.getAttribute('data-parent');
+
+                    //alert(parentValue)
+
+                    parentId.value = parentValue;
+
+                    myModalEl.addEventListener('hide.bs.modal', evt => {
+                        parentId.value = 0;
+                    });
+                    
+                    modal.show();
+                });
+            });
+
+
+
+        });
+    </script>
+}

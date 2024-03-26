@@ -1,0 +1,55 @@
+@model Meeting
+
+<div class="modal fade" id="saveMeetingModal" tabindex="-1" aria-labelledby="saveMeetingModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="saveMeetingModalLabel">Add Event</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="meeting-form" asp-controller="Events" asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="mb-3">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-xl-6 col-12">
+                            <label asp-for="StartTime" class="control-label"></label>
+                            <input asp-for="StartTime" class="form-control" />
+                            <span asp-validation-for="StartTime" class="text-danger"></span>
+                        </div>
+                        <div class="col-xl-6 col-12">
+                            <label asp-for="EndTime" class="control-label"></label>
+                            <input asp-for="EndTime" class="form-control" />
+                            <span asp-validation-for="EndTime" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Visibility" class="control-label"></label>
+                        <select class="form-select" asp-for="Visibility" asp-items="Html.GetEnumSelectList<MeetingVisibility>()"></select>
+                        <span asp-validation-for="Visibility" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Details" class="control-label"></label>
+                        <textarea asp-for="Details" class="form-control"></textarea>
+                        <span asp-validation-for="Details" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Location" class="control-label"></label>
+                        <input asp-for="Location" class="form-control" />
+                        <span asp-validation-for="Location" class="text-danger"></span>
+                    </div>
+                    <input type="hidden" asp-for="CampaignId" />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button type="submit" form="meeting-form" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

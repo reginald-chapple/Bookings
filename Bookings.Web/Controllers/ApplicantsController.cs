@@ -57,7 +57,7 @@ public class ApplicantsController : Controller
     [Route("{id}/Interview-Invite")]
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> InterviewInvite(long? id, [Bind("Label,Message,Details,Location,Date,StartTime,EndTime,CampaignId")] InterviewInviteModel model)
+    public async Task<IActionResult> InterviewInvite(long? id, [Bind("Label,Message,Details,Location,StartTime,EndTime,CampaignId")] InterviewInviteModel model)
     {
         if (id == null)
         {
@@ -81,11 +81,9 @@ public class ApplicantsController : Controller
                 Slug =  $"{FriendlyUrlHelper.GetFriendlyTitle(model.Label)}-{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()}",
                 Details = model.Details,
                 Location = model.Location,
-                Date = model.Date,
                 StartTime = model.StartTime,
                 EndTime = model.EndTime,
-                EntityId = model.CampaignId,
-                EntityType = EntityType.Campaign,
+                CampaignId = model.CampaignId,
                 CreatedBy = User.FindFirst(ClaimTypes.NameIdentifier)!.Value
             };
             applicant.Status = ApplicantStatus.Interview;
@@ -101,7 +99,6 @@ public class ApplicantsController : Controller
                     Message = model.Message,
                     Type = InviteType.Interview,
                     InviteeKey = applicant.Resume!.CreatedBy,
-                    InviteeName = applicant.Resume!.Applicant,
                     CreatedBy = User.FindFirst(ClaimTypes.NameIdentifier)!.Value,
                     EntityId = meeting.Id,
                     EntityType = EntityType.Meeting

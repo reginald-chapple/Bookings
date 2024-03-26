@@ -59,20 +59,11 @@
                             <tr>
                                 <td class="align-top py-1 text-start">
                                     <div class="d-flex">
-                                        <span class="bi bi-calendar-date me-2 text-700 fs--1"></span>
-                                        <span class="text-900 fw-bold mb-0 text-nowrap">Date : </span>
-                                    </div>
-                                </td>
-                                <td class="ps-1 py-1 text-1000 text-end">@Model.Date.ToString("MMM dd, yyyy")</td>
-                            </tr>
-                            <tr>
-                                <td class="align-top py-1 text-start">
-                                    <div class="d-flex">
                                         <span class="bi bi-clock me-2 text-700 fs--1"></span>
                                         <span class="text-900 fw-bold mb-0 text-nowrap">Start : </span>
                                     </div>
                                 </td>
-                                <td class="ps-1 py-1 text-1000 text-end">@Model.StartTime.ToString("hh:mm tt")</td>
+                                <td class="ps-1 py-1 text-1000 text-end">@Model.StartTime.ToString("MMM dd, yyyy hh:mm tt")</td>
                             </tr>
                             <tr>
                                 <td class="align-top py-1 text-start">
@@ -81,7 +72,7 @@
                                         <span class="text-900 fw-bold mb-0 text-nowrap">End : </span>
                                     </div>
                                 </td>
-                                <td class="ps-1 py-1 text-1000 text-end">@Model.EndTime.ToString("hh:mm tt")</td>
+                                <td class="ps-1 py-1 text-1000 text-end">@Model.EndTime.ToString("MMM dd, yyyy hh:mm tt")</td>
                             </tr>
                         </tbody>
                     </table>

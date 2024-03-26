@@ -21,6 +21,37 @@ public class InvitesController : Controller
         _context = context;
     }
 
+    public async Task<IActionResult> Send([Bind("Id,Label,Message,EntityId")] Invite invite, string[] selectedUsers)
+    {
+        if (ModelState.IsValid)
+        {
+            var newInvites = new List<Invite>();
+            
+            if (selectedUsers != null)
+            {
+                foreach (var user in selectedUsers)
+                {
+                    if (!_context.Invites.Where(i => i.InviteeKey == user).Any())
+                    {
+                        newInvites.Add(new Invite
+                        {
+                            Label = invite.Label,
+                            Message = invite.Message,
+                            Type = InviteType.Event,
+                            EntityType = EntityType.Meeting,
+                            EntityId = invite.EntityId,
+                            InviteeKey = user,
+                            CreatedBy = User.FindFirst(ClaimTypes.NameIdentifier)!.Value
+                        });
+                    }
+                }
+            }
+            await _context.AddRangeAsync(newInvites);
+            await _context.SaveChangesAsync();
+        }
+        return Redirect(HttpContext.Request.Headers.Referer!);
+    }
+
     [Route("{id}/Interview")]
     public async Task<IActionResult> Interview(long? id)
     {
@@ -57,12 +88,11 @@ public class InvitesController : Controller
                 Message = invite.Message,
                 Details = m.Details,
                 Location = m.Location,
-                Date = m.Date,
                 StartTime = m.StartTime,
                 EndTime = m.EndTime,
                 Status = invite.Status,
                 ApplicantId = (long) invite.EntityId!,
-                CampaignId = (long) m.EntityId!,
+                CampaignId = m.CampaignId,
                 MeetingId = m.Id
             }).FirstOrDefault();
 

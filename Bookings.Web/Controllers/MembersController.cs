@@ -179,4 +179,44 @@ public class MembersController : Controller
 
         return View(invites);
     }
+
+    [Route("{id}/Calendar")]
+    public async Task<IActionResult> Calendar(string id)
+    {
+        if (string.IsNullOrEmpty(id) || string.IsNullOrWhiteSpace(id))
+        {
+            return NotFound();
+        }
+
+        if (User == null)
+        {
+            return RedirectToAction(nameof(AccountController.AccessDenied), "Account", new { area = "Identity" });
+        }
+
+        var claimUserId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+
+        if (claimUserId == null)
+        {
+            return RedirectToAction(nameof(AccountController.AccessDenied), "Account", new { area = "Identity" });
+        }
+
+        if (id != claimUserId)
+        {
+            return RedirectToAction(nameof(AccountController.AccessDenied), "Account", new { area = "Identity" });
+        }
+
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        if (user.Id != claimUserId)
+        {
+            return RedirectToAction(nameof(AccountController.AccessDenied), "Account", new { area = "Identity" });
+        }
+
+        return View(user);
+    }
 }

@@ -69,30 +69,18 @@
                 <!-- Card share action END -->
             </ul>
             <!-- Feed react END -->
-
-            <!-- Add comment -->
-            <div class="d-flex mb-3">
-                <!-- Avatar -->
-                <div class="avatar avatar-xs me-2">
-                    <a href="#!"> <img class="avatar-img rounded-circle" src="~/media/members/@(User.FindFirst("Image")!.Value)" alt=""> </a>
-                </div>
-                <!-- Comment box  -->
-                <form class="position-relative w-100">
-                    <textarea class="form-control pe-4 bg-light" rows="1" placeholder="Add a comment..."></textarea>
-                </form>
-            </div>
         </div>
         <!-- Card body END -->
         <!-- Card footer START -->
         <div class="card-footer border-0 pt-0">
             <!-- Load more comments -->
-            <a href="#!" role="button" class="btn btn-link btn-link-loader btn-sm text-secondary d-flex align-items-center" data-bs-toggle="button" aria-pressed="true">
+            <a  asp-controller="Posts" asp-action="Details" asp-route-id="@item.Post.Id" class="btn btn-link btn-link-loader btn-sm text-secondary d-flex align-items-center">
                 <div class="spinner-dots me-2">
                     <span class="spinner-dot"></span>
                     <span class="spinner-dot"></span>
                     <span class="spinner-dot"></span>
                 </div>
-                Load more comments 
+                View full post 
             </a>
         </div>
         <!-- Card footer END -->

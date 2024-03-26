@@ -55,6 +55,7 @@ public class Campaign : AuditableEntity
     public virtual ICollection<Opportunity> Opportunities { get; set; } = [];
     public virtual ICollection<Donation> Donations { get; set; } = [];
     public virtual ICollection<Expenditure> Expenditures { get; set; } = [];
+    public virtual ICollection<Meeting> Meetings { get; set; } = [];
 
     public int DaysPassed()
     {

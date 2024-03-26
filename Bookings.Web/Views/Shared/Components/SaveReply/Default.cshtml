@@ -1,0 +1,29 @@
+@model Reply
+
+<div class="modal fade" id="saveReplyModal" tabindex="-1" aria-labelledby="saveReplyModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="saveReplyModalLabel">Save Reply</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="reply-form" asp-controller="Replies" asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="mb-3">
+                        <label asp-for="Content" class="control-label"></label>
+                        <textarea asp-for="Content" class="form-control"></textarea>
+                        <span asp-validation-for="Content" class="text-danger"></span>
+                    </div>
+                    <input asp-for="PostId" type="hidden" />
+                    <input value="0" asp-for="ParentId" type="hidden" />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button type="submit" form="reply-form" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

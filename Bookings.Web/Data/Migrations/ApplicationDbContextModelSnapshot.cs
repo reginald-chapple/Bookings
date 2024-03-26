@@ -15,7 +15,7 @@ namespace Bookings.Web.Data.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.1");
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.3");
 
             modelBuilder.Entity("Bookings.Web.Domain.ActionItem", b =>
                 {
@@ -709,10 +709,6 @@ namespace Bookings.Web.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("InviteeName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
@@ -748,14 +744,14 @@ namespace Bookings.Web.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<long>("CampaignId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateOnly>("Date")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("DeleteDate")
@@ -769,14 +765,8 @@ namespace Bookings.Web.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<TimeOnly>("EndTime")
+                    b.Property<DateTime>("EndTime")
                         .HasColumnType("TEXT");
-
-                    b.Property<long?>("EntityId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("EntityType")
-                        .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
@@ -793,7 +783,7 @@ namespace Bookings.Web.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<TimeOnly>("StartTime")
+                    b.Property<DateTime>("StartTime")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("Updated")
@@ -803,7 +793,12 @@ namespace Bookings.Web.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("Visibility")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CampaignId");
 
                     b.ToTable("Meetings");
                 });
@@ -818,6 +813,9 @@ namespace Bookings.Web.Data.Migrations
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Updated")
                         .HasColumnType("TEXT");
@@ -1442,6 +1440,17 @@ namespace Bookings.Web.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Bookings.Web.Domain.Meeting", b =>
+                {
+                    b.HasOne("Bookings.Web.Domain.Campaign", "Campaign")
+                        .WithMany("Meetings")
+                        .HasForeignKey("CampaignId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Campaign");
+                });
+
             modelBuilder.Entity("Bookings.Web.Domain.MeetingAttendee", b =>
                 {
                     b.HasOne("Bookings.Web.Domain.ApplicationUser", "Attendee")
@@ -1640,6 +1649,8 @@ namespace Bookings.Web.Data.Migrations
                     b.Navigation("Donations");
 
                     b.Navigation("Expenditures");
+
+                    b.Navigation("Meetings");
 
                     b.Navigation("Opportunities");
                 });
