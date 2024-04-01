@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Bookings.Web.Data.Migrations
+namespace Bookings.Web.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class FreshFlowers : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -54,21 +54,6 @@ namespace Bookings.Web.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Attractions",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Label = table.Column<string>(type: "TEXT", nullable: false),
-                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Attractions", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Causes",
                 columns: table => new
                 {
@@ -109,31 +94,6 @@ namespace Bookings.Web.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Forums",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: false),
-                    ModeratorKey = table.Column<string>(type: "TEXT", nullable: false),
-                    ModeratorName = table.Column<string>(type: "TEXT", nullable: false),
-                    ModeratorImage = table.Column<string>(type: "TEXT", nullable: false),
-                    ParentId = table.Column<long>(type: "INTEGER", nullable: true),
-                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Forums", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Forums_Forums_ParentId",
-                        column: x => x.ParentId,
-                        principalTable: "Forums",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Invites",
                 columns: table => new
                 {
@@ -145,7 +105,6 @@ namespace Bookings.Web.Data.Migrations
                     Type = table.Column<int>(type: "INTEGER", nullable: false),
                     HasViewed = table.Column<bool>(type: "INTEGER", nullable: false),
                     InviteeKey = table.Column<string>(type: "TEXT", nullable: false),
-                    InviteeName = table.Column<string>(type: "TEXT", nullable: false),
                     EntityId = table.Column<long>(type: "INTEGER", nullable: true),
                     EntityType = table.Column<int>(type: "INTEGER", nullable: false),
                     Created = table.Column<DateTime>(type: "TEXT", nullable: false),
@@ -159,34 +118,6 @@ namespace Bookings.Web.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Invites", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Meetings",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Slug = table.Column<string>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Details = table.Column<string>(type: "TEXT", nullable: false),
-                    Location = table.Column<string>(type: "TEXT", nullable: false),
-                    Date = table.Column<DateOnly>(type: "TEXT", nullable: false),
-                    StartTime = table.Column<TimeOnly>(type: "TEXT", nullable: false),
-                    EndTime = table.Column<TimeOnly>(type: "TEXT", nullable: false),
-                    EntityId = table.Column<long>(type: "INTEGER", nullable: true),
-                    EntityType = table.Column<int>(type: "INTEGER", nullable: false),
-                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
-                    DeleteDate = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    CreatedBy = table.Column<string>(type: "TEXT", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "TEXT", nullable: false),
-                    DeletedBy = table.Column<string>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Meetings", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -225,22 +156,6 @@ namespace Bookings.Web.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Resumes", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SkinComplexions",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    ScalePosition = table.Column<string>(type: "TEXT", nullable: false),
-                    HexCode = table.Column<string>(type: "TEXT", nullable: false),
-                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SkinComplexions", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -366,30 +281,53 @@ namespace Bookings.Web.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Follows",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    UserId = table.Column<string>(type: "TEXT", nullable: false),
+                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
+                    DeleteDate = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    CreatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    DeletedBy = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Follows", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Follows_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Relationships",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    IsPrivate = table.Column<bool>(type: "INTEGER", nullable: false),
                     Type = table.Column<int>(type: "INTEGER", nullable: false),
-                    SeekerId = table.Column<string>(type: "TEXT", nullable: false),
-                    TargetId = table.Column<string>(type: "TEXT", nullable: false),
+                    UserId = table.Column<string>(type: "TEXT", nullable: false),
                     Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
+                    DeleteDate = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    CreatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    DeletedBy = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Relationships", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Relationships_AspNetUsers_SeekerId",
-                        column: x => x.SeekerId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Relationships_AspNetUsers_TargetId",
-                        column: x => x.TargetId,
+                        name: "FK_Relationships_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -405,6 +343,7 @@ namespace Bookings.Web.Data.Migrations
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     IsPublished = table.Column<bool>(type: "INTEGER", nullable: false),
                     FundraisingGoal = table.Column<decimal>(type: "TEXT", precision: 9, scale: 2, nullable: false),
+                    Reason = table.Column<string>(type: "TEXT", nullable: false),
                     Problem = table.Column<string>(type: "TEXT", nullable: false),
                     Goal = table.Column<string>(type: "TEXT", nullable: false),
                     Beneficiaries = table.Column<string>(type: "TEXT", nullable: false),
@@ -427,30 +366,6 @@ namespace Bookings.Web.Data.Migrations
                     table.PrimaryKey("PK_Campaigns", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Campaigns_Causes_CauseId",
-                        column: x => x.CauseId,
-                        principalTable: "Causes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Communities",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    About = table.Column<string>(type: "TEXT", nullable: false),
-                    IsEnabled = table.Column<bool>(type: "INTEGER", nullable: false),
-                    CauseId = table.Column<long>(type: "INTEGER", nullable: false),
-                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Communities", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Communities_Causes_CauseId",
                         column: x => x.CauseId,
                         principalTable: "Causes",
                         principalColumn: "Id",
@@ -510,58 +425,6 @@ namespace Bookings.Web.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Posts",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Subject = table.Column<string>(type: "TEXT", nullable: false),
-                    Content = table.Column<string>(type: "TEXT", nullable: false),
-                    ForumId = table.Column<long>(type: "INTEGER", nullable: false),
-                    AuthorKey = table.Column<string>(type: "TEXT", nullable: false),
-                    AuthorName = table.Column<string>(type: "TEXT", nullable: false),
-                    AuthorImage = table.Column<string>(type: "TEXT", nullable: false),
-                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Posts", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Posts_Forums_ForumId",
-                        column: x => x.ForumId,
-                        principalTable: "Forums",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MeetingAttendees",
-                columns: table => new
-                {
-                    AttendeeId = table.Column<string>(type: "TEXT", nullable: false),
-                    MeetingId = table.Column<long>(type: "INTEGER", nullable: false),
-                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MeetingAttendees", x => new { x.MeetingId, x.AttendeeId });
-                    table.ForeignKey(
-                        name: "FK_MeetingAttendees_AspNetUsers_AttendeeId",
-                        column: x => x.AttendeeId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_MeetingAttendees_Meetings_MeetingId",
-                        column: x => x.MeetingId,
-                        principalTable: "Meetings",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "UserNotifications",
                 columns: table => new
                 {
@@ -589,41 +452,6 @@ namespace Bookings.Web.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MatchProfiles",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    HasChildren = table.Column<bool>(type: "INTEGER", nullable: false),
-                    IsSmoker = table.Column<bool>(type: "INTEGER", nullable: false),
-                    IsDrinker = table.Column<bool>(type: "INTEGER", nullable: false),
-                    HairColor = table.Column<int>(type: "INTEGER", nullable: false),
-                    EyeColor = table.Column<int>(type: "INTEGER", nullable: false),
-                    BodyType = table.Column<int>(type: "INTEGER", nullable: false),
-                    Sexuality = table.Column<int>(type: "INTEGER", nullable: false),
-                    ComplexionId = table.Column<int>(type: "INTEGER", nullable: true),
-                    GenderIdentity = table.Column<int>(type: "INTEGER", nullable: false),
-                    UserId = table.Column<string>(type: "TEXT", nullable: false),
-                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MatchProfiles", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_MatchProfiles_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_MatchProfiles_SkinComplexions_ComplexionId",
-                        column: x => x.ComplexionId,
-                        principalTable: "SkinComplexions",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "UserValues",
                 columns: table => new
                 {
@@ -645,6 +473,73 @@ namespace Bookings.Web.Data.Migrations
                         name: "FK_UserValues_Values_ValueId",
                         column: x => x.ValueId,
                         principalTable: "Values",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ActionItems",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Label = table.Column<string>(type: "TEXT", nullable: false),
+                    Details = table.Column<string>(type: "TEXT", nullable: false),
+                    PercentageComplete = table.Column<decimal>(type: "TEXT", precision: 5, scale: 2, nullable: false),
+                    Deadline = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    IsCompleted = table.Column<bool>(type: "INTEGER", nullable: false),
+                    CompletionDate = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    State = table.Column<int>(type: "INTEGER", nullable: false),
+                    Type = table.Column<int>(type: "INTEGER", nullable: false),
+                    CampaignId = table.Column<long>(type: "INTEGER", nullable: false),
+                    ParentId = table.Column<long>(type: "INTEGER", nullable: true),
+                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
+                    DeleteDate = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    CreatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    DeletedBy = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ActionItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ActionItems_ActionItems_ParentId",
+                        column: x => x.ParentId,
+                        principalTable: "ActionItems",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ActionItems_Campaigns_CampaignId",
+                        column: x => x.CampaignId,
+                        principalTable: "Campaigns",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Communities",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    IsEnabled = table.Column<bool>(type: "INTEGER", nullable: false),
+                    CampaignId = table.Column<long>(type: "INTEGER", nullable: false),
+                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
+                    DeleteDate = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    CreatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    DeletedBy = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Communities", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Communities_Campaigns_CampaignId",
+                        column: x => x.CampaignId,
+                        principalTable: "Campaigns",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -707,17 +602,18 @@ namespace Bookings.Web.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Milestones",
+                name: "Meetings",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Label = table.Column<string>(type: "TEXT", nullable: false),
+                    Slug = table.Column<string>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
                     Details = table.Column<string>(type: "TEXT", nullable: false),
-                    PercentageComplete = table.Column<decimal>(type: "TEXT", precision: 5, scale: 2, nullable: false),
-                    Deadline = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    IsCompleted = table.Column<bool>(type: "INTEGER", nullable: false),
-                    CompletionDate = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    Location = table.Column<string>(type: "TEXT", nullable: false),
+                    Visibility = table.Column<int>(type: "INTEGER", nullable: false),
+                    StartTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    EndTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     CampaignId = table.Column<long>(type: "INTEGER", nullable: false),
                     Created = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Updated = table.Column<DateTime>(type: "TEXT", nullable: false),
@@ -729,9 +625,9 @@ namespace Bookings.Web.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Milestones", x => x.Id);
+                    table.PrimaryKey("PK_Meetings", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Milestones_Campaigns_CampaignId",
+                        name: "FK_Meetings_Campaigns_CampaignId",
                         column: x => x.CampaignId,
                         principalTable: "Campaigns",
                         principalColumn: "Id",
@@ -739,14 +635,13 @@ namespace Bookings.Web.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Opportunities",
+                name: "Teams",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Title = table.Column<string>(type: "TEXT", nullable: false),
-                    Details = table.Column<string>(type: "TEXT", nullable: false),
-                    IsClosed = table.Column<bool>(type: "INTEGER", nullable: false),
+                    Positions = table.Column<string>(type: "TEXT", nullable: false),
+                    IsOpenForMembership = table.Column<bool>(type: "INTEGER", nullable: false),
                     CampaignId = table.Column<long>(type: "INTEGER", nullable: false),
                     Created = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Updated = table.Column<DateTime>(type: "TEXT", nullable: false),
@@ -758,35 +653,9 @@ namespace Bookings.Web.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Opportunities", x => x.Id);
+                    table.PrimaryKey("PK_Teams", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Opportunities_Campaigns_CampaignId",
-                        column: x => x.CampaignId,
-                        principalTable: "Campaigns",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TimelineEntries",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Title = table.Column<string>(type: "TEXT", nullable: false),
-                    Content = table.Column<string>(type: "TEXT", nullable: false),
-                    CampaignId = table.Column<long>(type: "INTEGER", nullable: false),
-                    AuthorKey = table.Column<string>(type: "TEXT", nullable: false),
-                    AuthorName = table.Column<string>(type: "TEXT", nullable: false),
-                    AuthorImage = table.Column<string>(type: "TEXT", nullable: false),
-                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TimelineEntries", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_TimelineEntries_Campaigns_CampaignId",
+                        name: "FK_Teams_Campaigns_CampaignId",
                         column: x => x.CampaignId,
                         principalTable: "Campaigns",
                         principalColumn: "Id",
@@ -821,159 +690,157 @@ namespace Bookings.Web.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Reply",
+                name: "Posts",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Subject = table.Column<string>(type: "TEXT", nullable: false),
+                    Content = table.Column<string>(type: "TEXT", nullable: false),
+                    CommunityId = table.Column<long>(type: "INTEGER", nullable: true),
+                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
+                    DeleteDate = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    CreatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    DeletedBy = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Posts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Posts_Communities_CommunityId",
+                        column: x => x.CommunityId,
+                        principalTable: "Communities",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MeetingAttendees",
+                columns: table => new
+                {
+                    AttendeeId = table.Column<string>(type: "TEXT", nullable: false),
+                    MeetingId = table.Column<long>(type: "INTEGER", nullable: false),
+                    Role = table.Column<int>(type: "INTEGER", nullable: false),
+                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MeetingAttendees", x => new { x.MeetingId, x.AttendeeId });
+                    table.ForeignKey(
+                        name: "FK_MeetingAttendees_AspNetUsers_AttendeeId",
+                        column: x => x.AttendeeId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MeetingAttendees_Meetings_MeetingId",
+                        column: x => x.MeetingId,
+                        principalTable: "Meetings",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TeamMembers",
+                columns: table => new
+                {
+                    MemberId = table.Column<string>(type: "TEXT", nullable: false),
+                    TeamId = table.Column<long>(type: "INTEGER", nullable: false),
+                    Position = table.Column<string>(type: "TEXT", nullable: false),
+                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TeamMembers", x => new { x.TeamId, x.MemberId });
+                    table.ForeignKey(
+                        name: "FK_TeamMembers_AspNetUsers_MemberId",
+                        column: x => x.MemberId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TeamMembers_Teams_TeamId",
+                        column: x => x.TeamId,
+                        principalTable: "Teams",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TeamRequests",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Position = table.Column<string>(type: "TEXT", nullable: false),
+                    HasViewed = table.Column<bool>(type: "INTEGER", nullable: false),
+                    Status = table.Column<int>(type: "INTEGER", nullable: false),
+                    TeamId = table.Column<long>(type: "INTEGER", nullable: false),
+                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
+                    DeleteDate = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    CreatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    DeletedBy = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TeamRequests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TeamRequests_Teams_TeamId",
+                        column: x => x.TeamId,
+                        principalTable: "Teams",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Replies",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Content = table.Column<string>(type: "TEXT", nullable: false),
                     PostId = table.Column<long>(type: "INTEGER", nullable: false),
-                    AuthorKey = table.Column<string>(type: "TEXT", nullable: false),
-                    AuthorName = table.Column<string>(type: "TEXT", nullable: false),
-                    AuthorImage = table.Column<string>(type: "TEXT", nullable: false),
+                    ParentId = table.Column<long>(type: "INTEGER", nullable: true),
                     Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
+                    DeleteDate = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    CreatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "TEXT", nullable: false),
+                    DeletedBy = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reply", x => x.Id);
+                    table.PrimaryKey("PK_Replies", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reply_Posts_PostId",
+                        name: "FK_Replies_Posts_PostId",
                         column: x => x.PostId,
                         principalTable: "Posts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ActionItems",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Label = table.Column<string>(type: "TEXT", nullable: false),
-                    IsCompleted = table.Column<bool>(type: "INTEGER", nullable: false),
-                    CompletionDate = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    MilestoneId = table.Column<long>(type: "INTEGER", nullable: false),
-                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
-                    DeleteDate = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    CreatedBy = table.Column<string>(type: "TEXT", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "TEXT", nullable: false),
-                    DeletedBy = table.Column<string>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ActionItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ActionItems_Milestones_MilestoneId",
-                        column: x => x.MilestoneId,
-                        principalTable: "Milestones",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Applicants",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    ResumeId = table.Column<string>(type: "TEXT", nullable: false),
-                    HasViewed = table.Column<bool>(type: "INTEGER", nullable: false),
-                    Status = table.Column<int>(type: "INTEGER", nullable: false),
-                    OpportunityId = table.Column<long>(type: "INTEGER", nullable: false),
-                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "INTEGER", nullable: false),
-                    DeleteDate = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    CreatedBy = table.Column<string>(type: "TEXT", nullable: false),
-                    UpdatedBy = table.Column<string>(type: "TEXT", nullable: false),
-                    DeletedBy = table.Column<string>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Applicants", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Applicants_Opportunities_OpportunityId",
-                        column: x => x.OpportunityId,
-                        principalTable: "Opportunities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Applicants_Resumes_ResumeId",
-                        column: x => x.ResumeId,
-                        principalTable: "Resumes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Volunteers",
-                columns: table => new
-                {
-                    OpportunityId = table.Column<long>(type: "INTEGER", nullable: false),
-                    UserId = table.Column<string>(type: "TEXT", nullable: false),
-                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Volunteers", x => new { x.OpportunityId, x.UserId });
-                    table.ForeignKey(
-                        name: "FK_Volunteers_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Volunteers_Opportunities_OpportunityId",
-                        column: x => x.OpportunityId,
-                        principalTable: "Opportunities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Comments",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Content = table.Column<string>(type: "TEXT", nullable: false),
-                    TimelineEntryId = table.Column<long>(type: "INTEGER", nullable: false),
-                    AuthorKey = table.Column<string>(type: "TEXT", nullable: false),
-                    AuthorName = table.Column<string>(type: "TEXT", nullable: false),
-                    AuthorImage = table.Column<string>(type: "TEXT", nullable: false),
-                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Comments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Comments_TimelineEntries_TimelineEntryId",
-                        column: x => x.TimelineEntryId,
-                        principalTable: "TimelineEntries",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Replies_Replies_ParentId",
+                        column: x => x.ParentId,
+                        principalTable: "Replies",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ActionItems_MilestoneId",
+                name: "IX_ActionItems_CampaignId",
                 table: "ActionItems",
-                column: "MilestoneId");
+                column: "CampaignId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Applicants_OpportunityId",
-                table: "Applicants",
-                column: "OpportunityId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Applicants_ResumeId",
-                table: "Applicants",
-                column: "ResumeId");
+                name: "IX_ActionItems_ParentId",
+                table: "ActionItems",
+                column: "ParentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -1033,14 +900,10 @@ namespace Bookings.Web.Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_TimelineEntryId",
-                table: "Comments",
-                column: "TimelineEntryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Communities_CauseId",
+                name: "IX_Communities_CampaignId",
                 table: "Communities",
-                column: "CauseId");
+                column: "CampaignId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_CommunityMembers_MemberId",
@@ -1058,20 +921,9 @@ namespace Bookings.Web.Data.Migrations
                 column: "CampaignId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Forums_ParentId",
-                table: "Forums",
-                column: "ParentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MatchProfiles_ComplexionId",
-                table: "MatchProfiles",
-                column: "ComplexionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MatchProfiles_UserId",
-                table: "MatchProfiles",
-                column: "UserId",
-                unique: true);
+                name: "IX_Follows_UserId",
+                table: "Follows",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MeetingAttendees_AttendeeId",
@@ -1079,39 +931,45 @@ namespace Bookings.Web.Data.Migrations
                 column: "AttendeeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Milestones_CampaignId",
-                table: "Milestones",
+                name: "IX_Meetings_CampaignId",
+                table: "Meetings",
                 column: "CampaignId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Opportunities_CampaignId",
-                table: "Opportunities",
-                column: "CampaignId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Posts_ForumId",
+                name: "IX_Posts_CommunityId",
                 table: "Posts",
-                column: "ForumId");
+                column: "CommunityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Relationships_SeekerId",
+                name: "IX_Relationships_UserId",
                 table: "Relationships",
-                column: "SeekerId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Relationships_TargetId",
-                table: "Relationships",
-                column: "TargetId");
+                name: "IX_Replies_ParentId",
+                table: "Replies",
+                column: "ParentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reply_PostId",
-                table: "Reply",
+                name: "IX_Replies_PostId",
+                table: "Replies",
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TimelineEntries_CampaignId",
-                table: "TimelineEntries",
-                column: "CampaignId");
+                name: "IX_TeamMembers_MemberId",
+                table: "TeamMembers",
+                column: "MemberId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TeamRequests_TeamId",
+                table: "TeamRequests",
+                column: "TeamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Teams_CampaignId",
+                table: "Teams",
+                column: "CampaignId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserNotifications_UserId",
@@ -1122,11 +980,6 @@ namespace Bookings.Web.Data.Migrations
                 name: "IX_UserValues_UserId",
                 table: "UserValues",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Volunteers_UserId",
-                table: "Volunteers",
-                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -1134,9 +987,6 @@ namespace Bookings.Web.Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "ActionItems");
-
-            migrationBuilder.DropTable(
-                name: "Applicants");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
@@ -1154,16 +1004,10 @@ namespace Bookings.Web.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Attractions");
-
-            migrationBuilder.DropTable(
                 name: "ChatMessages");
 
             migrationBuilder.DropTable(
                 name: "ChatUsers");
-
-            migrationBuilder.DropTable(
-                name: "Comments");
 
             migrationBuilder.DropTable(
                 name: "CommunityMembers");
@@ -1175,10 +1019,10 @@ namespace Bookings.Web.Data.Migrations
                 name: "Expenditures");
 
             migrationBuilder.DropTable(
-                name: "Invites");
+                name: "Follows");
 
             migrationBuilder.DropTable(
-                name: "MatchProfiles");
+                name: "Invites");
 
             migrationBuilder.DropTable(
                 name: "MeetingAttendees");
@@ -1187,7 +1031,16 @@ namespace Bookings.Web.Data.Migrations
                 name: "Relationships");
 
             migrationBuilder.DropTable(
-                name: "Reply");
+                name: "Replies");
+
+            migrationBuilder.DropTable(
+                name: "Resumes");
+
+            migrationBuilder.DropTable(
+                name: "TeamMembers");
+
+            migrationBuilder.DropTable(
+                name: "TeamRequests");
 
             migrationBuilder.DropTable(
                 name: "UserNotifications");
@@ -1196,28 +1049,10 @@ namespace Bookings.Web.Data.Migrations
                 name: "UserValues");
 
             migrationBuilder.DropTable(
-                name: "Volunteers");
-
-            migrationBuilder.DropTable(
-                name: "Milestones");
-
-            migrationBuilder.DropTable(
-                name: "Resumes");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Chats");
-
-            migrationBuilder.DropTable(
-                name: "TimelineEntries");
-
-            migrationBuilder.DropTable(
-                name: "Communities");
-
-            migrationBuilder.DropTable(
-                name: "SkinComplexions");
 
             migrationBuilder.DropTable(
                 name: "Meetings");
@@ -1226,19 +1061,19 @@ namespace Bookings.Web.Data.Migrations
                 name: "Posts");
 
             migrationBuilder.DropTable(
-                name: "Notifications");
+                name: "Teams");
 
             migrationBuilder.DropTable(
-                name: "Values");
+                name: "Notifications");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Opportunities");
+                name: "Values");
 
             migrationBuilder.DropTable(
-                name: "Forums");
+                name: "Communities");
 
             migrationBuilder.DropTable(
                 name: "Campaigns");

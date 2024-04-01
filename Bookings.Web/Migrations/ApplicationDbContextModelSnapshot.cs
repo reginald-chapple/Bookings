@@ -3,22 +3,19 @@ using System;
 using Bookings.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Bookings.Web.Data.Migrations
+namespace Bookings.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240313052348_Improved2")]
-    partial class Improved2
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.1");
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.3");
 
             modelBuilder.Entity("Bookings.Web.Domain.ActionItem", b =>
                 {
@@ -70,6 +67,9 @@ namespace Bookings.Web.Data.Migrations
                         .HasPrecision(5, 2)
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("State")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("Type")
                         .HasColumnType("INTEGER");
 
@@ -87,58 +87,6 @@ namespace Bookings.Web.Data.Migrations
                     b.HasIndex("ParentId");
 
                     b.ToTable("ActionItems");
-                });
-
-            modelBuilder.Entity("Bookings.Web.Domain.Applicant", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("DeleteDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("DeletedBy")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("HasViewed")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("OpportunityId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("ResumeId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("Updated")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OpportunityId");
-
-                    b.HasIndex("ResumeId");
-
-                    b.ToTable("Applicants");
                 });
 
             modelBuilder.Entity("Bookings.Web.Domain.ApplicationRole", b =>
@@ -257,27 +205,6 @@ namespace Bookings.Web.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-                });
-
-            modelBuilder.Entity("Bookings.Web.Domain.Attraction", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Label")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("Updated")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Attractions");
                 });
 
             modelBuilder.Entity("Bookings.Web.Domain.Campaign", b =>
@@ -496,11 +423,7 @@ namespace Bookings.Web.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("About")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<long>("CauseId")
+                    b.Property<long>("CampaignId")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Created")
@@ -523,10 +446,6 @@ namespace Bookings.Web.Data.Migrations
                     b.Property<bool>("IsEnabled")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime>("Updated")
                         .HasColumnType("TEXT");
 
@@ -536,7 +455,8 @@ namespace Bookings.Web.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CauseId");
+                    b.HasIndex("CampaignId")
+                        .IsUnique();
 
                     b.ToTable("Communities");
                 });
@@ -563,54 +483,6 @@ namespace Bookings.Web.Data.Migrations
                     b.HasIndex("MemberId");
 
                     b.ToTable("CommunityMembers");
-                });
-
-            modelBuilder.Entity("Bookings.Web.Domain.Conversation", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("DeleteDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("DeletedBy")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Subject")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<long>("TopicId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("Updated")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("UpdatedBy")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TopicId");
-
-                    b.ToTable("Conversations");
                 });
 
             modelBuilder.Entity("Bookings.Web.Domain.Donation", b =>
@@ -711,6 +583,47 @@ namespace Bookings.Web.Data.Migrations
                     b.ToTable("Expenditures");
                 });
 
+            modelBuilder.Entity("Bookings.Web.Domain.Follow", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DeleteDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DeletedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Follows");
+                });
+
             modelBuilder.Entity("Bookings.Web.Domain.Invite", b =>
                 {
                     b.Property<long>("Id")
@@ -744,10 +657,6 @@ namespace Bookings.Web.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("InviteeName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
@@ -777,63 +686,13 @@ namespace Bookings.Web.Data.Migrations
                     b.ToTable("Invites");
                 });
 
-            modelBuilder.Entity("Bookings.Web.Domain.MatchProfile", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("BodyType")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("ComplexionId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("EyeColor")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("GenderIdentity")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("HairColor")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("HasChildren")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("IsDrinker")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("IsSmoker")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Sexuality")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("Updated")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ComplexionId");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("MatchProfiles");
-                });
-
             modelBuilder.Entity("Bookings.Web.Domain.Meeting", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("CampaignId")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Created")
@@ -841,9 +700,6 @@ namespace Bookings.Web.Data.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateOnly>("Date")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("DeleteDate")
@@ -857,14 +713,8 @@ namespace Bookings.Web.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<TimeOnly>("EndTime")
+                    b.Property<DateTime>("EndTime")
                         .HasColumnType("TEXT");
-
-                    b.Property<long?>("EntityId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("EntityType")
-                        .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
@@ -881,7 +731,7 @@ namespace Bookings.Web.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<TimeOnly>("StartTime")
+                    b.Property<DateTime>("StartTime")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("Updated")
@@ -891,7 +741,12 @@ namespace Bookings.Web.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("Visibility")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CampaignId");
 
                     b.ToTable("Meetings");
                 });
@@ -906,6 +761,9 @@ namespace Bookings.Web.Data.Migrations
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Updated")
                         .HasColumnType("TEXT");
@@ -938,13 +796,58 @@ namespace Bookings.Web.Data.Migrations
                     b.ToTable("Notifications");
                 });
 
-            modelBuilder.Entity("Bookings.Web.Domain.Opportunity", b =>
+            modelBuilder.Entity("Bookings.Web.Domain.Post", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<long>("CampaignId")
+                    b.Property<long?>("CommunityId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DeleteDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DeletedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommunityId");
+
+                    b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("Bookings.Web.Domain.Relationship", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Created")
@@ -961,19 +864,11 @@ namespace Bookings.Web.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Details")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsClosed")
-                        .HasColumnType("INTEGER");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Type")
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Updated")
                         .HasColumnType("TEXT");
@@ -982,44 +877,13 @@ namespace Bookings.Web.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("CampaignId");
-
-                    b.ToTable("Opportunities");
-                });
-
-            modelBuilder.Entity("Bookings.Web.Domain.Relationship", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsPrivate")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("SeekerId")
+                    b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("TargetId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("Updated")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SeekerId");
-
-                    b.HasIndex("TargetId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Relationships");
                 });
@@ -1034,9 +898,6 @@ namespace Bookings.Web.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<long>("ConversationId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<DateTime>("Created")
                         .HasColumnType("TEXT");
 
@@ -1054,6 +915,12 @@ namespace Bookings.Web.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
+                    b.Property<long?>("ParentId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("PostId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("Updated")
                         .HasColumnType("TEXT");
 
@@ -1063,7 +930,9 @@ namespace Bookings.Web.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ConversationId");
+                    b.HasIndex("ParentId");
+
+                    b.HasIndex("PostId");
 
                     b.ToTable("Replies");
                 });
@@ -1122,38 +991,13 @@ namespace Bookings.Web.Data.Migrations
                     b.ToTable("Resumes");
                 });
 
-            modelBuilder.Entity("Bookings.Web.Domain.SkinComplexion", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("HexCode")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ScalePosition")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("Updated")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SkinComplexions");
-                });
-
-            modelBuilder.Entity("Bookings.Web.Domain.Topic", b =>
+            modelBuilder.Entity("Bookings.Web.Domain.Team", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<long>("CommunityId")
+                    b.Property<long>("CampaignId")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Created")
@@ -1170,18 +1014,90 @@ namespace Bookings.Web.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Description")
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsOpenForMembership")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Positions")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CampaignId")
+                        .IsUnique();
+
+                    b.ToTable("Teams");
+                });
+
+            modelBuilder.Entity("Bookings.Web.Domain.TeamMember", b =>
+                {
+                    b.Property<long>("TeamId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("MemberId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Position")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("TeamId", "MemberId");
+
+                    b.HasIndex("MemberId");
+
+                    b.ToTable("TeamMembers");
+                });
+
+            modelBuilder.Entity("Bookings.Web.Domain.TeamRequest", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("DeleteDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("DeletedBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("HasViewed")
+                        .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Position")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<long?>("ParentId")
+                    b.Property<int>("Status")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("TeamId")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Updated")
@@ -1193,11 +1109,9 @@ namespace Bookings.Web.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CommunityId");
+                    b.HasIndex("TeamId");
 
-                    b.HasIndex("ParentId");
-
-                    b.ToTable("Topics");
+                    b.ToTable("TeamRequests");
                 });
 
             modelBuilder.Entity("Bookings.Web.Domain.UserNotification", b =>
@@ -1268,27 +1182,6 @@ namespace Bookings.Web.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Values");
-                });
-
-            modelBuilder.Entity("Bookings.Web.Domain.Volunteer", b =>
-                {
-                    b.Property<long>("OpportunityId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("Updated")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("OpportunityId", "UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Volunteers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1395,25 +1288,6 @@ namespace Bookings.Web.Data.Migrations
                     b.Navigation("Parent");
                 });
 
-            modelBuilder.Entity("Bookings.Web.Domain.Applicant", b =>
-                {
-                    b.HasOne("Bookings.Web.Domain.Opportunity", "Opportunity")
-                        .WithMany("Applicants")
-                        .HasForeignKey("OpportunityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Bookings.Web.Domain.Resume", "Resume")
-                        .WithMany("Applications")
-                        .HasForeignKey("ResumeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Opportunity");
-
-                    b.Navigation("Resume");
-                });
-
             modelBuilder.Entity("Bookings.Web.Domain.ApplicationUserRole", b =>
                 {
                     b.HasOne("Bookings.Web.Domain.ApplicationRole", "Role")
@@ -1485,13 +1359,13 @@ namespace Bookings.Web.Data.Migrations
 
             modelBuilder.Entity("Bookings.Web.Domain.Community", b =>
                 {
-                    b.HasOne("Bookings.Web.Domain.Cause", "Cause")
-                        .WithMany("Communities")
-                        .HasForeignKey("CauseId")
+                    b.HasOne("Bookings.Web.Domain.Campaign", "Campaign")
+                        .WithOne("Community")
+                        .HasForeignKey("Bookings.Web.Domain.Community", "CampaignId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Cause");
+                    b.Navigation("Campaign");
                 });
 
             modelBuilder.Entity("Bookings.Web.Domain.CommunityMember", b =>
@@ -1511,17 +1385,6 @@ namespace Bookings.Web.Data.Migrations
                     b.Navigation("Community");
 
                     b.Navigation("Member");
-                });
-
-            modelBuilder.Entity("Bookings.Web.Domain.Conversation", b =>
-                {
-                    b.HasOne("Bookings.Web.Domain.Topic", "Topic")
-                        .WithMany("Conversations")
-                        .HasForeignKey("TopicId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Topic");
                 });
 
             modelBuilder.Entity("Bookings.Web.Domain.Donation", b =>
@@ -1546,21 +1409,26 @@ namespace Bookings.Web.Data.Migrations
                     b.Navigation("Campaign");
                 });
 
-            modelBuilder.Entity("Bookings.Web.Domain.MatchProfile", b =>
+            modelBuilder.Entity("Bookings.Web.Domain.Follow", b =>
                 {
-                    b.HasOne("Bookings.Web.Domain.SkinComplexion", "Complexion")
-                        .WithMany("Profiles")
-                        .HasForeignKey("ComplexionId");
-
                     b.HasOne("Bookings.Web.Domain.ApplicationUser", "User")
-                        .WithOne("MatchProfile")
-                        .HasForeignKey("Bookings.Web.Domain.MatchProfile", "UserId")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Complexion");
-
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Bookings.Web.Domain.Meeting", b =>
+                {
+                    b.HasOne("Bookings.Web.Domain.Campaign", "Campaign")
+                        .WithMany("Meetings")
+                        .HasForeignKey("CampaignId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Campaign");
                 });
 
             modelBuilder.Entity("Bookings.Web.Domain.MeetingAttendee", b =>
@@ -1582,62 +1450,82 @@ namespace Bookings.Web.Data.Migrations
                     b.Navigation("Meeting");
                 });
 
-            modelBuilder.Entity("Bookings.Web.Domain.Opportunity", b =>
+            modelBuilder.Entity("Bookings.Web.Domain.Post", b =>
+                {
+                    b.HasOne("Bookings.Web.Domain.Community", "Community")
+                        .WithMany("Posts")
+                        .HasForeignKey("CommunityId");
+
+                    b.Navigation("Community");
+                });
+
+            modelBuilder.Entity("Bookings.Web.Domain.Relationship", b =>
+                {
+                    b.HasOne("Bookings.Web.Domain.ApplicationUser", "User")
+                        .WithMany("Relationships")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Bookings.Web.Domain.Reply", b =>
+                {
+                    b.HasOne("Bookings.Web.Domain.Reply", "Parent")
+                        .WithMany("Children")
+                        .HasForeignKey("ParentId");
+
+                    b.HasOne("Bookings.Web.Domain.Post", "Post")
+                        .WithMany("Replies")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Parent");
+
+                    b.Navigation("Post");
+                });
+
+            modelBuilder.Entity("Bookings.Web.Domain.Team", b =>
                 {
                     b.HasOne("Bookings.Web.Domain.Campaign", "Campaign")
-                        .WithMany("Opportunities")
-                        .HasForeignKey("CampaignId")
+                        .WithOne("Team")
+                        .HasForeignKey("Bookings.Web.Domain.Team", "CampaignId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Campaign");
                 });
 
-            modelBuilder.Entity("Bookings.Web.Domain.Relationship", b =>
+            modelBuilder.Entity("Bookings.Web.Domain.TeamMember", b =>
                 {
-                    b.HasOne("Bookings.Web.Domain.ApplicationUser", "Seeker")
-                        .WithMany()
-                        .HasForeignKey("SeekerId")
+                    b.HasOne("Bookings.Web.Domain.ApplicationUser", "Member")
+                        .WithMany("Teams")
+                        .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Bookings.Web.Domain.ApplicationUser", "Target")
-                        .WithMany()
-                        .HasForeignKey("TargetId")
+                    b.HasOne("Bookings.Web.Domain.Team", "Team")
+                        .WithMany("Members")
+                        .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Seeker");
+                    b.Navigation("Member");
 
-                    b.Navigation("Target");
+                    b.Navigation("Team");
                 });
 
-            modelBuilder.Entity("Bookings.Web.Domain.Reply", b =>
+            modelBuilder.Entity("Bookings.Web.Domain.TeamRequest", b =>
                 {
-                    b.HasOne("Bookings.Web.Domain.Conversation", "Conversation")
-                        .WithMany("Replies")
-                        .HasForeignKey("ConversationId")
+                    b.HasOne("Bookings.Web.Domain.Team", "Team")
+                        .WithMany("Requests")
+                        .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Conversation");
-                });
-
-            modelBuilder.Entity("Bookings.Web.Domain.Topic", b =>
-                {
-                    b.HasOne("Bookings.Web.Domain.Community", "Community")
-                        .WithMany("Topics")
-                        .HasForeignKey("CommunityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Bookings.Web.Domain.Topic", "Parent")
-                        .WithMany("Children")
-                        .HasForeignKey("ParentId");
-
-                    b.Navigation("Community");
-
-                    b.Navigation("Parent");
+                    b.Navigation("Team");
                 });
 
             modelBuilder.Entity("Bookings.Web.Domain.UserNotification", b =>
@@ -1676,25 +1564,6 @@ namespace Bookings.Web.Data.Migrations
                     b.Navigation("User");
 
                     b.Navigation("Value");
-                });
-
-            modelBuilder.Entity("Bookings.Web.Domain.Volunteer", b =>
-                {
-                    b.HasOne("Bookings.Web.Domain.Opportunity", "Opportunity")
-                        .WithMany("Volunteers")
-                        .HasForeignKey("OpportunityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Bookings.Web.Domain.ApplicationUser", "User")
-                        .WithMany("VolunteerWork")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Opportunity");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1749,28 +1618,32 @@ namespace Bookings.Web.Data.Migrations
 
                     b.Navigation("Communities");
 
-                    b.Navigation("MatchProfile");
-
                     b.Navigation("Meetings");
 
                     b.Navigation("Notifications");
 
+                    b.Navigation("Relationships");
+
+                    b.Navigation("Teams");
+
                     b.Navigation("UserRoles");
 
                     b.Navigation("Values");
-
-                    b.Navigation("VolunteerWork");
                 });
 
             modelBuilder.Entity("Bookings.Web.Domain.Campaign", b =>
                 {
                     b.Navigation("ActionItems");
 
+                    b.Navigation("Community");
+
                     b.Navigation("Donations");
 
                     b.Navigation("Expenditures");
 
-                    b.Navigation("Opportunities");
+                    b.Navigation("Meetings");
+
+                    b.Navigation("Team");
                 });
 
             modelBuilder.Entity("Bookings.Web.Domain.Cause", b =>
@@ -1778,8 +1651,6 @@ namespace Bookings.Web.Data.Migrations
                     b.Navigation("Campaigns");
 
                     b.Navigation("Children");
-
-                    b.Navigation("Communities");
                 });
 
             modelBuilder.Entity("Bookings.Web.Domain.Chat", b =>
@@ -1793,12 +1664,7 @@ namespace Bookings.Web.Data.Migrations
                 {
                     b.Navigation("Members");
 
-                    b.Navigation("Topics");
-                });
-
-            modelBuilder.Entity("Bookings.Web.Domain.Conversation", b =>
-                {
-                    b.Navigation("Replies");
+                    b.Navigation("Posts");
                 });
 
             modelBuilder.Entity("Bookings.Web.Domain.Meeting", b =>
@@ -1811,28 +1677,21 @@ namespace Bookings.Web.Data.Migrations
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("Bookings.Web.Domain.Opportunity", b =>
+            modelBuilder.Entity("Bookings.Web.Domain.Post", b =>
                 {
-                    b.Navigation("Applicants");
-
-                    b.Navigation("Volunteers");
+                    b.Navigation("Replies");
                 });
 
-            modelBuilder.Entity("Bookings.Web.Domain.Resume", b =>
-                {
-                    b.Navigation("Applications");
-                });
-
-            modelBuilder.Entity("Bookings.Web.Domain.SkinComplexion", b =>
-                {
-                    b.Navigation("Profiles");
-                });
-
-            modelBuilder.Entity("Bookings.Web.Domain.Topic", b =>
+            modelBuilder.Entity("Bookings.Web.Domain.Reply", b =>
                 {
                     b.Navigation("Children");
+                });
 
-                    b.Navigation("Conversations");
+            modelBuilder.Entity("Bookings.Web.Domain.Team", b =>
+                {
+                    b.Navigation("Members");
+
+                    b.Navigation("Requests");
                 });
 
             modelBuilder.Entity("Bookings.Web.Domain.Value", b =>

@@ -166,53 +166,8 @@ public class SeederService : ISeederService
         await _roleManager.CreateAsync(role);
     }
 
-    public async Task SeedUserValuesAsync()
-    {
-        if (!_context.UserValues.Any())
-        {
-            await _context.UserValues.AddRangeAsync([
-                // aaliyah.ayad@local.com
-                new UserValue { UserId = "1c73cce6-69c8-4561-a63d-7b7651151fda", ValueId = 1 },
-                new UserValue { UserId = "1c73cce6-69c8-4561-a63d-7b7651151fda", ValueId = 2 },
-                new UserValue { UserId = "1c73cce6-69c8-4561-a63d-7b7651151fda", ValueId = 3 },
-                new UserValue { UserId = "1c73cce6-69c8-4561-a63d-7b7651151fda", ValueId = 4 },
-                new UserValue { UserId = "1c73cce6-69c8-4561-a63d-7b7651151fda", ValueId = 5 },
-                new UserValue { UserId = "1c73cce6-69c8-4561-a63d-7b7651151fda", ValueId = 6 },
-                // sammy.bear@local.com
-                new UserValue { UserId = "cf24ce35-2505-455d-b995-4c36bdc30079", ValueId = 1 },
-                new UserValue { UserId = "cf24ce35-2505-455d-b995-4c36bdc30079", ValueId = 2 },
-                new UserValue { UserId = "cf24ce35-2505-455d-b995-4c36bdc30079", ValueId = 3 },
-                new UserValue { UserId = "cf24ce35-2505-455d-b995-4c36bdc30079", ValueId = 5 },
-                new UserValue { UserId = "cf24ce35-2505-455d-b995-4c36bdc30079", ValueId = 6 },
-                new UserValue { UserId = "cf24ce35-2505-455d-b995-4c36bdc30079", ValueId = 7 },
-                // min.an@local.com
-                new UserValue { UserId = "bf8dd2a7-ad39-42dc-9c4c-82f8bd2b184c", ValueId = 1 },
-                new UserValue { UserId = "bf8dd2a7-ad39-42dc-9c4c-82f8bd2b184c", ValueId = 2 },
-                new UserValue { UserId = "bf8dd2a7-ad39-42dc-9c4c-82f8bd2b184c", ValueId = 3 },
-                new UserValue { UserId = "bf8dd2a7-ad39-42dc-9c4c-82f8bd2b184c", ValueId = 4 },
-                new UserValue { UserId = "bf8dd2a7-ad39-42dc-9c4c-82f8bd2b184c", ValueId = 6 },
-                new UserValue { UserId = "bf8dd2a7-ad39-42dc-9c4c-82f8bd2b184c", ValueId = 8 },
-                // eddie.moss@local.com
-                new UserValue { UserId = "bedcc188-598a-458e-894e-819170beb9ae", ValueId = 1 },
-                new UserValue { UserId = "bedcc188-598a-458e-894e-819170beb9ae", ValueId = 2 },
-                new UserValue { UserId = "bedcc188-598a-458e-894e-819170beb9ae", ValueId = 3 },
-                new UserValue { UserId = "bedcc188-598a-458e-894e-819170beb9ae", ValueId = 6 },
-                new UserValue { UserId = "bedcc188-598a-458e-894e-819170beb9ae", ValueId = 7 },
-                new UserValue { UserId = "bedcc188-598a-458e-894e-819170beb9ae", ValueId = 9 },
-                // wade.rivers@local.com
-                new UserValue { UserId = "3751fc55-8e51-46a0-abd3-c4ae867b2f53", ValueId = 1 },
-                new UserValue { UserId = "3751fc55-8e51-46a0-abd3-c4ae867b2f53", ValueId = 2 },
-                new UserValue { UserId = "3751fc55-8e51-46a0-abd3-c4ae867b2f53", ValueId = 3 },
-                new UserValue { UserId = "3751fc55-8e51-46a0-abd3-c4ae867b2f53", ValueId = 9 },
-                new UserValue { UserId = "3751fc55-8e51-46a0-abd3-c4ae867b2f53", ValueId = 10 },
-                new UserValue { UserId = "3751fc55-8e51-46a0-abd3-c4ae867b2f53", ValueId = 11 },
-            ]);
-        }
-    }
-
     public async Task RunAllAsync() 
     {
-        await SeedUserValuesAsync();
         await SeedUsersAsync();
         await SeedCausesAsync();
         await SeedValuesAsync();
