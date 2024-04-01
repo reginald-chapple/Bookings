@@ -14,9 +14,9 @@
     <div class="col">
         <div class="card h-100">
             <div class="card-header d-sm-flex align-items-center text-center justify-content-sm-between border-0 pb-0">
-                <h1 class="h4 card-title">Discover Campaigns</h1>
+                <h1 class="h4 fw-light text-uppercase">@Model.Campaign!.Name</h1>
                 <div class="btn-group" role="group" aria-label="Basic example">
-                    <a class="btn btn-primary-soft" asp-controller="Members" asp-action="Campaigns" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)!.Value"> 
+                    <a class="btn btn-primary-soft" asp-controller="Members" asp-action="Campaigns" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)"> 
                         <i class="bi bi-person-circle pe-1"></i> My Campaigns
                     </a>
                     <a class="btn btn-primary-soft" href="#"> 
@@ -25,26 +25,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <ul class="nav nav-tabs nav-bottom-line justify-content-center justify-content-md-start">
-                    <li class="nav-item"> 
-                        <a class="nav-link active" asp-controller="Campaigns" asp-action="Details" asp-route-slug="@Model.Campaign!.Slug"> Details </a> 
-                    </li>
-                    <li class="nav-item"> 
-                        <a class="nav-link" asp-controller="Campaigns" asp-action="Expenditures" asp-route-slug="@Model.Campaign!.Slug"> Expenditures </a> 
-                    </li>
-                    <li class="nav-item"> 
-                        <a class="nav-link" asp-controller="Campaigns" asp-action="Milestones" asp-route-slug="@Model.Campaign!.Slug"> Milestones </a> 
-                    </li>
-                    <li class="nav-item"> 
-                        <a class="nav-link" asp-controller="Campaigns" asp-action="Opportunities" asp-route-slug="@Model.Campaign!.Slug"> Opportunities </a> 
-                    </li>
-                    <li class="nav-item"> 
-                        <a class="nav-link" asp-controller="Campaigns" asp-action="Events" asp-route-slug="@Model.Campaign!.Slug"> Events </a> 
-                    </li>
-                    <li class="nav-item"> 
-                        <a class="nav-link" asp-controller="Campaigns" asp-action="Donations" asp-route-slug="@Model.Campaign!.Slug"> Donations </a> 
-                    </li>
-                </ul>
+                @await Html.PartialAsync("Campaigns/_CampaignTabList", Model.Campaign)
                 <div class="tab-content mb-0 pb-0">
                     <div class="tab-pane fade show active">
                         <div class="row g-2 mb-4">

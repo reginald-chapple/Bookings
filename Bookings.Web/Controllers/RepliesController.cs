@@ -33,7 +33,7 @@ public class RepliesController : Controller
             {
                 reply.ParentId = null;
             }
-            reply.CreatedBy = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            reply.CreatedBy = User.FindFirstValue(ClaimTypes.NameIdentifier);
             _context.Add(reply);
             await _context.SaveChangesAsync();
         }

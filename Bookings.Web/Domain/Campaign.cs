@@ -46,13 +46,14 @@ public class Campaign : AuditableEntity
 
     public virtual Community? Community { get; set; }
 
+    public virtual Team? Team { get; set; }
+
     public long CauseId { get; set; }
     public virtual Cause? Cause { get; set; }
 
     // public long CityId { get; set; }
     // public virtual City? City { get; set; }
     public virtual ICollection<ActionItem> ActionItems { get; set; } = [];
-    public virtual ICollection<Opportunity> Opportunities { get; set; } = [];
     public virtual ICollection<Donation> Donations { get; set; } = [];
     public virtual ICollection<Expenditure> Expenditures { get; set; } = [];
     public virtual ICollection<Meeting> Meetings { get; set; } = [];

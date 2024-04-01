@@ -4,84 +4,11 @@
     ViewData["Title"] = "Campaign";
 }
 
-@section StyleTag{
-    <style>
-        .timeline-vertical .timeline-item:not(:last-child) .timeline-item-bar .timeline-bar {
-            position: absolute;
-            height: 100px;
-            left: 11px;
-            top: 24px;
-        }
-        .timeline-vertical.timeline-with-details .timeline-item:not(:last-child) .timeline-item-bar .timeline-bar {
-            height: calc(100% - 1rem) !important;
-        }
-        .timeline-basic .timeline-item:hover .timeline-item-bar .icon-item {
-            background: var(--phoenix-gray-100) !important;
-            border-color: var(--phoenix-gray-300) !important;
-        }
-        .timeline-basic .timeline-item:hover .timeline-item-title {
-            color: var(--phoenix-gray-1100) !important;
-        }
-        .timeline-basic .timeline-item:hover .timeline-time {
-            color: var(--phoenix-gray-1100) !important;
-        }
-        .timeline-basic .timeline-item:not(:last-child) .timeline-item-bar {
-            height: 100%;
-        }
-        .timeline-basic .timeline-item:not(:last-child) .timeline-item-bar .timeline-bar {
-            position: absolute;
-            height: calc(100% - 2.5rem);
-            left: 20px;
-            top: 40px;
-        }
-        .timeline li {
-            position: relative;
-            padding-left: 1.5rem;
-        }
-        .timeline li:after {
-            position: absolute;
-            content: "";
-            height: 0.625rem;
-            width: 0.625rem;
-            border-radius: 50%;
-            background: var(--phoenix-gray-200);
-            left: 0;
-            top: 50%;
-            -webkit-transform: translateY(-50%);
-            -ms-transform: translateY(-50%);
-            transform: translateY(-50%);
-        }
-        .timeline li:not(:last-child):before {
-            position: absolute;
-            content: "";
-            height: 100%;
-            width: 1px;
-            background-color: var(--phoenix-gray-200);
-            top: 50%;
-            left: 0.3125rem;
-        }
-        .icon-item.icon-item-md {
-            height: 2.5rem;
-            width: 2.5rem;
-        }
-        .icon-item {
-            border: none !important;
-            display: -webkit-box;
-            display: -ms-flexbox;
-            display: flex;
-            -webkit-box-pack: center;
-            -ms-flex-pack: center;
-            justify-content: center;
-            -webkit-box-align: center;
-            -ms-flex-align: center;
-            align-items: center;
-            
-        }
-    </style>
-}
+@section StyleTag{}
 
 @section SidebarWidgets {
-    <partial name="Widgets/_JoinCommunity" />
+    <partial name="Widgets/_JoinUs" />
+    <partial name="Widgets/_TeamRequest" />
 }
 
 <div class="row">

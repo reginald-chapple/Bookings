@@ -31,7 +31,7 @@ public class MembersController : Controller
             return NotFound();
         }
 
-        if (id != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+        if (id != User.FindFirstValue(ClaimTypes.NameIdentifier))
         {
             return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
         }
@@ -43,7 +43,7 @@ public class MembersController : Controller
             return NotFound();
         }
 
-        if (user.Id != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+        if (user.Id != User.FindFirstValue(ClaimTypes.NameIdentifier))
         {
             return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
         }
@@ -66,7 +66,7 @@ public class MembersController : Controller
             return NotFound();
         }
 
-        if (id != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+        if (id != User.FindFirstValue(ClaimTypes.NameIdentifier))
         {
             return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
         }
@@ -78,7 +78,7 @@ public class MembersController : Controller
             return NotFound();
         }
 
-        if (user.Id != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+        if (user.Id != User.FindFirstValue(ClaimTypes.NameIdentifier))
         {
             return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
         }
@@ -95,7 +95,7 @@ public class MembersController : Controller
             return NotFound();
         }
 
-        if (id != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+        if (id != User.FindFirstValue(ClaimTypes.NameIdentifier))
         {
             return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
         }
@@ -107,7 +107,7 @@ public class MembersController : Controller
             return NotFound();
         }
 
-        if (user.Id != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+        if (user.Id != User.FindFirstValue(ClaimTypes.NameIdentifier))
         {
             return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
         }
@@ -130,7 +130,7 @@ public class MembersController : Controller
             return NotFound();
         }
 
-        if (id != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+        if (id != User.FindFirstValue(ClaimTypes.NameIdentifier))
         {
             return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
         }
@@ -142,7 +142,7 @@ public class MembersController : Controller
             return NotFound();
         }
 
-        if (user.Id != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+        if (user.Id != User.FindFirstValue(ClaimTypes.NameIdentifier))
         {
             return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
         }
@@ -158,7 +158,7 @@ public class MembersController : Controller
             return NotFound();
         }
 
-        if (id != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+        if (id != User.FindFirstValue(ClaimTypes.NameIdentifier))
         {
             return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
         }
@@ -170,7 +170,7 @@ public class MembersController : Controller
             return NotFound();
         }
 
-        if (user.Id != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+        if (user.Id != User.FindFirstValue(ClaimTypes.NameIdentifier))
         {
             return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
         }
@@ -193,7 +193,7 @@ public class MembersController : Controller
             return RedirectToAction(nameof(AccountController.AccessDenied), "Account", new { area = "Identity" });
         }
 
-        var claimUserId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+        var claimUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
         if (claimUserId == null)
         {
@@ -218,5 +218,32 @@ public class MembersController : Controller
         }
 
         return View(user);
+    }
+
+    [Route("{id}/Experience")]
+    public async Task<IActionResult> Experience(string id)
+    {
+        if (string.IsNullOrEmpty(id) || string.IsNullOrWhiteSpace(id))
+        {
+            return NotFound();
+        }
+
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        var model = new UserExperienceModel
+        {
+            CampaignCount =  _context.TeamMembers.Where(c => c.MemberId == user.Id).Select(c => c.TeamId).Count(),
+            FollowerCount = _context.Follows.Where(f => f.UserId == user.Id).Select(f => f.Id).Count(),
+            FollowingCount = _context.Follows.Where(f => f.CreatedBy == user.Id).Select(f => f.Id).Count(),
+            Creator = await _userService.GetCreatorAsync(user.Id),
+            Resume = await _context.Resumes.FirstOrDefaultAsync(r => r.CreatedBy == user.Id)
+        };
+
+        return View(model);
     }
 }

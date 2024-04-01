@@ -43,7 +43,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" asp-area="Accounts" asp-controller="Members" asp-action="Index" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)!.Value">
+                                    <a class="dropdown-item" asp-area="Accounts" asp-controller="Members" asp-action="Index" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">
                                         Dashboard
                                     </a>
                                 </li>
@@ -60,7 +60,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" asp-area="Accounts" asp-controller="Providers" asp-action="Index" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)!.Value">
+                                    <a class="dropdown-item" asp-area="Accounts" asp-controller="Providers" asp-action="Index" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">
                                         Dashboard
                                     </a>
                                 </li>

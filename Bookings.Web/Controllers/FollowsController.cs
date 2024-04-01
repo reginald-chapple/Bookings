@@ -27,7 +27,7 @@ public class FollowsController : Controller
         if (ModelState.IsValid)
         {
             relationship.Type = RelationshipType.Follow;
-            relationship.CreatedBy = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            relationship.CreatedBy = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
             _context.Add(relationship);
             await _context.SaveChangesAsync();
         }

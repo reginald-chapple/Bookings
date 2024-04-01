@@ -17,7 +17,7 @@ namespace Bookings.Web.Data.Services
         private string PrivateChatDisplayName(string chatName, ClaimsPrincipal User)
         {
             string[] names = chatName.Split(":");
-            var result = Array.Find(names, element => element != User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var result = Array.Find(names, element => element != User.FindFirstValue(ClaimTypes.NameIdentifier));
             return result!;
         }
 

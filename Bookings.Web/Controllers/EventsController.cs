@@ -27,10 +27,10 @@ public class EventsController : Controller
     {
         if (ModelState.IsValid)
         {
-            meeting.CreatedBy = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            meeting.CreatedBy = User.FindFirstValue(ClaimTypes.NameIdentifier);
             meeting.Attendees.Add(new MeetingAttendee
             {
-                AttendeeId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value,
+                AttendeeId = User.FindFirstValue(ClaimTypes.NameIdentifier),
                 Role = AttendeeRole.Creator
             });
             await _context.AddAsync(meeting);
@@ -54,7 +54,7 @@ public class EventsController : Controller
             return NotFound();
         }
 
-        if (meeting.CreatedBy != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+        if (meeting.CreatedBy != User.FindFirstValue(ClaimTypes.NameIdentifier))
         {
             return RedirectToAction(nameof(AccountController.AccessDenied), "Account", new { area = "Identity" });
         }

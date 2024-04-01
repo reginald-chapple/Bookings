@@ -4,11 +4,13 @@ using Bookings.Web.Data.Services;
 using Bookings.Web.Domain;
 using Bookings.Web.Infrastructure.Helpers;
 using Bookings.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bookings.Web.Controllers;
 
+[Authorize(Roles = "Member")]
 [Route("[controller]")]
 public class CampaignsController : Controller
 {
@@ -33,9 +35,12 @@ public class CampaignsController : Controller
     {
         if (ModelState.IsValid)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
             campaign.Slug = $"{FriendlyUrlHelper.GetFriendlyTitle(campaign.Name)}-{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()}";
-            campaign.CreatedBy = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
-            campaign.Community = new Community { CreatedBy = User.FindFirst(ClaimTypes.NameIdentifier)!.Value };
+            campaign.CreatedBy = userId;
+            campaign.Community = new Community { CreatedBy = userId };
+            campaign.Team = new Team { CreatedBy = userId };
+            campaign.Team.Members.Add(new TeamMember { MemberId = userId, Position = "Manager" });
             await _context.AddAsync(campaign);
             await _context.SaveChangesAsync();
             return Redirect(HttpContext.Request.Headers.Referer!);
@@ -43,6 +48,7 @@ public class CampaignsController : Controller
         return Redirect(HttpContext.Request.Headers.Referer!);
     }
 
+    [AllowAnonymous]
     [Route("{slug}")]
     public async Task<IActionResult> Public(string slug)
     {
@@ -53,6 +59,7 @@ public class CampaignsController : Controller
 
         var campaign = await _context.Campaigns
             .Include(c => c.Cause)
+            .Include(c => c.Team)
             .Include(c => c.Expenditures)
             .FirstOrDefaultAsync(u => u.Slug == slug );
 
@@ -72,6 +79,10 @@ public class CampaignsController : Controller
             Campaign = campaign,
             ActionItems = actionItems
         };
+
+        ViewData["UserHasPendingRequest"] = _context.TeamRequests
+            .Where(r => r.CreatedBy == User.FindFirstValue(ClaimTypes.NameIdentifier) && r.TeamId == campaign.Team!.Id)
+            .Any();
 
         return View(model);
     }
@@ -160,26 +171,6 @@ public class CampaignsController : Controller
         return View(campaign);
     }
 
-    [Route("{slug}/Opportunities")]
-    public async Task<IActionResult> Opportunities(string slug)
-    {
-        if (string.IsNullOrEmpty(slug) || string.IsNullOrWhiteSpace(slug))
-        {
-            return NotFound();
-        }
-
-        var campaign = await _context.Campaigns
-            .Include(c => c.Opportunities)
-            .FirstOrDefaultAsync(u => u.Slug == slug );
-
-        if (campaign == null)
-        {
-            return NotFound();
-        }
-
-        return View(campaign);
-    }
-
     [Route("{slug}/Milestones")]
     public async Task<IActionResult> Milestones(string slug)
     {
@@ -190,6 +181,26 @@ public class CampaignsController : Controller
 
         var campaign = await _context.Campaigns
             .Include(c => c.ActionItems)
+            .FirstOrDefaultAsync(u => u.Slug == slug );
+
+        if (campaign == null)
+        {
+            return NotFound();
+        }
+
+        return View(campaign);
+    }
+
+    [Route("{slug}/Team")]
+    public async Task<IActionResult> Team(string slug)
+    {
+        if (string.IsNullOrEmpty(slug) || string.IsNullOrWhiteSpace(slug))
+        {
+            return NotFound();
+        }
+
+        var campaign = await _context.Campaigns
+            .Include(c => c.Team)
             .FirstOrDefaultAsync(u => u.Slug == slug );
 
         if (campaign == null)

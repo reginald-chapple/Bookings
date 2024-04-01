@@ -40,14 +40,8 @@ public enum InviteType
 {
     [Description("Event")]
     Event,
-    [Description("Opportunity")]
-    Opportunity,
-    [Description("Interview")]
-    Interview,
     [Description("Task")]
     Task,
     [Description("Chat")]
     Chat,
-    [Description("Date")]
-    Date
 }

@@ -1,0 +1,71 @@
+@model IEnumerable<TeamRequesterModel>
+
+<div class="card bg-transparent h-100">
+    <div class="card-header pb-0">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="text-1100 text-uppercase fw-light">Requests</h5>
+            <div class="search-box mb-2 mb-sm-0">
+                <form class="position-relative" data-bs-toggle="search" data-bs-display="static">
+                    <div class="input-group mb-3">
+                        <input type="search" class="form-control" placeholder="Search requests" aria-label="Search"
+                            aria-describedby="button-addon2">
+                        <button class="btn btn-primary-soft" type="button" id="button-addon2">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="card-body py-0" style="max-height: 500px; min-height: 200px; overflow-y: scroll;">
+        <div class="row px-1 py-3">
+            @foreach (var item in Model)
+            {
+                <div class="col-12 p-2">
+                    <div class="border-bottom border-200 gx-0 flex-1 cursor-pointer pb-3">
+                        <div class="mb-1 mb-md-0 d-flex justify-content-between align-items-center lh-1">
+                            <div class="d-flex align-items-center">
+                                <!-- Avatar -->
+                                <div class="avatar avatar-story me-2">
+                                    <a asp-controller="Members" asp-action="Experience" asp-route-id="@item.Creator!.Id">
+                                        <img class="avatar-img rounded-circle" src="~/media/members/@(item.Creator!.Image)"
+                                            alt="">
+                                    </a>
+                                </div>
+                                <!-- Info -->
+                                <div>
+                                    <div class="nav nav-divider">
+                                        <h6 class="nav-item card-title mb-0">
+                                            <a asp-controller="Members" asp-action="Experience"
+                                                asp-route-id="@item.Creator!.Id"> @item.Creator.FullName </a>
+                                        </h6>
+                                    </div>
+                                    <p class="mb-0 small">@item.Request!.Position</p>
+                                </div>
+                            </div>
+                            <div>
+                                <a role="button" class="btn rounded-3 ms-auto btn-primary-soft btn-sm"
+                                    asp-controller="Members" asp-action="Experience" asp-route-id="@item.Creator.Id">
+                                    <i class="bi bi-eye-fill"></i>
+                                </a>
+                                <button type="button" class="btn rounded-3 ms-quto btn-info-soft btn-sm">
+                                    <i class="bi bi-chat-square-text-fill"></i>
+                                </button>
+                                <form class="d-inline" asp-controller="Teams" asp-action="AddMember" asp-route-id="@item.Request.TeamId">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <input type="hidden" name="RequestId" value="@item.Request.Id" />
+                                    <button type="submit" class="btn rounded-3 ms-auto btn-success-soft btn-sm">
+                                        <i class="bi bi-check-lg"></i>
+                                    </button>
+                                </form>
+                                <button type="button" class="btn rounded-3 ms-auto btn-danger-soft btn-sm">
+                                    <i class="bi bi-x-lg"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

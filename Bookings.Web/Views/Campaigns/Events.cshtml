@@ -20,26 +20,7 @@
                 </a>
             </div>
             <div class="card-body">
-                <ul class="nav nav-tabs nav-bottom-line justify-content-center justify-content-md-start">
-                    <li class="nav-item"> 
-                        <a class="nav-link" asp-controller="Campaigns" asp-action="Details" asp-route-slug="@Model.Slug"> Details </a> 
-                    </li>
-                    <li class="nav-item"> 
-                        <a class="nav-link" asp-controller="Campaigns" asp-action="Expenditures" asp-route-slug="@Model.Slug"> Expenditures </a> 
-                    </li>
-                    <li class="nav-item"> 
-                        <a class="nav-link" asp-controller="Campaigns" asp-action="Milestones" asp-route-slug="@Model.Slug"> Milestones </a> 
-                    </li>
-                    <li class="nav-item"> 
-                        <a class="nav-link" asp-controller="Campaigns" asp-action="Opportunities" asp-route-slug="@Model.Slug"> Opportunities </a> 
-                    </li>
-                    <li class="nav-item"> 
-                        <a class="nav-link active" asp-controller="Campaigns" asp-action="Events" asp-route-slug="@Model.Slug"> Events </a> 
-                    </li>
-                    <li class="nav-item"> 
-                        <a class="nav-link" asp-controller="Campaigns" asp-action="Donations" asp-route-slug="@Model.Slug"> Donations </a> 
-                    </li>
-                </ul>
+                @await Html.PartialAsync("Campaigns/_CampaignTabList", Model)
                  <div class="tab-content mb-0 pb-0">
                     <div class="tab-pane fade show active">
                         <div class="row">

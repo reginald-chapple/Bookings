@@ -26,7 +26,7 @@ public class ResumesController : Controller
     {
         if (ModelState.IsValid)
         {
-            resume.CreatedBy = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            resume.CreatedBy = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
             resume.Applicant = User.FindFirst("FullName")!.Value;
             await _context.AddAsync(resume);
             await _context.SaveChangesAsync();

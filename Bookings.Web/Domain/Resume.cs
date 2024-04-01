@@ -19,6 +19,4 @@ public class Resume : AuditableEntity
 
     [DataType(DataType.Text)]
     public string Background { get; set; } = string.Empty;
-
-    public virtual ICollection<Applicant> Applications { get; set; } = [];
 }

@@ -34,7 +34,7 @@ public class ProfileController : Controller
             return NotFound();
         }
 
-        if (id != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+        if (id != User.FindFirstValue(ClaimTypes.NameIdentifier))
         {
             return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
         }
@@ -46,7 +46,7 @@ public class ProfileController : Controller
             return NotFound();
         }
 
-        if (user.Id != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+        if (user.Id != User.FindFirstValue(ClaimTypes.NameIdentifier))
         {
             return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
         }
@@ -62,7 +62,7 @@ public class ProfileController : Controller
             return NotFound();
         }
 
-        if (id != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+        if (id != User.FindFirstValue(ClaimTypes.NameIdentifier))
         {
             return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
         }
@@ -74,7 +74,7 @@ public class ProfileController : Controller
             return NotFound();
         }
 
-        if (user.Id != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+        if (user.Id != User.FindFirstValue(ClaimTypes.NameIdentifier))
         {
             return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
         }
@@ -96,7 +96,7 @@ public class ProfileController : Controller
             return NotFound();
         }
 
-        if (id != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+        if (id != User.FindFirstValue(ClaimTypes.NameIdentifier))
         {
             return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
         }
@@ -108,7 +108,7 @@ public class ProfileController : Controller
             return NotFound();
         }
 
-        if (user.Id != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+        if (user.Id != User.FindFirstValue(ClaimTypes.NameIdentifier))
         {
             return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
         }
@@ -126,7 +126,7 @@ public class ProfileController : Controller
             return NotFound();
         }
 
-        if (id != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+        if (id != User.FindFirstValue(ClaimTypes.NameIdentifier))
         {
             return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
         }
@@ -138,14 +138,14 @@ public class ProfileController : Controller
             return NotFound();
         }
 
-        if (user.Id != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+        if (user.Id != User.FindFirstValue(ClaimTypes.NameIdentifier))
         {
             return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
         }
 
         var users = _context.Users
             .Include(u => u.Values)
-            .Where(u => u.Id != User.FindFirst(ClaimTypes.NameIdentifier)!.Value && u.Values.Count() > 0)
+            .Where(u => u.Id != User.FindFirstValue(ClaimTypes.NameIdentifier) && u.Values.Count() > 0)
             .ToList();
 
         var userList = new List<ApplicationUser>();

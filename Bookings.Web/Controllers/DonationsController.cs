@@ -22,7 +22,7 @@ public class DonationsController : Controller
     {
         if (ModelState.IsValid)
         {
-            donation.CreatedBy = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            donation.CreatedBy = User.FindFirstValue(ClaimTypes.NameIdentifier);
             _context.Add(donation);
             await _context.SaveChangesAsync();
             return Redirect(HttpContext.Request.Headers.Referer!);

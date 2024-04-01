@@ -1,0 +1,73 @@
+@model Campaign
+
+@{
+    ViewData["Title"] = "Campaign";
+}
+
+@section StyleTag{
+    <style>
+        .table > :not(caption) > * > * {
+            background-color: transparent !important;
+        }
+    </style>
+}
+
+@section SidebarWidgets {
+    <partial name="Widgets/_NewsWidget" />
+}
+
+<div class="row">
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-header d-sm-flex align-items-center text-center justify-content-sm-between border-0 pb-0">
+                <h1 class="h4 fw-light text-uppercase">@Model.Name</h1>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <a class="btn btn-primary-soft" asp-controller="Members" asp-action="Campaigns" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)"> 
+                        <i class="bi bi-person-circle pe-1"></i> My Campaigns
+                    </a>
+                    <a class="btn btn-primary-soft" asp-controller="Campaigns" asp-action="Community" asp-route-slug="@Model.Slug"> 
+                        <i class="bi bi-share pe-1"></i> Community
+                    </a>
+                    <button class="btn btn-success-soft" type="button"> 
+                        <i class="bi bi-door-open pe-1"></i> Open
+                    </button>
+                     <button class="btn btn-danger-soft" type="button"> 
+                        <i class="bi bi-door-closed pe-1"></i> Close
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                @await Html.PartialAsync("Campaigns/_CampaignTabList", Model)
+                <div class="tab-content mb-0 pb-0">
+                    <div class="tab-pane fade show active">
+                        <div class="row">
+                            <div class="col-12">
+                                <form class="mb-3" asp-controller="Teams" asp-action="AddPosition">
+                                    <div class="input-group mb-3">
+                                        <input type="text" name="Position" class="form-control" placeholder="Add Position" aria-label="Add Position" aria-describedby="button-addon2">
+                                        <input type="hidden" name="TeamId" value="@Model.Team!.Id" />
+                                        <button class="btn btn-primary-soft" type="submit" id="button-addon2"><i class="bi bi-floppy2"></i></button>
+                                    </div>
+                                </form>
+                                @await Html.PartialAsync("Teams/_Positions", Model.Team)
+                            </div>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-xl-6 col-sm-12 mb-3">
+                                @await Component.InvokeAsync("TeamMembers", new { teamId = Model.Team!.Id })
+                            </div>
+                            <div class="col-xl-6 col-sm-12 mb-3">
+                                @await Component.InvokeAsync("TeamRequests", new { teamId = Model.Team!.Id })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section JavaScripts {}
+
+@section ScriptTag {
+}

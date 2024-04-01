@@ -4,7 +4,6 @@ public enum EntityType
 {
     None,
     ActionItem,
-    Applicant,
     Campaign,
     Cause,
     Chat,
@@ -16,6 +15,5 @@ public enum EntityType
     Invite,
     Meeting,
     Milestone,
-    Opportunity,
     Resume
 }

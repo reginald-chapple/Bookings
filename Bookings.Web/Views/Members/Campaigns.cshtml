@@ -18,91 +18,73 @@
 
 <div class="row">
     <div class="col">
-        <div class="card h-100">
-            <div class="card-header d-sm-flex align-items-center text-center justify-content-sm-between border-0 pb-0">
-                <h1 class="h4 card-title">Discover Campaigns</h1>
-                <!-- Button modal -->
-                <a class="btn btn-primary-soft" href="#" data-bs-toggle="modal" data-bs-target="#saveCampaignModal"> 
-                    <i class="bi bi-plus pe-1"></i> Create campaign
-                </a>
-            </div>
-            <div class="card-body">
-                <ul class="nav nav-tabs nav-bottom-line justify-content-center justify-content-md-start">
-                    <li class="nav-item"> <a class="nav-link active" data-bs-toggle="tab" href="#tab-1"> My Campaigns </a> </li>
-                    <li class="nav-item"> <a class="nav-link" data-bs-toggle="tab" href="#tab-2"> Volunteer </a> </li>
-                </ul>
-                <div class="tab-content mb-0 pb-0">
-                    <div class="tab-pane fade show active" id="tab-1">
-                        <div class="row mb-5">
-                            <div class="d-flex align-items-center justify-content-end my-3">
-                                <div class="ms-3" id="bulk-select-actions">
-                                    <div class="d-flex">
-                                        <select class="form-select form-select-sm" aria-label="Bulk actions">
-                                            <option selected="selected">Bulk actions</option>
-                                            <option value="Delete">Delete</option>
-                                            <option value="Archive">Archive</option>
-                                        </select>
-                                        <button class="btn btn-danger-soft btn-sm mx-2" type="button">Apply</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="campaign-table">
-                                <div class="table-responsive mx-n1 px-1">
-                                    <table class="table table-sm border-top border-200 fs--1 mb-0">
-                                        <thead>
-                                            <tr>
-                                                <th class="white-space-nowrap fs--1 align-middle ps-0" style="max-width:20px; width:18px;">
-                                                    <div class="form-check mb-0 fs-0">
-                                                        <input class="form-check-input" id="bulk-select-example" type="checkbox">
-                                                    </div>
-                                                </th>
-                                                <th class="sort align-middle text-uppercase ps-3">Campaign</th>
-                                                <th class="sort align-middle text-uppercase ps-3">Slug</th>
-                                                <th class="sort text-end align-middle text-uppercase pe-0" scope="col">Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="list" id="products-table-body">
-                                            @foreach(var item in Model.Campaigns)
-                                            {
-                                                <tr>
-                                                    <td class="fs--1 align-middle">
-                                                        <div class="form-check mb-0 fs-0">
-                                                            <input class="form-check-input" type="checkbox">
-                                                        </div>
-                                                    </td>
-                                                    <td class="align-middle ps-3">
-                                                        <a asp-controller="Campaigns" asp-action="Details" asp-route-slug="@item.Slug">@item.Name</a> 
-                                                    </td>
-                                                    <td class="align-middle ps-3">@item.Slug</td>
-                                                    <td class="align-middle white-space-nowrap text-end pe-0">
-                                                        <div class="font-sans-serif btn-reveal-trigger position-static">
-                                                            <button
-                                                                class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
-                                                                type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true"
-                                                                aria-expanded="false" data-bs-reference="parent">
-                                                                <span class="fas fa-ellipsis-h fs--2"></span>
-                                                            </button>
-                                                            <div class="dropdown-menu dropdown-menu-end py-2">
-                                                                <a class="dropdown-item" href="#!">View</a>
-                                                                <a class="dropdown-item" href="#">
-                                                                    Edit
-                                                                </a>
-                                                                <a class="dropdown-item" href="#!">Export</a>
-                                                                <div class="dropdown-divider"></div>
-                                                                <a class="dropdown-item text-danger" href="#!">Remove</a>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+        <div class="card card-body h-100">
+            <div class="row mb-5">
+                <div class="d-flex align-items-center justify-content-between my-3">
+                        <h1 class="h4 fw-light text-uppercase">My Campaigns</h1>
+                    <div class="ms-3" id="bulk-select-actions">
+                        <div class="d-flex">
+                            <select class="form-select form-select-sm" aria-label="Bulk actions">
+                                <option selected="selected">Bulk actions</option>
+                                <option value="Delete">Delete</option>
+                                <option value="Archive">Archive</option>
+                            </select>
+                            <button class="btn btn-danger-soft btn-sm ms-2" type="button">Apply</button>
+                            <button class="btn btn-primary-soft btn-sm mx-2" type="button" data-bs-toggle="modal" data-bs-target="#saveCampaignModal">Create</button>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="tab-2">
-                        ...
+                </div>
+                <div id="campaign-table">
+                    <div class="table-responsive mx-n1 px-1">
+                        <table class="table table-sm border-top border-200 fs--1 mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="white-space-nowrap fs--1 align-middle ps-0" style="max-width:20px; width:18px;">
+                                        <div class="form-check mb-0 fs-0">
+                                            <input class="form-check-input" id="bulk-select-example" type="checkbox">
+                                        </div>
+                                    </th>
+                                    <th class="sort align-middle text-uppercase ps-3">Campaign</th>
+                                    <th class="sort align-middle text-uppercase ps-3">Slug</th>
+                                    <th class="sort text-end align-middle text-uppercase pe-0" scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="list" id="products-table-body">
+                                @foreach(var item in Model.Campaigns)
+                                {
+                                    <tr>
+                                        <td class="fs--1 align-middle">
+                                            <div class="form-check mb-0 fs-0">
+                                                <input class="form-check-input" type="checkbox">
+                                            </div>
+                                        </td>
+                                        <td class="align-middle ps-3">
+                                            <a asp-controller="Campaigns" asp-action="Details" asp-route-slug="@item.Slug">@item.Name</a> 
+                                        </td>
+                                        <td class="align-middle ps-3">@item.Slug</td>
+                                        <td class="align-middle white-space-nowrap text-end pe-0">
+                                            <div class="font-sans-serif btn-reveal-trigger position-static">
+                                                <button
+                                                    class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
+                                                    type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true"
+                                                    aria-expanded="false" data-bs-reference="parent">
+                                                    <span class="bi bi-three-dots fs--2"></span>
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-end py-2">
+                                                    <a class="dropdown-item" href="#!">View</a>
+                                                    <a class="dropdown-item" href="#">
+                                                        Edit
+                                                    </a>
+                                                    <a class="dropdown-item" href="#!">Export</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item text-danger" href="#!">Remove</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

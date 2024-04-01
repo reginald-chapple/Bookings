@@ -1,0 +1,22 @@
+@model Campaign
+
+<ul class="nav nav-tabs nav-bottom-line justify-content-center justify-content-md-start">
+    <li class="nav-item"> 
+        <a class="nav-link @Html.ActiveClass("Campaigns", "Details")" asp-controller="Campaigns" asp-action="Details" asp-route-slug="@Model!.Slug"> Details </a> 
+    </li>
+    <li class="nav-item"> 
+        <a class="nav-link @Html.ActiveClass("Campaigns", "Expenditures")" asp-controller="Campaigns" asp-action="Expenditures" asp-route-slug="@Model!.Slug"> Expenditures </a> 
+    </li>
+    <li class="nav-item"> 
+        <a class="nav-link @Html.ActiveClass("Campaigns", "Milestones")" asp-controller="Campaigns" asp-action="Milestones" asp-route-slug="@Model!.Slug"> Milestones </a> 
+    </li>
+    <li class="nav-item"> 
+        <a class="nav-link @Html.ActiveClass("Campaigns", "Team")" asp-controller="Campaigns" asp-action="Team" asp-route-slug="@Model!.Slug"> Team </a> 
+    </li>
+    <li class="nav-item"> 
+        <a class="nav-link @Html.ActiveClass("Campaigns", "Events")" asp-controller="Campaigns" asp-action="Events" asp-route-slug="@Model!.Slug"> Events </a> 
+    </li>
+    <li class="nav-item"> 
+        <a class="nav-link @Html.ActiveClass("Campaigns", "Donations")" asp-controller="Campaigns" asp-action="Donations" asp-route-slug="@Model!.Slug"> Donations </a> 
+    </li>
+</ul>

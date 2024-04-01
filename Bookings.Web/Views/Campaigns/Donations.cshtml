@@ -15,10 +15,10 @@
         <div class="card h-100">
             <div class="card-header d-sm-flex align-items-center text-center justify-content-sm-between border-0 pb-0">
                 <h1 class="h4 card-title">Discover Campaigns</h1>
-                @if (User.Identity!.IsAuthenticated && User.IsInRole("Member") && User.FindFirst(ClaimTypes.NameIdentifier)!.Value == Model.CreatedBy)
+                @if (User.Identity!.IsAuthenticated && User.IsInRole("Member") && User.FindFirstValue(ClaimTypes.NameIdentifier) == Model.CreatedBy)
                 {
                     <div class="btn-group" role="group" aria-label="Basic example">
-                        <a class="btn btn-primary-soft" asp-controller="Members" asp-action="Campaigns" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)!.Value"> 
+                        <a class="btn btn-primary-soft" asp-controller="Members" asp-action="Campaigns" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)"> 
                             <i class="bi bi-person-circle pe-1"></i> My Campaigns
                         </a>
                         <a class="btn btn-primary-soft" href="#"> 
@@ -34,26 +34,7 @@
                 }
             </div>
             <div class="card-body">
-                <ul class="nav nav-tabs nav-bottom-line justify-content-center justify-content-md-start">
-                    <li class="nav-item"> 
-                        <a class="nav-link" asp-controller="Campaigns" asp-action="Timeline" asp-route-slug="@Model.Slug"> Timeline </a> 
-                    </li>
-                    <li class="nav-item"> 
-                        <a class="nav-link" asp-controller="Campaigns" asp-action="Details" asp-route-slug="@Model.Slug"> Details </a> 
-                    </li>
-                    <li class="nav-item"> 
-                        <a class="nav-link" asp-controller="Campaigns" asp-action="Expenditures" asp-route-slug="@Model.Slug"> Expenditures </a> 
-                    </li>
-                    <li class="nav-item"> 
-                        <a class="nav-link" asp-controller="Campaigns" asp-action="Milestones" asp-route-slug="@Model.Slug"> Milestones </a> 
-                    </li>
-                    <li class="nav-item"> 
-                        <a class="nav-link" asp-controller="Campaigns" asp-action="Opportunities" asp-route-slug="@Model.Slug"> Opportunities </a> 
-                    </li>
-                    <li class="nav-item"> 
-                        <a class="nav-link active" asp-controller="Campaigns" asp-action="Donations" asp-route-slug="@Model.Slug"> Donations </a> 
-                    </li>
-                </ul>
+                @await Html.PartialAsync("Campaigns/_CampaignTabList", Model)
                 <div class="tab-content mb-0 pb-0">
                     <div class="tab-pane fade show active">
                         <div class="row g-2 mb-4">
@@ -93,7 +74,7 @@
                         </div>
 
                         <div class="row">
-                            @if (User.Identity!.IsAuthenticated && User.IsInRole("Member") && User.FindFirst(ClaimTypes.NameIdentifier)!.Value != Model.CreatedBy)
+                            @if (User.Identity!.IsAuthenticated && User.IsInRole("Member") && User.FindFirstValue(ClaimTypes.NameIdentifier) != Model.CreatedBy)
                             {
                             <div class="col-12">
                                 <button class="btn btn-primary-soft d-block w-100" type="button" data-bs-toggle="modal" data-bs-target="#saveDonationModal"> 

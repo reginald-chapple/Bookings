@@ -60,7 +60,7 @@ namespace Bookings.Web.Data.Services
 
         public string GetCurrentUserId(ClaimsPrincipal User)
         {
-            return User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            return User.FindFirstValue(ClaimTypes.NameIdentifier);
         }
 
         public async Task<CreatorModel> GetCreatorAsync(string createdBy)

@@ -41,7 +41,7 @@ public class InvitesController : Controller
                             EntityType = EntityType.Meeting,
                             EntityId = invite.EntityId,
                             InviteeKey = user,
-                            CreatedBy = User.FindFirst(ClaimTypes.NameIdentifier)!.Value
+                            CreatedBy = User.FindFirstValue(ClaimTypes.NameIdentifier)!
                         });
                     }
                 }
@@ -67,7 +67,7 @@ public class InvitesController : Controller
             return NotFound();
         }
 
-        if (invite.InviteeKey != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+        if (invite.InviteeKey != User.FindFirstValue(ClaimTypes.NameIdentifier))
         {
             return RedirectToAction(nameof(AccountController.AccessDenied), "Account", new { area = "Identity" });
         }
@@ -120,7 +120,7 @@ public class InvitesController : Controller
             return NotFound();
         }
 
-        if (invite.InviteeKey != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+        if (invite.InviteeKey != User.FindFirstValue(ClaimTypes.NameIdentifier))
         {
             return RedirectToAction(nameof(AccountController.AccessDenied), "Account", new { area = "Identity" });
         }

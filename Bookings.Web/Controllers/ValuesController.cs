@@ -34,11 +34,11 @@ public class ValuesController : Controller
             {
                 foreach(var value in Values)
                 {
-                    if (!_context.UserValues.Where(v => v.UserId == User.FindFirst(ClaimTypes.NameIdentifier)!.Value && v.ValueId == value).Any())
+                    if (!_context.UserValues.Where(v => v.UserId == User.FindFirstValue(ClaimTypes.NameIdentifier) && v.ValueId == value).Any())
                     {
                         await _context.AddAsync(new UserValue
                         {
-                            UserId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value,
+                            UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
                             ValueId = value
                         });
                     }

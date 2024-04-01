@@ -29,7 +29,7 @@ public class PostsController : Controller
     {
         if (ModelState.IsValid)
         {
-            post.CreatedBy = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            post.CreatedBy = User.FindFirstValue(ClaimTypes.NameIdentifier);
             _context.Add(post);
             await _context.SaveChangesAsync();
         }
@@ -43,7 +43,7 @@ public class PostsController : Controller
     {
         if (ModelState.IsValid)
         {
-            post.CreatedBy = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            post.CreatedBy = User.FindFirstValue(ClaimTypes.NameIdentifier);
             _context.Add(post);
             await _context.SaveChangesAsync();
         }

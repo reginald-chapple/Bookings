@@ -22,7 +22,7 @@ namespace Bookings.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                expenditure.CreatedBy = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+                expenditure.CreatedBy = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 _context.Add(expenditure);
                 await _context.SaveChangesAsync();
                 return Redirect(HttpContext.Request.Headers.Referer!);

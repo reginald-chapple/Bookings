@@ -29,7 +29,7 @@ public class CalendarController : Controller
             return new JsonResult(new { Message = "Forbidden" });
         }
 
-        var claimUserId = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+        var claimUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
         if (string.IsNullOrEmpty(claimUserId) || string.IsNullOrWhiteSpace(claimUserId))
         {

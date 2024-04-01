@@ -60,19 +60,19 @@
             else if (User.IsInRole("Provider"))
             {
                 <li>
-                    <a asp-area="Accounts" asp-controller="Providers" asp-action="Index" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)!.Value" class="active">
+                    <a asp-area="Accounts" asp-controller="Providers" asp-action="Index" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)" class="active">
                         <i class="bx bxs-dashboard"></i>
                         <span class="links_name d-none">Dashboard</span>
                     </a>
                 </li>
                 <li>
-                    <a asp-area="Accounts" asp-controller="Providers" asp-action="Services" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)!.Value">
+                    <a asp-area="Accounts" asp-controller="Providers" asp-action="Services" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">
                         <i class='bx bxs-book-bookmark'></i>
                         <span class="links_name d-none">Services</span>
                     </a>
                 </li>
                 <li>
-                    <a asp-area="Accounts" asp-controller="Appointments" asp-action="Bookings" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)!.Value">
+                    <a asp-area="Accounts" asp-controller="Appointments" asp-action="Bookings" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">
                         <i class='bx bxs-calendar-check'></i>
                         <span class="links_name d-none">Bookings</span>
                     </a>
@@ -99,19 +99,19 @@
             else if (User.IsInRole("Member"))
             {
                 <li>
-                    <a asp-area="Members" asp-controller="Home" asp-action="Index" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)!.Value" class="active">
+                    <a asp-area="Members" asp-controller="Home" asp-action="Index" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)" class="active">
                         <i class="bx bxs-dashboard"></i>
                         <span class="links_name d-none">Dashboard</span>
                     </a>
                 </li>
                 <li>
-                    <a asp-area="Accounts" asp-controller="Appointments" asp-action="MyAppointments" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)!.Value">
+                    <a asp-area="Accounts" asp-controller="Appointments" asp-action="MyAppointments" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">
                         <i class='bx bxs-calendar-check'></i>
                         <span class="links_name d-none">My Appointments</span>
                     </a>
                 </li>
                 <li>
-                    <a asp-area="Members" asp-controller="Home" asp-action="Messages" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)!.Value">
+                    <a asp-area="Members" asp-controller="Home" asp-action="Messages" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">
                         <i class="bx bxs-message-alt-dots"></i>
                         <span class="links_name d-none">Messages</span>
                     </a>

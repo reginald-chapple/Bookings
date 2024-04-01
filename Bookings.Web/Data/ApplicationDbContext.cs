@@ -22,20 +22,20 @@ namespace Bookings.Web.Data
         public DbSet<ChatMessage> ChatMessages { get; set; }
         public DbSet<Value> Values { get; set; }
         public DbSet<UserValue> UserValues { get; set; }
-        public DbSet<Community> Communities { get; set; }
-        public DbSet<CommunityMember> CommunityMembers { get; set; }
         public DbSet<Cause> Causes { get; set; }
         public DbSet<Campaign> Campaigns { get; set; }
+        public DbSet<Team> Teams { get; set; }
+        public DbSet<TeamMember> TeamMembers { get; set; }
+        public DbSet<Community> Communities { get; set; }
+        public DbSet<CommunityMember> CommunityMembers { get; set; }
         public DbSet<ActionItem> ActionItems { get; set; }
         public DbSet<Resume> Resumes { get; set; }
-        public DbSet<Opportunity> Opportunities { get; set; }
-        public DbSet<Applicant> Applicants { get; set; }
+        public DbSet<TeamRequest> TeamRequests { get; set; }
         public DbSet<Donation> Donations { get; set; }
         public DbSet<Expenditure> Expenditures { get; set; }
         public DbSet<Meeting> Meetings { get; set; }
         public DbSet<Invite> Invites { get; set; }
-        public DbSet<MeetingAttendee> MeetingAttendees { get; set; }        
-        public DbSet<Volunteer> Volunteers { get; set; }
+        public DbSet<MeetingAttendee> MeetingAttendees { get; set; }
         public DbSet<Follow> Follows { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Reply> Replies { get; set; }
@@ -63,7 +63,7 @@ namespace Bookings.Web.Data
             builder.ApplyConfiguration(new UserNotificationConfiguration());
             builder.ApplyConfiguration(new MeetingAttendeeConfiguration());
             builder.ApplyConfiguration(new CommunityMemberConfiguration());
-            builder.ApplyConfiguration(new VolunteerConfiguration());
+            builder.ApplyConfiguration(new TeamMemberConfiguration());
             builder.ApplyConfiguration(new UserValueConfiguration());
         }
 

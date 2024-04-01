@@ -1,0 +1,34 @@
+@model CampaignDetailsModel
+
+@{
+    bool userHasPendingRequest = ViewBag.UserHasPendingRequest;
+}
+@if (!userHasPendingRequest)
+{
+    <div class="sidebar-widgetbox p-3 mb-3">
+        <div>
+            <h3 class="fs-3">Join the team!</h3>
+        </div>
+        <div class="row align-items-center my-4">
+            
+            <div class="col-12 mb-2">
+                <form asp-controller="Teams" asp-action="TeamRequest" asp-route-id="@Model.Campaign.Team!.Id">
+                    <select class="form-select mb-3" name="Position" aria-label="Default select example">
+                        <option selected>How would like help?</option>
+                        @foreach(var position in Model.Campaign!.Team!.Positions.Split(";"))
+                        {
+                            @if(!string.IsNullOrEmpty(position) || !string.IsNullOrWhiteSpace(position))
+                            {
+                                <option value="@position">@position</option>
+                            }
+                        }                        
+                    
+                    </select>
+                    <button class="btn btn-primary-soft w-100" type="submit">
+                        Join Team
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+}

@@ -3,29 +3,26 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Bookings.Web.Domain;
 
-public class Applicant : AuditableEntity
+public class TeamRequest : AuditableEntity
 {
     public long Id { get; set; }
 
-    public string ResumeId { get; set; } = string.Empty;
-    public virtual Resume? Resume { get; set; }
+    public string Position { get; set; } = string.Empty;
 
     public bool HasViewed { get; set; } = false;
 
-    public ApplicantStatus Status { get; set; } = ApplicantStatus.Pending;
+    public RequestStatus Status { get; set; } = RequestStatus.Pending;
 
-    public long OpportunityId { get; set; }
-    public virtual Opportunity? Opportunity { get; set; }
+    public long TeamId { get; set; }
+    public virtual Team? Team { get; set; }
 }
 
-public enum ApplicantStatus
+public enum RequestStatus
 {
     [Description("Pending")]
     Pending,
     [Description("Review")]
     Review,
-    [Description("Interview")]
-    Interview,
     [Description("Withdrawn")]
     Withdrawn,
     [Description("Selected")]

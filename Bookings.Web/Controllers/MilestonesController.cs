@@ -24,7 +24,7 @@ public class MilestonesController : Controller
     {
         if (ModelState.IsValid)
         {
-            milestone.CreatedBy = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            milestone.CreatedBy = User.FindFirstValue(ClaimTypes.NameIdentifier);
             milestone.Type = ActionItemType.Milestone;
             await _context.AddAsync(milestone);
             await _context.SaveChangesAsync();
@@ -51,7 +51,7 @@ public class MilestonesController : Controller
             return NotFound();
         }
 
-        if (milestone.CreatedBy != User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
+        if (milestone.CreatedBy != User.FindFirstValue(ClaimTypes.NameIdentifier))
         {
             return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
         }
