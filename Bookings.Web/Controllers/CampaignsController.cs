@@ -81,9 +81,22 @@ public class CampaignsController : Controller
             ActionItems = actionItems
         };
 
-        ViewData["UserHasPendingRequest"] = _context.TeamRequests
+        var isOnTeam = _context.TeamMembers
+            .Where(t => t.MemberId == User.FindFirstValue(ClaimTypes.NameIdentifier) && t.TeamId == campaign.Team!.Id)
+            .Any();
+
+        var hasPendingRequest = _context.TeamRequests
             .Where(r => r.CreatedBy == User.FindFirstValue(ClaimTypes.NameIdentifier) && r.TeamId == campaign.Team!.Id)
             .Any();
+
+        bool canJoinTeam = false;
+
+        if (!isOnTeam && !hasPendingRequest)
+        {
+            canJoinTeam = true;
+        }
+
+        ViewData["CanJoinTeam"] = canJoinTeam;
 
         return View(model);
     }

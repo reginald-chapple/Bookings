@@ -4,9 +4,11 @@
     ViewData["Title"] = "Home";
 }
 
-@section Stylesheets {}
+@section Stylesheets {
+}
 
-@section StyleTag {}
+@section StyleTag {
+}
 
 @section SidebarWidgets {
     <partial name="Widgets/_NewsWidget" />
@@ -19,39 +21,40 @@
                 <h4 class="text-uppercase fw-light mb-0"> Causes</h4>
             </div>
             <div class="dropdown">
-				<a href="#" class="text-secondary btn btn-secondary-soft-hover py-1 px-2" id="cardFeedAction1"
-					data-bs-toggle="dropdown" aria-expanded="false">
-					<i class="bi bi-three-dots"></i>
-				</a>
-				<!-- Card feed action dropdown menu -->
-				<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction1">
-					<li><a class="dropdown-item" href="#"> <i class="bi bi-info-circle fa-fw pe-2"></i>About</a></li>
-					<li><a class="dropdown-item" href="#"> <i class="bi bi-inbox fa-fw pe-2"></i>Contact</a></li>
-					<li>
-						<hr class="dropdown-divider">
-					</li>
-					<li><a class="dropdown-item" href="#"> <i class="bi bi-question-circle fa-fw pe-2"></i>FAQ</a></li>
-				</ul>
-			</div>
+                <a href="#" class="text-secondary btn btn-secondary-soft-hover py-1 px-2" id="cardFeedAction1"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-three-dots"></i>
+                </a>
+                <!-- Card feed action dropdown menu -->
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction1">
+                    <li><a class="dropdown-item" href="#"> <i class="bi bi-info-circle fa-fw pe-2"></i>About</a></li>
+                    <li><a class="dropdown-item" href="#"> <i class="bi bi-inbox fa-fw pe-2"></i>Contact</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#"> <i class="bi bi-question-circle fa-fw pe-2"></i>FAQ</a></li>
+                </ul>
+            </div>
         </div>
     </div>
     <div class="card-body">
         <div class="row g-4">
-            @foreach(var item in Model)
+            @foreach (var item in Model)
             {
                 @if (item.ParentId == null)
                 {
                     <div class="col-12 col-xl-4">
                         <ul class="list-unstyled">
                             <li class="text-uppercase fw-light fs-5"><strong>@item.Name</strong></li>
-                            @foreach(var child in item.Children)
+                            @foreach (var child in item.Children)
                             {
                                 <li>
-                                    <a style="color: var(--bs-body-color);" asp-controller="Causes" asp-action="Campaigns" asp-route-slug="@child.Slug">
+                                    <a style="color: var(--bs-body-color);" asp-controller="Causes" asp-action="Campaigns"
+                                        asp-route-slug="@child.Slug">
                                         @child.Name
                                     </a>
                                 </li>
-                            }   
+                            }
                         </ul>
                     </div>
                 }
@@ -85,6 +88,8 @@
     </div>
 </div>
 
-@section JavaScripts {}
+@section JavaScripts {
+}
 
-@section ScriptTag {}
+@section ScriptTag {
+}

@@ -1,9 +1,9 @@
 @model CampaignDetailsModel
 
 @{
-    bool userHasPendingRequest = ViewBag.UserHasPendingRequest;
+    bool canJoinTeam = ViewBag.CanJoinTeam;
 }
-@if (!userHasPendingRequest)
+@if (canJoinTeam)
 {
     <div class="sidebar-widgetbox p-3 mb-3">
         <div>
