@@ -60,6 +60,7 @@ public class CampaignsController : Controller
         var campaign = await _context.Campaigns
             .Include(c => c.Cause)
             .Include(c => c.Team)
+            .Include(c => c.Donations)
             .Include(c => c.Expenditures)
             .FirstOrDefaultAsync(u => u.Slug == slug );
 

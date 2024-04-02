@@ -58,8 +58,8 @@ public class MembersController : Controller
         return View(model);
     }
 
-    [Route("{id}/Feed")]
-    public async Task<IActionResult> Feed(string id)
+    [Route("{id}/Posts")]
+    public async Task<IActionResult> Posts(string id)
     {
         if (string.IsNullOrEmpty(id) || string.IsNullOrWhiteSpace(id))
         {
@@ -178,6 +178,54 @@ public class MembersController : Controller
         var invites = await _context.Invites.Where(i => i.InviteeKey == user.Id).OrderBy(i => i.Created).ToListAsync();
 
         return View(invites);
+    }
+
+    [Route("{id}/Teams")]
+    public async Task<IActionResult> Teams(string id)
+    {
+        if (string.IsNullOrEmpty(id) || string.IsNullOrWhiteSpace(id))
+        {
+            return NotFound();
+        }
+
+        if (id != User.FindFirstValue(ClaimTypes.NameIdentifier))
+        {
+            return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
+        }
+
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        if (user.Id != User.FindFirstValue(ClaimTypes.NameIdentifier))
+        {
+            return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
+        }
+
+        var teams = await _context.TeamMembers
+            .Include(t => t.Team)
+                .ThenInclude(t => t!.Campaign)
+            .Where(t => t.MemberId == user.Id && t.Position != "Manager")
+            .OrderByDescending(t => t.Created)
+            .ToListAsync();
+
+        var requests = await _context.TeamRequests
+            .Include(t => t.Team)
+                .ThenInclude(t => t!.Campaign)
+            .Where(t => t.CreatedBy == user.Id)
+            .OrderByDescending(t => t.Created)
+            .ToListAsync();
+
+        var model = new MemberTeams
+        {
+            Teams = teams,
+            Requests = requests
+        };
+
+        return View(model);
     }
 
     [Route("{id}/Calendar")]

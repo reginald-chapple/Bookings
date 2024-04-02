@@ -88,36 +88,6 @@ public class ProfileController : Controller
         return View(model);
     }
 
-    [Route("{id}/Values")]
-    public async Task<IActionResult> Values(string id)
-    {
-        if (string.IsNullOrEmpty(id) || string.IsNullOrWhiteSpace(id))
-        {
-            return NotFound();
-        }
-
-        if (id != User.FindFirstValue(ClaimTypes.NameIdentifier))
-        {
-            return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
-        }
-
-        var user = await _context.Users.Include(u => u.Values).FirstOrDefaultAsync(u => u.Id == id);
-
-        if (user == null)
-        {
-            return NotFound();
-        }
-
-        if (user.Id != User.FindFirstValue(ClaimTypes.NameIdentifier))
-        {
-            return RedirectToAction(nameof(AccountController.AccessDenied), "Account");
-        }
-
-        ViewData["Values"] = await _context.Values.OrderBy(v => v.Name).ToListAsync();
-
-        return View(user);
-    }
-
     [Route("{id}/Recommendations")]
     public async Task<IActionResult> Recommendations(string id)
     {
@@ -162,6 +132,7 @@ public class ProfileController : Controller
         List<(ApplicationUser, double)> userMatches = _userRecommender.CalculateMatches(userList, user);
 
         ViewData["Users"] = userMatches;
+        ViewData["Values"] = await _context.Values.OrderBy(v => v.Name).ToListAsync();
 
         return View(user);
     }

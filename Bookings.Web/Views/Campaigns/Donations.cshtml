@@ -74,14 +74,7 @@
                         </div>
 
                         <div class="row">
-                            @if (User.Identity!.IsAuthenticated && User.IsInRole("Member") && User.FindFirstValue(ClaimTypes.NameIdentifier) != Model.CreatedBy)
-                            {
-                            <div class="col-12">
-                                <button class="btn btn-primary-soft d-block w-100" type="button" data-bs-toggle="modal" data-bs-target="#saveDonationModal"> 
-                                    <i class="bi bi-heart-fill pe-1"></i> Donate
-                                </button>
-                            </div>
-                            }
+
                         </div>
                     </div>
                 </div>
@@ -89,8 +82,6 @@
         </div>
     </div>
 </div>
-
-@await Component.InvokeAsync("SaveDonation", new { campaignId = Model.Id })
 
 @section JavaScripts {}
 

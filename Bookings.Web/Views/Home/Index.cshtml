@@ -16,7 +16,7 @@
     <div class="card-header border-0 pb-0">
         <div class="d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center">
-                <h4 class="card-title mb-0"> Causes</h4>
+                <h4 class="text-uppercase fw-light mb-0"> Causes</h4>
             </div>
             <div class="dropdown">
 				<a href="#" class="text-secondary btn btn-secondary-soft-hover py-1 px-2" id="cardFeedAction1"
@@ -43,10 +43,9 @@
                 {
                     <div class="col-12 col-xl-4">
                         <ul class="list-unstyled">
-                            <li><strong class="fs-4">@item.Name</strong></li>
+                            <li class="text-uppercase fw-light fs-5"><strong>@item.Name</strong></li>
                             @foreach(var child in item.Children)
                             {
-                                @*  *@
                                 <li>
                                     <a style="color: var(--bs-body-color);" asp-controller="Causes" asp-action="Campaigns" asp-route-slug="@child.Slug">
                                         @child.Name
@@ -59,7 +58,7 @@
             }
             <div class="col-12 col-xl-3">
                 <ul class="list-unstyled">
-                    <li><strong class="fs-4">Social</strong></li>
+                    <li class="text-uppercase fw-light fs-5"><strong>Social</strong></li>
                     <li>
                         <a style="color: var(--bs-body-color);" href="#">
                             Communities
