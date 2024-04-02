@@ -43,7 +43,7 @@ namespace Bookings.Web.Controllers
             {
                 ChatId = chatId,
                 Content = content,
-                AuthorId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                AuthorId = User.FindFirstValue(ClaimTypes.NameIdentifier)!,
                 AuthorName = User.FindFirst("FullName")!.Value,
                 AuthorImage = User.FindFirst("Image")!.Value
             };

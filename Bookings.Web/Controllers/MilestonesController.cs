@@ -24,7 +24,7 @@ public class MilestonesController : Controller
     {
         if (ModelState.IsValid)
         {
-            milestone.CreatedBy = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            milestone.CreatedBy = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
             milestone.Type = ActionItemType.Milestone;
             await _context.AddAsync(milestone);
             await _context.SaveChangesAsync();

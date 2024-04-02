@@ -38,7 +38,7 @@ public class ValuesController : Controller
                     {
                         await _context.AddAsync(new UserValue
                         {
-                            UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                            UserId = User.FindFirstValue(ClaimTypes.NameIdentifier)!,
                             ValueId = value
                         });
                     }

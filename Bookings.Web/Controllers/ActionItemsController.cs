@@ -25,7 +25,7 @@ public class ActionItemsController : Controller
     {
         if (ModelState.IsValid)
         {
-            item.CreatedBy = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            item.CreatedBy = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
             item.Type = ActionItemType.Task;
             await _context.AddAsync(item);
             await _context.SaveChangesAsync();
