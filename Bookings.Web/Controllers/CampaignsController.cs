@@ -23,9 +23,48 @@ public class CampaignsController : Controller
         _userService = userService;
     }
 
-    public IActionResult Index()
+    [Route("Search")]
+    public async Task<IActionResult> Search(string currentFilter, string searchString, int? pageNumber)
     {
-        return View();
+        if (searchString != null)
+        {
+            pageNumber = 1;
+        }
+        else
+        {
+            searchString = currentFilter;
+        }
+
+        ViewData["CurrentFilter"] = searchString;
+        
+        var campaigns = from c in _context.Campaigns.Include(c => c.Cause) select c;
+
+        if (!string.IsNullOrEmpty(searchString))
+        {
+            campaigns = campaigns.Where(p => p.Name.Contains(searchString));
+        }
+        
+        ViewData["Causes"] = _context.Causes.Where(c => c.ParentId == null).OrderBy(c => c.Name).ToList();
+        
+        int pageSize = 12;
+        return View(await PaginatedList<Campaign>.CreateAsync(campaigns.AsNoTracking(), pageNumber ?? 1, pageSize));
+    }
+
+    [Route("Search")]
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Search(string SearchString)
+    {
+        if (ModelState.IsValid)
+        {
+            if(string.IsNullOrWhiteSpace(SearchString) || string.IsNullOrEmpty(SearchString))
+            {
+                return Redirect(HttpContext.Request.Headers.Referer!);
+            }
+
+            return Redirect($"/Campaigns/Search?SearchString={SearchString}");
+        }
+        return Redirect(HttpContext.Request.Headers.Referer!);
     }
 
     [Route("Create")]

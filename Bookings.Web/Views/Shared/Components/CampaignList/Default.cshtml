@@ -1,0 +1,46 @@
+@model IEnumerable<Campaign>
+
+<div class="row gy-3">
+    @foreach(var campaign in Model)
+    {
+        <div class="col-12">
+            <div class="card mb-2">
+                <div class="card-header d-sm-flex align-items-center text-center justify-content-sm-between border-0 pb-0">
+                    <h4 class="fw-light text-uppercase mt-0">
+                        <a asp-controller="Campaigns" asp-action="Public" asp-route-slug="@campaign.Slug">@campaign.Name</a>
+                    </h4>
+                    <div class="dropdown">
+                        <a href="#" class="text-secondary btn btn-secondary-soft-hover py-1 px-2" id="cardFeedAction@(campaign.Id)"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-three-dots"></i>
+                        </a>
+                        <!-- Card feed action dropdown menu -->
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction@(campaign.Id)">
+                            <li><a class="dropdown-item" href="#"> <i class="bi bi-info-circle fa-fw pe-2"></i>About</a></li>
+                            <li><a class="dropdown-item" href="#"> <i class="bi bi-inbox fa-fw pe-2"></i>Contact</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#"> <i class="bi bi-question-circle fa-fw pe-2"></i>FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card-text mb-3">
+                        @campaign.Goal.Truncate(500)
+                    </div>
+                    <ul class="list-inline mt-auto">
+                        <li class="list-inline-item"><strong>Cause :</strong></li>
+                        <li class="list-inline-item">@campaign.Cause!.Name</li>
+                    </ul>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex align-items-center text-center justify-content-between">
+                        <div><i class="bi bi-calendar-check"></i> @campaign.Created.ToString("dddd MMMM dd, yyyy hh:mm tt")</div>
+                        <div><i class="bi bi-geo-alt"></i> New York</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

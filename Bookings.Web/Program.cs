@@ -44,6 +44,7 @@ builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IChatRepository, ChatRepository>();
+builder.Services.AddTransient<ICampaignService, CampaignService>();
 builder.Services.AddTransient<IChatService, ChatService>();
 builder.Services.AddTransient<IFileService, FileService>();
 builder.Services.AddTransient<ISeederService, SeederService>();

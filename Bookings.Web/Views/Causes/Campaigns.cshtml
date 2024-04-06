@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Cause";
+    List<Cause> causes = ViewBag.Causes;
 }
 
 @section SidebarWidgets {
@@ -16,123 +17,71 @@
 
 <div class="row g-3">
     <div class="col-4">
-        <form>
+        <form asp-controller="Campaigns" asp-action="Search" method="POST">
             <div class="mb-3">
-                <input type="text" class="form-control" placeholder="Search" aria-label="Search">
+                <input type="text" class="form-control" placeholder="Search" aria-label="Search" name="SearchString" />
             </div>
 
-            <div class="card mb-3">
-                <div class="card-header border-0 pb-0">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div class="d-flex align-items-center">
-                            <h4 class="text-uppercase fw-light mb-0"> Causes</h4>
-                        </div>
-                        <div class="dropdown">
-                            <a href="#" class="text-secondary btn btn-secondary-soft-hover py-1 px-2" id="cardFeedAction1"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-three-dots"></i>
-                            </a>
-                            <!-- Card feed action dropdown menu -->
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction1">
-                                <li><a class="dropdown-item" href="#"> <i class="bi bi-info-circle fa-fw pe-2"></i>About</a></li>
-                                <li><a class="dropdown-item" href="#"> <i class="bi bi-inbox fa-fw pe-2"></i>Contact</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="#"> <i class="bi bi-question-circle fa-fw pe-2"></i>FAQ</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            Cause 1
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                        <label class="form-check-label" for="flexRadioDefault2">
-                            Cause 2
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            Cause 3
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                        <label class="form-check-label" for="flexRadioDefault2">
-                            Cause 4
-                        </label>
-                    </div>
-                </div>
-            </div>
             <div class="mb-3">
-                <button type="button" class="btn btn-primary-soft w-100">Filter</button>
+                <button type="submit" class="btn btn-primary-soft w-100">Filter</button>
             </div>
         </form>
+
+        <div class="card mb-3">
+            <div class="card-header border-0 pb-0">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <h4 class="text-uppercase fw-light mb-0"> Subcauses</h4>
+                    </div>
+                    <div class="dropdown">
+                        <a href="#" class="text-secondary btn btn-secondary-soft-hover py-1 px-2" id="cardFeedAction1"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-three-dots"></i>
+                        </a>
+                        <!-- Card feed action dropdown menu -->
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction1">
+                            <li><a class="dropdown-item" href="#"> <i class="bi bi-info-circle fa-fw pe-2"></i>About</a></li>
+                            <li><a class="dropdown-item" href="#"> <i class="bi bi-inbox fa-fw pe-2"></i>Contact</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#"> <i class="bi bi-question-circle fa-fw pe-2"></i>FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                @foreach(var subcause in Model.Children)
+                {
+                    <li>
+                        <a asp-controller="Causes" asp-action="Campaigns" asp-route-slug="@subcause.Slug">
+                            @subcause.Name
+                        </a>
+                    </li>
+                }
+                </ul>
+            </div>
+        </div>
     </div>
     <div class="col-8">
-        <form class="mb-3">
-            <div class="input-group">
-                <select class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
-                <button class="btn btn-primary-soft" type="button"><i class="bi bi-filter"></i></button>
-            </div>
-        </form>
-
-        <div class="row gy-3">
-            @foreach(var item in Model.Campaigns)
-            {
-                <div class="col-12">
-                    <div class="card mb-2">
-                        <div class="card-header d-sm-flex align-items-center text-center justify-content-sm-between border-0 pb-0">
-                            <h4 class="fw-light text-uppercase mt-0">
-                                <a asp-controller="Campaigns" asp-action="Public" asp-route-slug="@item.Slug">@item.Name</a>
-                            </h4>
-                            <div class="dropdown">
-                                <a href="#" class="text-secondary btn btn-secondary-soft-hover py-1 px-2" id="cardFeedAction@(item.Id)"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-three-dots"></i>
-                                </a>
-                                <!-- Card feed action dropdown menu -->
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cardFeedAction@(item.Id)">
-                                    <li><a class="dropdown-item" href="#"> <i class="bi bi-info-circle fa-fw pe-2"></i>About</a></li>
-                                    <li><a class="dropdown-item" href="#"> <i class="bi bi-inbox fa-fw pe-2"></i>Contact</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item" href="#"> <i class="bi bi-question-circle fa-fw pe-2"></i>FAQ</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="card-text mb-3">
-                                @item.Goal.Truncate(500)
-                            </div>
-                            <ul class="list-inline mt-auto">
-                                <li class="list-inline-item"><strong>Cause :</strong></li>
-                                <li class="list-inline-item">@Model.Name</li>
-                            </ul>
-                        </div>
-                        <div class="card-footer">
-                            <div class="d-flex align-items-center text-center justify-content-between">
-                                <div><i class="bi bi-calendar-check"></i> @item.Created.ToString("dddd MMMM dd, yyyy hh:mm tt")</div>
-                                <div><i class="bi bi-geo-alt"></i> New York</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
+        <div class="dropdown mb-3">
+            <button class="text-secondary btn bg-white dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Select Cause <i class="bi bi-chevron-down"></i>
+            </button>
+            <ul class="dropdown-menu w-100">
+                @foreach(var c in causes)
+                {
+                    <li>
+                        <a class="dropdown-item" asp-controller="Causes" asp-action="Campaigns" asp-route-slug="@c.Slug">
+                            @c.Name
+                        </a>
+                    </li>
+                }
+            </ul>
         </div>
+
+        @await Component.InvokeAsync("CampaignList", new { cause = Model })
     </div>
 </div>
 
