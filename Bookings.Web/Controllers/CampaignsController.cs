@@ -7,6 +7,7 @@ using Bookings.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace Bookings.Web.Controllers;
 
@@ -70,7 +71,7 @@ public class CampaignsController : Controller
     [Route("Create")]
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Name,Reason,Problem,Goal,Beneficiaries,Importance,Solution,FundraisingGoal,CauseId")] Campaign campaign)
+    public async Task<JsonResult> Create([Bind("Id,Name,Reason,Problem,Goal,Beneficiaries,Importance,Solution,FundraisingGoal,CauseId")] Campaign campaign)
     {
         if (ModelState.IsValid)
         {
@@ -82,9 +83,18 @@ public class CampaignsController : Controller
             campaign.Team.Members.Add(new TeamMember { MemberId = userId, Position = "Manager" });
             await _context.AddAsync(campaign);
             await _context.SaveChangesAsync();
-            return Redirect(HttpContext.Request.Headers.Referer!);
+            return new JsonResult(new { Name = campaign.Name, Slug = campaign.Slug });
         }
-        return Redirect(HttpContext.Request.Headers.Referer!);
+        else
+        {
+            var errors = ModelState.Values.SelectMany(v => v.Errors)
+                .Select(e => e.ErrorMessage)
+                .ToList();
+
+            var json = JsonConvert.SerializeObject(errors);
+
+            return Json(json);
+        }
     }
 
     [AllowAnonymous]

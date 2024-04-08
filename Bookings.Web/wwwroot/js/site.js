@@ -78,3 +78,28 @@ function ajaxGet(url, successCallback, errorCallback) {
         }
     });
 }
+
+function flashToast(data, alert) {
+    const flashToast = document.getElementById('flashToast');
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(flashToast);
+    const toastBody = document.getElementById('flashToastBody');
+    if (alert == "success") {
+        flashToast.classList.add("text-bg-success");
+    }
+    else if (alert == "warning") {
+        flashToast.classList.add("text-bg-warning");
+    }
+    else if (alert == "danger") {
+        flashToast.classList.add("text-bg-danger");
+    }
+    toastBody.innerHTML = data;
+    toastBootstrap.show()
+}
+
+function notify(data) {
+    const toastLiveExample = document.getElementById('liveToast')
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+    const toastBody = document.getElementById('toastBody');
+    toastBody.innerHTML = data;
+    toastBootstrap.show()
+}

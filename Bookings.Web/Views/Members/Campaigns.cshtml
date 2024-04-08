@@ -49,7 +49,7 @@
                                     <th class="sort text-end align-middle text-uppercase pe-0" scope="col">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody class="list" id="products-table-body">
+                            <tbody class="list" id="campaign-table-body">
                                 @foreach(var item in Model.Campaigns)
                                 {
                                     <tr>
@@ -94,6 +94,14 @@
 
 <vc:save-campaign></vc:save-campaign>
 
-@section JavaScripts {}
+@section JavaScripts {
+    <script src="~/js/campaigns.js"></script>
+}
 
-@section ScriptTag {}
+@section ScriptTag {
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            campaignActions.create
+        });
+    </script>
+}

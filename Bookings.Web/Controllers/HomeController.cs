@@ -18,7 +18,13 @@ public class HomeController : Controller
     private readonly ILogger<HomeController> _logger;
     private readonly ISeederService _seederService;
 
-    public HomeController(ILogger<HomeController> logger, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, ApplicationDbContext context, ISeederService seederService)
+    public HomeController(
+        ILogger<HomeController> logger, 
+        SignInManager<ApplicationUser> signInManager, 
+        UserManager<ApplicationUser> userManager, 
+        ApplicationDbContext context, 
+        ISeederService seederService
+    )
     {
         _logger = logger;
         _signInManager = signInManager;
