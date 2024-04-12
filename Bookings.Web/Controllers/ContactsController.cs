@@ -2,44 +2,41 @@ using System.Security.Claims;
 using Bookings.Web.Data;
 using Bookings.Web.Data.Repository;
 using Bookings.Web.Domain;
-using Bookings.Web.Hubs;
 using Bookings.Web.Identity.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bookings.Web.Controllers;
 
 [Authorize(Roles = "Member")]
 [Route("[controller]")]
-public class FollowsController : Controller
+public class ContactsController : Controller
 {
     private readonly ApplicationDbContext _context;
     private readonly INotificationRepository _notificationRepository;
 
-    public FollowsController(ApplicationDbContext context, INotificationRepository notificationRepository)
+    public ContactsController(ApplicationDbContext context, INotificationRepository notificationRepository)
     {
         _context = context;
         _notificationRepository = notificationRepository;
     }
 
-    [Route("Create")]
+    [Route("Request")]
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,UserId")] Relationship relationship)
+    public async Task<IActionResult> SocialRequest([Bind("Id,UserId")] Relationship relationship)
     {
         if (ModelState.IsValid)
         {
-            relationship.Type = RelationshipType.Follow;
-            relationship.Status = RelationshipStatus.Accepted;
+            relationship.Type = RelationshipType.Social;
             relationship.CreatedBy = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
             _context.Add(relationship);
             await _context.SaveChangesAsync();
             
             var notification = new Notification 
             {
-                Text = $"{HttpContext.User.FindFirst("FullName")!.Value} is now following you."
+                Text = $"{HttpContext.User.FindFirst("FullName")!.Value} requested to add you as a social contact."
             };
 
             _notificationRepository.Create(notification, relationship.UserId);

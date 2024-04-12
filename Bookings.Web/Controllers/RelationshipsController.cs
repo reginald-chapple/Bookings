@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using Bookings.Web.Data;
+using Bookings.Web.Data.Repository;
 using Bookings.Web.Domain;
 using Bookings.Web.Identity.Controllers;
 using Microsoft.AspNetCore.Authorization;
@@ -13,10 +14,12 @@ namespace Bookings.Web.Controllers;
 public class RelationshipsController : Controller
 {
     private readonly ApplicationDbContext _context;
+    private readonly INotificationRepository _notificationRepository;
 
-    public RelationshipsController(ApplicationDbContext context)
+    public RelationshipsController(ApplicationDbContext context, INotificationRepository notificationRepository)
     {
         _context = context;
+        _notificationRepository = notificationRepository;
     }
 
     [Route("{id}/Family")]

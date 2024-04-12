@@ -8,18 +8,32 @@ public class Relationship : AuditableEntity
 
     public RelationshipType Type { get; set; }
 
+    public RelationshipStatus Status { get; set; } = RelationshipStatus.Pending;
+
     public string UserId { get; set; } = string.Empty;
     public virtual ApplicationUser? User { get; set; }
 }
 
 public enum RelationshipType
 {
-    [Description("Family")]
-    Family,
-    [Description("Friend")]
-    Friend,
+    [Description("Social")]
+    Social,
     [Description("Follow")]
     Follow,
     [Description("Professional")]
     Professional
+}
+
+public enum RelationshipStatus
+{
+    [Description("Pending")]
+    Pending,
+    [Description("Accepted")]
+    Accepted,
+    [Description("Declined")]
+    Declined,
+    [Description("Removed")]
+    Removed,
+    [Description("Blocked")]
+    Blocked
 }

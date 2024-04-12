@@ -22,13 +22,15 @@ namespace Bookings.Web.Data.Repository
             _context.SaveChanges();
 
             //TODO: Assign notification to users
-            
-            var userNotification = new UserNotification();
-                userNotification.UserId = receiverId;
-                userNotification.NotificationId = notification.Id;
 
-                _context.UserNotifications.Add(userNotification);
-                _context.SaveChanges();
+            var userNotification = new UserNotification
+            {
+                UserId = receiverId,
+                NotificationId = notification.Id
+            };
+
+            _context.UserNotifications.Add(userNotification);
+            _context.SaveChanges();
 
             _hubContext.Clients.User(receiverId).SendAsync("displayNotification", notification.Text);
         }

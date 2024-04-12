@@ -86,9 +86,6 @@ function flashToast(data, alert) {
     if (alert == "success") {
         flashToast.classList.add("text-bg-success");
     }
-    else if (alert == "warning") {
-        flashToast.classList.add("text-bg-warning");
-    }
     else if (alert == "danger") {
         flashToast.classList.add("text-bg-danger");
     }
@@ -103,3 +100,27 @@ function notify(data) {
     toastBody.innerHTML = data;
     toastBootstrap.show()
 }
+
+const connection = new signalR.HubConnectionBuilder()
+    .withUrl("/notificationHub")
+    .configureLogging(signalR.LogLevel.Information)
+    .build();
+
+var _connectionId = '';
+
+connection.on('displayNotification',(data) => {
+    notify(data);
+});
+
+connection.start()
+    .then(function () {
+        connection.invoke('getConnectionId')
+            .then(function (connectionId) {
+                _connectionId = connectionId
+                console.log(_connectionId)
+            })
+    })
+    .catch(function (error) {
+        console.log(error);
+        setTimeout(() => start(), 5000);
+    })
