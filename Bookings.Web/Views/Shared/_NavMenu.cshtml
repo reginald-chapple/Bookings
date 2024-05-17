@@ -1,3 +1,6 @@
+@{
+    var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+}
 <div class="col-sm-auto bg-white sticky-top border-end">
     <div class="d-flex flex-sm-column flex-row flex-nowrap bg-white align-items-center sticky-top">
         <div class="pb-3">
@@ -20,8 +23,8 @@
                         <li class="text-uppercase"><a class="dropdown-item" href="#">Campaigns</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="#">Discover</a></li>
-                        <li><a class="dropdown-item" asp-controller="Members" asp-action="Campaigns" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">My Campaigns</a></li>
-                        <li><a class="dropdown-item" asp-controller="Members" asp-action="Teams" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">Teams</a></li>
+                        <li><a class="dropdown-item" asp-controller="Members" asp-action="Campaigns" asp-route-id="@currentUserId">My Campaigns</a></li>
+                        <li><a class="dropdown-item" asp-controller="Members" asp-action="Teams" asp-route-id="@currentUserId">Teams</a></li>
                     </ul>
                 </div>
                 <div class="btn-group dropend pb-3">
@@ -31,7 +34,7 @@
                     <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdown5">
                         <li class="text-uppercase"><a class="dropdown-item" href="#">Conversations</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" asp-controller="Members" asp-action="Posts" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">My Posts</a></li>
+                        <li><a class="dropdown-item" asp-controller="Members" asp-action="Posts" asp-route-id="@currentUserId">My Posts</a></li>
                         <li><a class="dropdown-item" href="#">Communities</a></li>
                     </ul>
                 </div>
@@ -42,10 +45,12 @@
                     <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdown4">
                         <li class="text-uppercase"><a class="dropdown-item" href="#">Relationships</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Discover</a></li>
-                        <li><a class="dropdown-item" href="#">My Contacts</a></li>
-                        <li><a class="dropdown-item" href="#">Followers</a></li>
-                        <li><a class="dropdown-item" href="#">Following</a></li>
+                        <li><a class="dropdown-item" asp-controller="Relationships" asp-action="Index" asp-route-id="@currentUserId">Recommendations</a></li>
+                        <li><a class="dropdown-item" asp-controller="Relationships" asp-action="Requests" asp-route-id="@currentUserId">Requests</a></li>
+                        <li><a class="dropdown-item" asp-controller="Relationships" asp-action="Social" asp-route-id="@currentUserId">Social</a></li>
+                        <li><a class="dropdown-item" asp-controller="Relationships" asp-action="Professional" asp-route-id="@currentUserId">Professional</a></li>
+                        <li><a class="dropdown-item" asp-controller="Relationships" asp-action="Followers" asp-route-id="@currentUserId">Followers</a></li>
+                        <li><a class="dropdown-item" asp-controller="Relationships" asp-action="Following" asp-route-id="@currentUserId">Following</a></li>
                     </ul>
                 </div>
                 <div class="btn-group dropend pb-3">
@@ -57,7 +62,7 @@
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="#">Discover</a></li>
                         <li><a class="dropdown-item" href="#">My Events</a></li>
-                        <li><a class="dropdown-item" asp-controller="Members" asp-action="Invites" asp-route-id="@User.FindFirstValue(ClaimTypes.NameIdentifier)">Invitations</a></li>
+                        <li><a class="dropdown-item" asp-controller="Members" asp-action="Invites" asp-route-id="@currentUserId">Invitations</a></li>
                     </ul>
                 </div>
             }

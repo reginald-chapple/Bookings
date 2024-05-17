@@ -6,6 +6,8 @@ using Bookings.Web.Domain;
 using Bookings.Web.Hubs;
 using Bookings.Web.Data.Repository;
 using Bookings.Web.Data.Recommenders;
+using Bookings.Web.Services;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +45,8 @@ builder.Services.Configure<IdentityOptions>(options =>
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+builder.Services.AddScoped<FlashMessageService>();
 builder.Services.AddScoped<IChatRepository, ChatRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddTransient<ICampaignService, CampaignService>();

@@ -29,7 +29,7 @@
         <div class="row">
             <partial name="_NavMenu" />
             <div class="col-sm p-3 min-vh-100">
-                <partial name="_FlashToast" />
+                @await Component.InvokeAsync("FlashMessage")
                 <partial name="_LiveToast" />
                 <div class="row">
                     <div class="col-12 col-lg-8">

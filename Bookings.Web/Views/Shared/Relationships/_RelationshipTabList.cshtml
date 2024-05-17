@@ -1,0 +1,22 @@
+@model ApplicationUser
+
+<ul class="nav nav-tabs nav-bottom-line justify-content-center justify-content-md-start">
+    <li class="nav-item"> 
+        <a class="nav-link @Html.ActiveClass("Relationships", "Index")" asp-controller="Relationships" asp-action="Index" asp-route-id="@Model!.Id"> Recommendations </a> 
+    </li>
+    <li class="nav-item"> 
+        <a class="nav-link @Html.ActiveClass("Relationships", "Requests")" asp-controller="Relationships" asp-action="Requests" asp-route-id="@Model!.Id"> Requests </a> 
+    </li>
+    <li class="nav-item"> 
+        <a class="nav-link @Html.ActiveClass("Relationships", "Social")" asp-controller="Relationships" asp-action="Social" asp-route-id="@Model!.Id"> Social </a> 
+    </li>
+    <li class="nav-item"> 
+        <a class="nav-link @Html.ActiveClass("Relationships", "Professional")" asp-controller="Relationships" asp-action="Professional" asp-route-id="@Model!.Id"> Professional </a> 
+    </li>
+    <li class="nav-item"> 
+        <a class="nav-link @Html.ActiveClass("Relationships", "Followers")" asp-controller="Relationships" asp-action="Followers" asp-route-id="@Model!.Id"> Followers </a> 
+    </li>
+    <li class="nav-item"> 
+        <a class="nav-link @Html.ActiveClass("Relationships", "Following")" asp-controller="Relationships" asp-action="Following" asp-route-id="@Model!.Id"> Following </a> 
+    </li>
+</ul>

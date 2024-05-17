@@ -1,0 +1,21 @@
+@model List<FlashMessage>
+
+@if (Model != null && Model.Any())
+{
+    <div aria-live="polite" aria-atomic="true" class="position-relative">
+        <div style="z-index: 1100;" class="toast-container position-fixed top-0 end-0 p-3">
+            @foreach (var message in Model)
+            {
+                <div class="toast show text-white bg-@message.Type" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000" data-bs-autohide="true">
+                    <div class="toast-header text-white bg-@message.Type">
+                        <strong class="me-auto">@message.Type.ToUpper()</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        @message.Message
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}

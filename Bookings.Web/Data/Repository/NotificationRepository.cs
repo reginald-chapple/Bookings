@@ -21,8 +21,6 @@ namespace Bookings.Web.Data.Repository
             _context.Notifications.Add(notification);
             _context.SaveChanges();
 
-            //TODO: Assign notification to users
-
             var userNotification = new UserNotification
             {
                 UserId = receiverId,
@@ -37,10 +35,9 @@ namespace Bookings.Web.Data.Repository
 
         public List<UserNotification> GetUserNotifications(string userId)
         {
-            return _context.UserNotifications
+            return [.. _context.UserNotifications
                 .Where(u=>u.UserId.Equals(userId) && !u.IsRead)
-                .Include(n=>n.Notification)
-                .ToList();
+                .Include(n=>n.Notification)];
         }
 
         public void ReadNotification(int notificationId, string userId)

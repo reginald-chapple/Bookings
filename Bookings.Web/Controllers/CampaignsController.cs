@@ -4,6 +4,7 @@ using Bookings.Web.Data.Services;
 using Bookings.Web.Domain;
 using Bookings.Web.Infrastructure.Helpers;
 using Bookings.Web.Models;
+using Bookings.Web.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,11 +18,13 @@ public class CampaignsController : Controller
 {
     private readonly ApplicationDbContext _context;
     private readonly IUserService _userService;
+    private readonly FlashMessageService _flashMessageService;
 
-    public CampaignsController(ApplicationDbContext context, IUserService userService)
+    public CampaignsController(ApplicationDbContext context, IUserService userService, FlashMessageService flashMessageService)
     {
         _context = context;
         _userService = userService;
+        _flashMessageService = flashMessageService;
     }
 
     [Route("Search")]
@@ -71,7 +74,7 @@ public class CampaignsController : Controller
     [Route("Create")]
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<JsonResult> Create([Bind("Id,Name,Reason,Problem,Goal,Beneficiaries,Importance,Solution,FundraisingGoal,CauseId")] Campaign campaign)
+    public async Task<IActionResult> Create([Bind("Id,Name,Reason,Problem,Goal,Beneficiaries,Importance,Solution,FundraisingGoal,CauseId")] Campaign campaign)
     {
         if (ModelState.IsValid)
         {
@@ -83,18 +86,11 @@ public class CampaignsController : Controller
             campaign.Team.Members.Add(new TeamMember { MemberId = userId, Position = "Manager" });
             await _context.AddAsync(campaign);
             await _context.SaveChangesAsync();
-            return new JsonResult(new { Name = campaign.Name, Slug = campaign.Slug });
+            _flashMessageService.AddMessage("Campaign created successfully!", "success");
+            return Redirect(HttpContext.Request.Headers.Referer!);
         }
-        else
-        {
-            var errors = ModelState.Values.SelectMany(v => v.Errors)
-                .Select(e => e.ErrorMessage)
-                .ToList();
-
-            var json = JsonConvert.SerializeObject(errors);
-
-            return Json(json);
-        }
+         _flashMessageService.AddMessage("Something went wrong!", "danger");
+        return Redirect(HttpContext.Request.Headers.Referer!);
     }
 
     [AllowAnonymous]

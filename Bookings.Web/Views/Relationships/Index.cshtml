@@ -1,0 +1,65 @@
+@model ApplicationUser
+
+@{
+    ViewData["Title"] = "Relationships";
+    List<(ApplicationUser, double)> users = ViewBag.Users;
+}
+
+@section SidebarWidgets {
+    <partial name="Widgets/_NewsWidget" />
+}
+
+@await Component.InvokeAsync("FlashMessage")
+
+<div class="card">
+    <div class="card-header d-sm-flex text-center align-items-center justify-content-between border-0 pb-0">
+        <h1 class="text-uppercase fw-light h4">Relationships</h1>
+         <button class="text-secondary btn btn-secondary-soft-hover py-1 px-2" type="button"> 
+            <i class="bi bi-three-dots pe-1"></i>
+        </button>
+    </div>
+
+    <div class="card-body">
+        @await Html.PartialAsync("Relationships/_RelationshipTabList", Model)
+        <div class="tab-content mb-0 pb-0">
+            <div class="tab-pane fade show active">
+                 <div class="row g-4 mb-3">
+                    @foreach (var match in users)
+                    {
+                        <div class="hstack gap-2 mb-3">
+                            <!-- Avatar -->
+                            <div class="avatar">
+                                <a href="#!">
+                                    <img class="avatar-img rounded-circle" src="~/media/members/@(match.Item1.Image)" alt="">
+                                </a>
+                            </div>
+                            <!-- Title -->
+                            <div class="overflow-hidden">
+                                <a class="h6 mb-0" href="#!">@match.Item1.FullName </a>
+                                <p class="mb-0 small text-truncate">@match.Item2.ToString("0.00")%</p>
+                            </div>
+                            <!-- Button -->
+                            <div class="ms-auto">
+                                <form class="d-inline" asp-controller="Relationships" asp-action="Create">
+                                    <input type="hidden" value="@match.Item1.Id" name="UserId" id="rel-@match.Item1.Id" />
+                                    <button type="submit" class="btn rounded-3 ms-auto btn-success-soft btn-md">
+                                        <i class="bi bi-person-plus-fill"></i>
+                                    </button>
+                                </form>
+                                <form class="d-inline" asp-controller="Follows" asp-action="Create">
+                                    <input type="hidden" value="@match.Item1.Id" name="UserId" id="follow-@match.Item1.Id" />
+                                        <button type="button" class="btn rounded-3 ms-auto btn-primary-soft btn-md">
+                                        <i class="bi bi-people-fill"></i>
+                                    </button>
+                                </form>
+                                <button type="button" class="btn rounded-3 ms-auto btn-danger-soft btn-md">
+                                    <i class="bi bi-person-x-fill"></i>
+                                </button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
